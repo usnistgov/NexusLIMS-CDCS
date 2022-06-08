@@ -32,7 +32,7 @@ ALLOWED_HOSTS = (
 )
 
 # Nexus settings
-DOCUMENTATION_LINK = "http://CHANGE.THIS.VALUE"
+DOCUMENTATION_LINK = "http://nexuslims.ipages.nist.gov/NexusMicroscopyLIMS/doc"
 CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT = True
 VERIFY_DATA_ACCESS = False
 

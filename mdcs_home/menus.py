@@ -55,24 +55,24 @@ Menu.add_item(
 
 Menu.add_item(
     "nodropdown",
-    MenuItem("LINK 1",
-             "https://example.com",
+    MenuItem("MARLIN",
+             "https://marlin.nist.gov",
              icon="fish",
              iconClass="fas")
 )
 
 Menu.add_item(
     "nodropdown",
-    MenuItem("LINK 2",
-             "https://example.com",
+    MenuItem("NEMO",
+             "https://nemo.nist.gov",
              icon="fish",
              iconClass="fas")
 )
 
 Menu.add_item(
     "nodropdown",
-    MenuItem("LINK 3",
-             "https://example.com",
+    MenuItem("EM Community SharePoint",
+             "https://nistgov.sharepoint.com/sites/microscopy/",
              icon="users",
              iconClass="fas")
 )
