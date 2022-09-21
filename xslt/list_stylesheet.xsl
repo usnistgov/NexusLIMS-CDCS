@@ -36,6 +36,13 @@
     <instr instr-PID="JEOL-JSM7100-SEM-N102656">#bcbd22</instr>
     <instr instr-PID="Philips-EM400-TEM-599910">#bebada</instr>
     <instr instr-PID="Philips-CM30-TEM-540388">#b3de69</instr>
+    <instr instr-PID="FEI-Titan-TEM-640918">#25276A</instr>
+    <instr instr-PID="Zeiss-LEO_1525_FESEM-927910">#1a581d</instr>
+    <instr instr-PID="FEI-Helios-DB-647035">#3f1f5f</instr>
+    <instr instr-PID="FEI-Helios-DB-647036">#40686f</instr>
+    <instr instr-PID="Zeiss-Gemini_300_SEM-936834">#791212</instr>
+    <instr instr-PID="FEI-Quanta_400_SEM-938570">#154157</instr>
+    <instr instr-PID="JEOL-7800F_SEM-N113138">#81538d</instr>
   </xsl:variable>
   <xsl:key name="lookup.instr.color" match="instr" use="@instr-PID"/>
 
