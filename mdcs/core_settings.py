@@ -82,33 +82,39 @@ DISPLAY_RULES_OF_BEHAVIOR_FOOTER = False
 """ boolean: display the rules of behavior link in the footer
 """
 
-ID_PROVIDER_SYSTEMS = {
-    "local": {
-        "class": "core_linked_records_app.utils.providers.local.LocalIdProvider",
-        "args": [],
-    },
-    # "handle": {
-    #     "class": "core_linked_records_app.utils.providers.handle_net.HandleNetSystem",
-    #     "args": [
-    #         "https://handle-server.example.org:8000",
-    #         "300%3APREFIX/USER",
-    #         "password",
-    #     ],
-    # },
-}
-""" dict: provider systems available for registering PIDs.
+ID_PROVIDER_SYSTEM_NAME = "local"
+""" str: internal name of the provider system.
 """
 
-ID_PROVIDER_PREFIXES = ["cdcs"]
+ID_PROVIDER_SYSTEM_CONFIG = {
+    "class": "core_linked_records_app.utils.providers.local.LocalIdProvider",
+    "args": [],
+}
+""" dict: provider system configuration for resolving PIDs.
+"""
+
+ID_PROVIDER_PREFIXES = (
+    os.environ["ID_PROVIDER_PREFIXES"].split(",")
+    if "ID_PROVIDER_PREFIXES" in os.environ
+    else ["cdcs"]
+)
 """ list<str>: accepted providers if manually specifying PIDs (first item is the
 default prefix)
 """
 
-PID_XPATH = "root.pid"
+ID_PROVIDER_PREFIX_DEFAULT = os.getenv(
+    "ID_PROVIDER_PREFIX_DEFAULT", ID_PROVIDER_PREFIXES[0]
+)
+
+ID_PROVIDER_PREFIX_BLOB = os.getenv(
+    "ID_PROVIDER_PREFIX_BLOB", ID_PROVIDER_PREFIXES[0]
+)
+
+PID_XPATH = os.getenv("PID_XPATH", "root.pid")
 """ string: location of the PID in the document, specified as dot notation
 """
 
-AUTO_SET_PID = False
+AUTO_SET_PID = os.getenv("AUTO_SET_PID", "False").lower() == "true"
 """ boolean: enable the automatic pid generation for saved data.
 """
 

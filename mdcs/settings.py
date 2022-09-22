@@ -508,27 +508,21 @@ if ENABLE_SAML2_SSO_AUTH:
 
 # configure handle server PIDs according to environment settings
 if ENABLE_HANDLE_PID:
-    hdl_user = f'300%3A{os.getenv("HANDLE_NET_PREFIX", "cdcs")}/' + \
-               f'{os.getenv("HANDLE_NET_USER", "ADMIN")}'
-    ID_PROVIDER_SYSTEMS = {
-        # "local": {
-        #     "class": "core_linked_records_app.utils.providers.local.LocalIdProvider",
-        #     "args": [],
-        # },
-        "handle.net": {  
-            "class": "core_linked_records_app.utils.providers.handle_net.HandleNetSystem",
-            "args": [
-                os.getenv("HANDLE_NET_URL", "https://handle-net.domain"),
-                hdl_user, 
-                os.getenv("HANDLE_NET_SECRET_KEY", "admin")
-            ],
-        }
+    HDL_USER = (
+        f"300%3A{ID_PROVIDER_PREFIX_DEFAULT}/"
+        f'{os.getenv("HANDLE_NET_USER", "ADMIN")}'
+    )
+
+    ID_PROVIDER_SYSTEM_NAME = "handle.net"
+    ID_PROVIDER_SYSTEM_CONFIG = {
+        "class": "core_linked_records_app.utils.providers.handle_net.HandleNetSystem",
+        "args": [
+            os.getenv("HANDLE_NET_LOOKUP_URL", "https://hdl.handle.net"),
+            os.getenv("HANDLE_NET_REGISTRATION_URL", "https://handle-net.domain"),
+            HDL_USER,
+            os.getenv("HANDLE_NET_SECRET_KEY", "admin"),
+        ],
     }
-    ID_PROVIDER_PREFIXES = [os.getenv("HANDLE_NET_PREFIX", "cdcs")]
-    ID_PROVIDER_PREFIX_DEFAULT = ID_PROVIDER_PREFIXES[0]
-    ID_PROVIDER_PREFIX_BLOB = ID_PROVIDER_PREFIXES[0]
-    PID_XPATH = os.getenv("PID_XPATH", "Experiment.@pid")
-    AUTO_SET_PID = os.getenv("AUTO_SET_PID", "False").lower() == "true"
 
     HANDLE_NET_RECORD_INDEX = os.getenv("HANDLE_NET_RECORD_INDEX", 1)
     HANDLE_NET_ADMIN_DATA = {
@@ -539,8 +533,9 @@ if ENABLE_HANDLE_PID:
             "value": {
                 "handle": f"0.NA/{ID_PROVIDER_PREFIX_DEFAULT}",
                 "index": int(os.getenv("HANDLE_NET_ADMIN_DATA_INDEX", 200)),
-                "permissions": os.getenv("HANDLE_NET_ADMIN_DATA_PERMISSIONS", 
-                                         "011111110011"),
+                "permissions": os.getenv(
+                    "HANDLE_NET_ADMIN_DATA_PERMISSIONS", "011111110011"
+                ),
             },
         },
     }
