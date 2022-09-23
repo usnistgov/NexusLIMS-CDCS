@@ -31,7 +31,6 @@
  */
 var getDataSourcesResults = function(order_by_field) {
     var $results = $("#results");
-
     $results.find(".results-container").each(function() {
         // TODO: check if problem setting variable with async call
         var $result_container = $(this);
@@ -39,6 +38,7 @@ var getDataSourcesResults = function(order_by_field) {
         var result_page = $result_container.find(".results-page");
         get_data_source_results(result_page, data_source_url);
     });
+
 };
 
 /**
@@ -59,6 +59,8 @@ var getResultsPage = function(event) {
  * @param data_source_url
  */
  var get_data_source_results = function(result_page, data_source_url) {
+    // display spinner
+    displaySpinner(result_page)
 
     $.ajax({
         url: data_source_url,
@@ -98,14 +100,13 @@ var getResultsPage = function(event) {
                 $(this).show()
             })
         }
-    });
+    })
 };
 
 /*
  * Display the edit icon according to the user permissions
  */
 var getDataPermission = function() {
-
     $("input.input-permission-url").map(function(){
         var inputElement = $(this);
         var dataPermissionUrl = inputElement.attr("value");
@@ -123,7 +124,7 @@ var getDataPermission = function() {
                             (function () {
                                 var target_id = id;
                                 $(editLinkElement).click(function() {
-                                  openEditRecord(target_id);
+                                  openEditRecord(target_id,$(editLinkElement));
                                 });
                             }());
                     }
@@ -132,16 +133,19 @@ var getDataPermission = function() {
             error: function(data) {
                 console.log(data)
             }
-        });
+        })
     });
 }
 
 /*
  * Navigate to the edit page with the correct record id
  * @param {string} id of the clicked record
+ * @param {selector} edit button selector of the clicked record
  */
-openEditRecord = function(id) {
-
+openEditRecord = function(id, btnSelector) {
+    var icon = btnSelector.find( "i" ).attr("class");
+    // Show loading spinner
+    showSpinner(btnSelector.find("i"))
     $.ajax({
         url : editRecordUrl,
         type : "POST",
@@ -155,6 +159,9 @@ openEditRecord = function(id) {
         error:function(data){
             $.notify("Error while opening the edit page.", {style: 'error'});
         }
+    }).always(function(data) {
+        // get old button icon
+       hideSpinner(btnSelector.find("i"), icon)
     });
 };
 

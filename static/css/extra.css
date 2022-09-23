@@ -196,3 +196,12 @@ i#search_icon {
     width: fit-content;
     margin: 2px auto !important;
 }
+
+/* modify position of loading spinner on results page;
+   this overrides definition in 
+   core_main_app/static/core_main_app/common/css/loading-spinner.css
+ */
+.loading-spinner {
+    margin-left: 39%;
+    margin-top: 1%;
+}

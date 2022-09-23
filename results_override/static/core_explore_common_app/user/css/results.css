@@ -151,6 +151,10 @@ span.expand {
     margin-right: 1em;
 }
 
+#data_sources_selector {
+    word-break: break-all;
+}
+
 .exporter-checkbox {
     height: 24px;
     width: 24px;
