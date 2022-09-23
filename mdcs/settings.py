@@ -110,14 +110,17 @@ INSTALLED_APPS = (
     "captcha",
     "django_celery_beat",
     
-    # Core apps
+    # this needs to come before mdcs_home so xml templatetag 
+    # override works
     "core_main_app",
-    
+
     # Local apps
     "mdcs_home",
-    # Override for results.js
+    
+    # Override for results.js;
     "results_override",
 
+    # Core apps
     "core_exporters_app",
     "core_exporters_app.exporters.xsl",
     "core_website_app",
