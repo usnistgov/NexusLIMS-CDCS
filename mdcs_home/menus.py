@@ -77,6 +77,14 @@ Menu.add_item(
              iconClass="fas")
 )
 
+Menu.add_item(
+    "nodropdown",
+    MenuItem("NexusLIMS Data Stats",
+             "http://limsimages.campus.nist.gov:5000",
+             icon="chart-line",
+             iconClass="fas")
+)
+
 # Menu.add_item(
 #     "explorer", MenuItem("Build a Custom Query", reverse("core_explore_example_index"))
 # )
