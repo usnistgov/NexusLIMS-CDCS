@@ -1,3 +1,5 @@
+*.xpr
+
 ### VS Code
 .vscode
 
@@ -62,6 +64,7 @@ Icon
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
+.directory
 
 # Directories potentially created on remote AFP share
 .AppleDB
