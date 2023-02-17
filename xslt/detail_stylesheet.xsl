@@ -1,6 +1,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema"
     xmlns:nx="https://data.nist.gov/od/dm/nexus/experiment/v1.0"
+    xmlns:exslt="http://exslt.org/common" extension-element-prefixes="exslt"
     version="1.0">
     <xsl:output method="html" indent="yes" encoding="UTF-8"/>
 
@@ -26,6 +27,128 @@
         <month month-number="12">December</month>
     </xsl:variable>
     <xsl:key name="lookup.date.month" match="month" use="@month-number"/>
+    
+    <xsl:variable name="periodic-table-dictionary">
+        <element symbol="H">1 - Hydrogen</element>
+        <element symbol="He">2 - Helium</element>
+        <element symbol="Li">3 - Lithium</element>
+        <element symbol="Be">4 - Beryllium</element>
+        <element symbol="B">5 - Boron</element>
+        <element symbol="C">6 - Carbon</element>
+        <element symbol="N">7 - Nitrogen</element>
+        <element symbol="O">8 - Oxygen</element>
+        <element symbol="F">9 - Fluorine</element>
+        <element symbol="Ne">10 - Neon</element>
+        <element symbol="Na">11 - Sodium</element>
+        <element symbol="Mg">12 - Magnesium</element>
+        <element symbol="Al">13 - Aluminum</element>
+        <element symbol="Si">14 - Silicon</element>
+        <element symbol="P">15 - Phosphorus</element>
+        <element symbol="S">16 - Sulfur</element>
+        <element symbol="Cl">17 - Chlorine</element>
+        <element symbol="Ar">18 - Argon</element>
+        <element symbol="K">19 - Potassium</element>
+        <element symbol="Ca">20 - Calcium</element>
+        <element symbol="Sc">21 - Scandium</element>
+        <element symbol="Ti">22 - Titanium</element>
+        <element symbol="V">23 - Vanadium</element>
+        <element symbol="Cr">24 - Chromium</element>
+        <element symbol="Mn">25 - Manganese</element>
+        <element symbol="Fe">26 - Iron</element>
+        <element symbol="Co">27 - Cobalt</element>
+        <element symbol="Ni">28 - Nickel</element>
+        <element symbol="Cu">29 - Copper</element>
+        <element symbol="Zn">30 - Zinc</element>
+        <element symbol="Ga">31 - Gallium</element>
+        <element symbol="Ge">32 - Germanium</element>
+        <element symbol="As">33 - Arsenic</element>
+        <element symbol="Se">34 - Selenium</element>
+        <element symbol="Br">35 - Bromine</element>
+        <element symbol="Kr">36 - Krypton</element>
+        <element symbol="Rb">37 - Rubidium</element>
+        <element symbol="Sr">38 - Strontium</element>
+        <element symbol="Y">39 - Yttrium</element>
+        <element symbol="Zr">40 - Zirconium</element>
+        <element symbol="Nb">41 - Niobium</element>
+        <element symbol="Mo">42 - Molybdenum</element>
+        <element symbol="Tc">43 - Technetium</element>
+        <element symbol="Ru">44 - Ruthenium</element>
+        <element symbol="Rh">45 - Rhodium</element>
+        <element symbol="Pd">46 - Palladium</element>
+        <element symbol="Ag">47 - Silver</element>
+        <element symbol="Cd">48 - Cadmium</element>
+        <element symbol="In">49 - Indium</element>
+        <element symbol="Sn">50 - Tin</element>
+        <element symbol="Sb">51 - Antimony</element>
+        <element symbol="Te">52 - Tellurium</element>
+        <element symbol="I">53 - Iodine</element>
+        <element symbol="Xe">54 - Xenon</element>
+        <element symbol="Cs">55 - Cesium</element>
+        <element symbol="Ba">56 - Barium</element>
+        <element symbol="La">57 - Lanthanum</element>
+        <element symbol="Ce">58 - Cerium</element>
+        <element symbol="Pr">59 - Praseodymium</element>
+        <element symbol="Nd">60 - Neodymium</element>
+        <element symbol="Pm">61 - Promethium</element>
+        <element symbol="Sm">62 - Samarium</element>
+        <element symbol="Eu">63 - Europium</element>
+        <element symbol="Gd">64 - Gadolinium</element>
+        <element symbol="Tb">65 - Terbium</element>
+        <element symbol="Dy">66 - Dysprosium</element>
+        <element symbol="Ho">67 - Holmium</element>
+        <element symbol="Er">68 - Erbium</element>
+        <element symbol="Tm">69 - Thulium</element>
+        <element symbol="Yb">70 - Ytterbium</element>
+        <element symbol="Lu">71 - Lutetium</element>
+        <element symbol="Hf">72 - Hafnium</element>
+        <element symbol="Ta">73 - Tantalum</element>
+        <element symbol="W">74 - Tungsten</element>
+        <element symbol="Re">75 - Rhenium</element>
+        <element symbol="Os">76 - Osmium</element>
+        <element symbol="Ir">77 - Iridium</element>
+        <element symbol="Pt">78 - Platinum</element>
+        <element symbol="Au">79 - Gold</element>
+        <element symbol="Hg">80 - Mercury</element>
+        <element symbol="Tl">81 - Thallium</element>
+        <element symbol="Pb">82 - Lead</element>
+        <element symbol="Bi">83 - Bismuth</element>
+        <element symbol="Po">84 - Polonium</element>
+        <element symbol="At">85 - Astatine</element>
+        <element symbol="Rn">86 - Radon</element>
+        <element symbol="Fr">87 - Francium</element>
+        <element symbol="Ra">88 - Radium</element>
+        <element symbol="Ac">89 - Actinium</element>
+        <element symbol="Th">90 - Thorium</element>
+        <element symbol="Pa">91 - Protactinium</element>
+        <element symbol="U">92 - Uranium</element>
+        <element symbol="Np">93 - Neptunium</element>
+        <element symbol="Pu">94 - Plutonium</element>
+        <element symbol="Am">95 - Americium</element>
+        <element symbol="Cm">96 - Curium</element>
+        <element symbol="Bk">97 - Berkelium</element>
+        <element symbol="Cf">98 - Californium</element>
+        <element symbol="Es">99 - Einsteinium</element>
+        <element symbol="Fm">100 - Fermium</element>
+        <element symbol="Md">101 - Mendelevium</element>
+        <element symbol="No">102 - Nobelium</element>
+        <element symbol="Lr">103 - Lawrencium</element>
+        <element symbol="Rf">104 - Rutherfordium</element>
+        <element symbol="Db">105 - Dubnium</element>
+        <element symbol="Sg">106 - Seaborgium</element>
+        <element symbol="Bh">107 - Bohrium</element>
+        <element symbol="Hs">108 - Hassium</element>
+        <element symbol="Mt">109 - Meitnerium</element>
+        <element symbol="Ds">110 - Darmstadtium</element>
+        <element symbol="Rg">111 - Roentgenium</element>
+        <element symbol="Cn">112 - Copernicium</element>
+        <element symbol="Nh">113 - Nihonium</element>
+        <element symbol="Fl">114 - Flerovium</element>
+        <element symbol="Mc">115 - Moscovium</element>
+        <element symbol="Lv">116 - Livermorium</element>
+        <element symbol="Ts">117 - Tennessine</element>
+        <element symbol="Og">118 - Oganesson</element>
+    </xsl:variable>
+    <xsl:key name="lookup.element.symbol" match="element" use="@symbol"/>
     
     <!-- This lookup table assigns a color to each instrument's badge so they can be visually distinguished 
        on the list page -->
@@ -1315,13 +1438,21 @@
                                     <xsl:when test="count(nx:sample) = 1">
                                         <xsl:if test="nx:sample/nx:name/text()">
                                             <tr>
-                                                <th scope="row">Name: </th>
+                                                <th scope="row">Name: 
+                                                    <xsl:call-template name="help-tip">
+                                                        <xsl:with-param name="tip-text">The name given to this sample (as entered at the time of reservation)</xsl:with-param>
+                                                    </xsl:call-template>
+                                                </th>
                                                 <td> <xsl:value-of select="nx:sample/nx:name"/></td>
                                             </tr>
                                         </xsl:if>
                                         <xsl:if test="nx:sample/@ref">
                                             <tr>
-                                                <th scope="row">PID: </th>
+                                                <th scope="row">PID: 
+                                                    <xsl:call-template name="help-tip">
+                                                        <xsl:with-param name="tip-text">A persistent identifier for this sample (if a URL, you can click to view more sample details)</xsl:with-param>
+                                                    </xsl:call-template>
+                                                </th>
                                                 <td> 
                                                     <xsl:call-template name="link-or-text">
                                                         <xsl:with-param name="val">
@@ -1333,8 +1464,29 @@
                                         </xsl:if>
                                         <xsl:if test="nx:sample/nx:description/text()">
                                             <tr>
-                                                <th scope="row">Description: </th>
+                                                <th scope="row">Description:
+                                                    <xsl:call-template name="help-tip">
+                                                        <xsl:with-param name="tip-text">The description given to this sample (as entered at the time of reservation)</xsl:with-param>
+                                                    </xsl:call-template>
+                                                </th>
                                                 <td> <xsl:value-of select="nx:sample/nx:description"/></td>
+                                            </tr>
+                                        </xsl:if>
+                                        <xsl:if test="nx:sample/nx:elements/*">
+                                            <tr>
+                                                <th scope="row">Elements: 
+                                                <xsl:call-template name="help-tip">
+                                                    <xsl:with-param name="tip-text">The physical elements (as chosen by the user) that are expected to be in this sample</xsl:with-param>
+                                                </xsl:call-template>
+                                                </th>
+                                                <td>
+                                                    <xsl:call-template name="elements-to-list">
+                                                        <xsl:with-param name="elements">
+                                                            <xsl:copy-of select="nx:sample/nx:elements/*"/>
+                                                        </xsl:with-param>
+                                                        <xsl:with-param name="tooltip-position">right</xsl:with-param>
+                                                    </xsl:call-template>
+                                                </td>
                                             </tr>
                                         </xsl:if>
                                     </xsl:when>
@@ -1360,6 +1512,12 @@
                                                         Description
                                                         <xsl:call-template name="help-tip">
                                                             <xsl:with-param name="tip-text">The description given to this sample (as entered at the time of reservation)</xsl:with-param>
+                                                        </xsl:call-template>
+                                                    </th>
+                                                    <th>
+                                                        Elements
+                                                        <xsl:call-template name="help-tip">
+                                                            <xsl:with-param name="tip-text">The physical elements (as chosen by the user) that are expected to be in this sample</xsl:with-param>
                                                         </xsl:call-template>
                                                     </th>
                                                 </tr>
@@ -1412,6 +1570,27 @@
                                                             <xsl:for-each select="./nx:description">
                                                                 <p><xsl:value-of select="."/></p>
                                                             </xsl:for-each>
+                                                        </td>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <td>
+                                                            <xsl:element name="span">
+                                                                <xsl:attribute name="data-toggle">tooltip</xsl:attribute>
+                                                                <xsl:attribute name="data-placement">right</xsl:attribute>
+                                                                <xsl:attribute name="title">No value entered</xsl:attribute>
+                                                                —
+                                                            </xsl:element>
+                                                        </td>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                                <xsl:choose>
+                                                    <xsl:when test="./nx:elements/*">
+                                                        <td> 
+                                                            <xsl:call-template name="elements-to-list">
+                                                                <xsl:with-param name="elements">
+                                                                    <xsl:copy-of select="./nx:elements/*"/>
+                                                                </xsl:with-param>
+                                                            </xsl:call-template>
                                                         </td>
                                                     </xsl:when>
                                                     <xsl:otherwise>
@@ -4514,6 +4693,34 @@ The textual data from the selected rows (not the actual files) can also be expor
                 <xsl:value-of select="$val"/>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+
+    <!-- This template will convert a set of <element> nodes into a comma-separated
+         list and add tooltips to each one for the atomic number and full element name -->
+    <xsl:template name="elements-to-list">
+        <xsl:param name='elements'/>
+        <xsl:param name="tooltip-position" select="'top'"/>
+        <xsl:for-each select="exslt:node-set($elements)/node()">
+              <xsl:variable name="element-symbol">
+                  <xsl:value-of select="local-name(./descendant-or-self::*)"/>
+              </xsl:variable>
+              <xsl:element name="span">
+                  <xsl:attribute name="data-toggle">tooltip</xsl:attribute>
+                  <xsl:attribute name="data-placement"><xsl:value-of select="$tooltip-position"/></xsl:attribute>
+                  <xsl:attribute name="title">
+                      <!-- The 'for-each document' bit is required because keys only work 
+                           in the context of the current document in XSLT 1.0 
+                           (see https://stackoverflow.com/a/35327827/1435788) -->
+                      <xsl:for-each select="document('')">
+                          <xsl:value-of select="key('lookup.element.symbol', $element-symbol)"/>
+                      </xsl:for-each>
+                  </xsl:attribute>
+                  <xsl:value-of select="local-name(.)"/>
+              </xsl:element>
+              <xsl:if test="position() != last()">
+                  <xsl:text>, </xsl:text>
+              </xsl:if>            
+        </xsl:for-each>
     </xsl:template>
 
 </xsl:stylesheet>
