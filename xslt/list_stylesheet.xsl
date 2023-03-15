@@ -546,7 +546,7 @@
             <xsl:when test="$input = 'dm4'">
               <xsl:attribute name="title">Gatan DigitalMicrograph file (v4)</xsl:attribute>
             </xsl:when>
-            <xsl:when test="$input = 'tif'">
+            <xsl:when test="$input = 'tif' or $input = 'tiff'">
               <xsl:attribute name="title">Tiff-format image</xsl:attribute>
             </xsl:when>
             <xsl:when test="$input = 'ser'">
@@ -554,6 +554,69 @@
             </xsl:when>
             <xsl:when test="$input = 'emi'">
               <xsl:attribute name="title">FEI .emi file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'txt'">
+              <xsl:attribute name="title">Text file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'dat'">
+              <xsl:attribute name="title">Custom .dat file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'spc'">
+              <xsl:attribute name="title">EDAX EDS spectrum file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'spd'">
+              <xsl:attribute name="title">EDAX EDS spectrum image file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'jpg' or $input = 'jpeg'">
+              <xsl:attribute name="title">JPEG-format image</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'osc'">
+              <xsl:attribute name="title">EDAX EBSD file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'ang'">
+              <xsl:attribute name="title">EDAX EBSD file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'h5' or $input = 'hdf5'">
+              <xsl:attribute name="title">HDF5 container file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'msa'">
+              <xsl:attribute name="title">MSA spectrum file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'xml'">
+              <xsl:attribute name="title">Custom XML format file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'csv'">
+              <xsl:attribute name="title">Comma separated value file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'xls' or $input = 'xlsx'">
+              <xsl:attribute name="title">Excel workbook file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'ppt' or $input = 'pptx'">
+              <xsl:attribute name="title">Powerpoint presentation file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'doc' or $input = 'docx'">
+              <xsl:attribute name="title">Word document file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'pdf'">
+              <xsl:attribute name="title">Portable Document Format file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'spx'">
+              <xsl:attribute name="title">Bruker spectrum file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'rpl'">
+              <xsl:attribute name="title">LISPIX-format spectrum image file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'rtf'">
+              <xsl:attribute name="title">Rich text format file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'oip' or $input = 'oipx'">
+              <xsl:attribute name="title">Oxford Instruments project file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'h5oina'">
+              <xsl:attribute name="title">Oxford Instruments data export file</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="$input = 'ebsp'">
+              <xsl:attribute name="title">Oxford EBSD pattern</xsl:attribute>
             </xsl:when>
             <xsl:otherwise>
               <xsl:attribute name="title">File extension</xsl:attribute>
