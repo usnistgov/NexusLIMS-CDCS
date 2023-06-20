@@ -1434,7 +1434,7 @@
                             </xsl:if> -->
                         </table>
                         
-                        <xsl:if test="nx:sample/*/text()">
+                        <xsl:if test="nx:sample/*/text() | nx:sample/@ref">
                             <h3 id="sample-info-header">Sample Information
                                 <xsl:call-template name="help-tip">
                                     <xsl:with-param name="tip-text">Sample information is extracted from the calendar reservation associated with this record</xsl:with-param>
