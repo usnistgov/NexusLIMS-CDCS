@@ -1,6 +1,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema"
-  xmlns:nx="https://data.nist.gov/od/dm/nexus/experiment/v1.0" version="1.0">
+  xmlns:nx="https://data.nist.gov/od/dm/nexus/experiment/v1.0" 
+  xmlns:exslt="http://exslt.org/common" extension-element-prefixes="exslt"
+  version="1.0">
   <xsl:output method="html" indent="yes" encoding="UTF-8"/>
 
   <xsl:param name="detail_url" select="'#'"/>
@@ -46,6 +48,53 @@
   </xsl:variable>
   <xsl:key name="lookup.instr.color" match="instr" use="@instr-PID"/>
 
+  <!-- Lookup table for tooltip text for extension badges
+
+Use it like:
+
+<xsl:variable name="value_to_lookup" select="'tif'"/>
+<xsl:value-of select='extension-to-tooltip-lookup/row[@ext = $value_to_lookup]'/>    
+-->
+  <xsl:variable name="extension-to-tooltip-lookup-fragment">
+    <row ext="" tooltip="File extension" />
+    <row ext="dm3" tooltip="Gatan DigitalMicrograph file (v3)" />
+    <row ext="dm4" tooltip="Gatan DigitalMicrograph file (v4)" />
+    <row ext="tif" tooltip="Tiff-format image" />
+    <row ext="tiff" tooltip="Tiff-format image" />
+    <row ext="ser" tooltip="FEI .ser file" />
+    <row ext="emi" tooltip="FEI .emi file" />
+    <row ext="txt" tooltip="Text file" />
+    <row ext="dat" tooltip="Custom .dat file" />
+    <row ext="spc" tooltip="EDAX EDS spectrum file" />
+    <row ext="spd" tooltip="EDAX EDS spectrum image file" />
+    <row ext="jpg" tooltip="JPEG-format image" />
+    <row ext="jpeg" tooltip="JPEG-format image" />
+    <row ext="osc" tooltip="EDAX EBSD file" />
+    <row ext="ang" tooltip="EDAX EBSD file" />
+    <row ext="h5" tooltip="HDF5 container file" />
+    <row ext="hdf5" tooltip="HDF5 container file" />
+    <row ext="msa" tooltip="MSA spectrum file" />
+    <row ext="xml" tooltip="Custom XML format file" />
+    <row ext="csv" tooltip="Comma separated value file" />
+    <row ext="xls" tooltip="Excel workbook file" />
+    <row ext="xlsx" tooltip="Excel workbook file" />
+    <row ext="ppt" tooltip="Powerpoint presentation file" />
+    <row ext="pptx" tooltip="Powerpoint presentation file" />
+    <row ext="doc" tooltip="Word document file" />
+    <row ext="docx" tooltip="Word document file" />
+    <row ext="pdf" tooltip="Portable Document Format file" />
+    <row ext="spx" tooltip="Bruker spectrum file" />
+    <row ext="rpl" tooltip="LISPIX-format spectrum image file" />
+    <row ext="rtf" tooltip="Rich text format file" />
+    <row ext="oip" tooltip="Oxford Instruments project file" />
+    <row ext="oipx" tooltip="Oxford Instruments project file" />
+    <row ext="h5oina" tooltip="Oxford Instruments data export file" />
+    <row ext="ebsp" tooltip="Oxford EBSD pattern" />
+  </xsl:variable>
+  <xsl:variable 
+    name="extension-to-tooltip-lookup" 
+    select="exslt:node-set($extension-to-tooltip-lookup-fragment)" />
+
   <xsl:template match="/">
     <xsl:apply-templates select="/nx:Experiment"/>
   </xsl:template>
@@ -67,21 +116,31 @@
     <xsl:variable name="title">
         <xsl:value-of select="nx:title"/>
     </xsl:variable>
-    <xsl:variable name="extension-strings">
+    
+    
+    <xsl:variable name="extension-fragment">
+      <xsl:element name="extensions">
         <xsl:for-each select="//nx:dataset/nx:location">
-        <xsl:call-template name="get-file-extension">
-          <xsl:with-param name="path">
-            <xsl:value-of select="."/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:for-each>
+          <xsl:call-template name="get-file-extension">
+            <xsl:with-param name="path">
+              <xsl:value-of select="."/>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+      </xsl:element>
     </xsl:variable>
-    <xsl:variable name="unique-extensions">
-      <xsl:call-template name="dedup-list">
-        <xsl:with-param name="input">
-          <xsl:value-of select="$extension-strings"/>
-        </xsl:with-param>
-      </xsl:call-template>
+    
+    <xsl:variable name="extensionCount">
+      <xsl:for-each select="exslt:node-set($extension-fragment)/extensions/ext[not(preceding::value = value)]">
+        <xsl:variable name="thisExtension" select="value/text()"/>
+        <xsl:variable name="thisCount" select="count(exslt:node-set($extension-fragment)/extensions/ext[value = $thisExtension])"/>
+        <xsl:element name="extension">
+          <xsl:attribute name="count">
+            <xsl:value-of select="$thisCount"/>
+          </xsl:attribute>
+          <xsl:value-of select="$thisExtension"/>
+        </xsl:element>
+      </xsl:for-each>
     </xsl:variable>
     
     <style>
@@ -125,9 +184,17 @@
          </xsl:choose> </span>
         <i class="fa fa-cubes filetypes-icon" style="margin-left:0.75em; font-size: small;"
             data-toggle="tooltip" data-placement="top" title="Filetypes present in record"/><span style="font-size: small;"><xsl:text>: </xsl:text></span>
+       
+       <!-- badges for unique file extensions -->
+       <xsl:variable name="unique-extensions">
+         <xsl:call-template name="get-unique-extensions">
+           <xsl:with-param name="global" select="true()"/>
+         </xsl:call-template>
+       </xsl:variable>
        <xsl:call-template name="extensions-to-badges">
-         <xsl:with-param name="input"><xsl:value-of select="$unique-extensions"/></xsl:with-param>
+         <xsl:with-param name="input" select="exslt:node-set($unique-extensions)"/>
        </xsl:call-template>
+       
      </div>
      <div class="experimenter-and-date">
        <span class="list-record-experimenter">
@@ -427,6 +494,45 @@
 
     </xsl:choose>
   </xsl:template>
+  
+  <xsl:template name="get-unique-extensions">
+    <xsl:param name="global" select="true()"/>
+    <xsl:variable name="selection">
+      <xsl:choose>
+        <xsl:when test="$global">
+          <xsl:copy-of select="//nx:dataset/nx:location"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="nx:dataset/nx:location"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="extension-fragment">
+      <xsl:element name="extensions">
+        <xsl:for-each select="exslt:node-set($selection)/nx:location">
+          <xsl:call-template name="get-file-extension">
+            <xsl:with-param name="path">
+              <xsl:value-of select="."/>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+      </xsl:element>
+    </xsl:variable>
+    
+    <xsl:element name="extensionCount">
+      <xsl:for-each select="exslt:node-set($extension-fragment)/extensions/ext[not(preceding::value = value)]">
+        <xsl:sort select="value/text()"/>
+        <xsl:variable name="thisExtension" select="value/text()"/>
+        <xsl:variable name="thisCount" select="count(exslt:node-set($extension-fragment)/extensions/ext[value = $thisExtension])"/>
+        <xsl:element name="extension">
+          <xsl:attribute name="count">
+            <xsl:value-of select="$thisCount"/>
+          </xsl:attribute>
+          <xsl:value-of select="$thisExtension"/>
+        </xsl:element>
+      </xsl:for-each>
+    </xsl:element>
+  </xsl:template>
 
   <xsl:template name="get-file-extension">
     <xsl:param name="path"/>
@@ -446,10 +552,10 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+  
+  
   <xsl:template name="TEMP">
     <xsl:param name="x"/>
-
     <xsl:choose>
       <xsl:when test="contains($x, '.')">
         <xsl:call-template name="TEMP">
@@ -458,180 +564,50 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="ext">
-          <xsl:value-of select="$x"/><xsl:text> </xsl:text>
+          <xsl:element name="value">
+            <xsl:value-of select="$x"/>
+          </xsl:element>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="dedup-list">
-    <!-- Cribbed from https://www.oxygenxml.com/archives/xsl-list/200412/msg00888.html -->
-    <xsl:param name="input"/>
-    <xsl:param name="to-keep"/>
-    <xsl:choose>
-      <!-- Our string contains a space, so there are more values to process -->
-      <xsl:when test="contains($input, ' ')">
-        <!-- Value to test is substring-before -->
-        <xsl:variable name="firstWord" select="substring-before($input, ' ')"/>
-
-        <xsl:choose>
-          <xsl:when test="not(contains($to-keep, $firstWord))">
-            <xsl:variable name="newString">
-              <xsl:choose>
-                <xsl:when test="string-length($to-keep) = 0">
-                  <xsl:value-of select="$firstWord"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="$to-keep"/>
-                  <xsl:text> </xsl:text>
-                  <xsl:value-of select="$firstWord"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:variable>
-            <xsl:call-template name="dedup-list">
-              <xsl:with-param name="input" select="substring-after($input, ' ')"/>
-              <xsl:with-param name="to-keep" select="$newString"/>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:call-template name="dedup-list">
-              <xsl:with-param name="input" select="substring-after($input, ' ')"/>
-              <xsl:with-param name="to-keep" select="$to-keep"/>
-            </xsl:call-template>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="string-length($to-keep) = 0">
-            <xsl:value-of select="$input"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:choose>
-              <xsl:when test="contains($to-keep, $input)">
-                <xsl:value-of select="$to-keep"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="$to-keep"/>
-                <xsl:text> </xsl:text>
-                <xsl:value-of select="$input"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
   <xsl:template name="extensions-to-badges">
+    <!--  needs to process an input like
+
+<extensionCount>
+  <extension count="12">tif</extension>
+  <extension count="3">dm3</extension>
+</extensionCount>
+    
+-->
     <xsl:param name="input"/>
-    <xsl:choose>
-      <!-- Our string contains a space, so there are more values to process -->
-      <xsl:when test="contains($input, ' ')">
-        <xsl:call-template name="extensions-to-badges">
-          <xsl:with-param name="input" select="substring-before($input, ' ')"></xsl:with-param>
-        </xsl:call-template>
-        <xsl:call-template name="extensions-to-badges">
-          <xsl:with-param name="input" select="substring-after($input, ' ')"></xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <span style="white-space:nowrap;">
-          <xsl:attribute name="data-toggle">tooltip</xsl:attribute>
-          <xsl:attribute name="data-placement">bottom</xsl:attribute>
+    <xsl:for-each select="$input/extensionCount/extension">
+      <span style="white-space:nowrap;">
+        <xsl:attribute name="data-toggle">tooltip</xsl:attribute>
+        <xsl:attribute name="data-placement">bottom</xsl:attribute>
+        <xsl:variable name="extension" select="./text()"/>
+        <xsl:variable name="tooltip-row" select='$extension-to-tooltip-lookup/row[@ext = $extension]' />
+        <xsl:attribute name="title">
           <xsl:choose>
-            <xsl:when test="$input = 'dm3'">
-              <xsl:attribute name="title">Gatan DigitalMicrograph file (v3)</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'dm4'">
-              <xsl:attribute name="title">Gatan DigitalMicrograph file (v4)</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'tif' or $input = 'tiff'">
-              <xsl:attribute name="title">Tiff-format image</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'ser'">
-              <xsl:attribute name="title">FEI .ser file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'emi'">
-              <xsl:attribute name="title">FEI .emi file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'txt'">
-              <xsl:attribute name="title">Text file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'dat'">
-              <xsl:attribute name="title">Custom .dat file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'spc'">
-              <xsl:attribute name="title">EDAX EDS spectrum file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'spd'">
-              <xsl:attribute name="title">EDAX EDS spectrum image file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'jpg' or $input = 'jpeg'">
-              <xsl:attribute name="title">JPEG-format image</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'osc'">
-              <xsl:attribute name="title">EDAX EBSD file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'ang'">
-              <xsl:attribute name="title">EDAX EBSD file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'h5' or $input = 'hdf5'">
-              <xsl:attribute name="title">HDF5 container file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'msa'">
-              <xsl:attribute name="title">MSA spectrum file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'xml'">
-              <xsl:attribute name="title">Custom XML format file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'csv'">
-              <xsl:attribute name="title">Comma separated value file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'xls' or $input = 'xlsx'">
-              <xsl:attribute name="title">Excel workbook file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'ppt' or $input = 'pptx'">
-              <xsl:attribute name="title">Powerpoint presentation file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'doc' or $input = 'docx'">
-              <xsl:attribute name="title">Word document file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'pdf'">
-              <xsl:attribute name="title">Portable Document Format file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'spx'">
-              <xsl:attribute name="title">Bruker spectrum file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'rpl'">
-              <xsl:attribute name="title">LISPIX-format spectrum image file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'rtf'">
-              <xsl:attribute name="title">Rich text format file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'oip' or $input = 'oipx'">
-              <xsl:attribute name="title">Oxford Instruments project file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'h5oina'">
-              <xsl:attribute name="title">Oxford Instruments data export file</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$input = 'ebsp'">
-              <xsl:attribute name="title">Oxford EBSD pattern</xsl:attribute>
+            <xsl:when test="not($tooltip-row)">
+              <xsl:text>File extension</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:attribute name="title">File extension</xsl:attribute>
+              <xsl:value-of select="$tooltip-row/@tooltip"/>
             </xsl:otherwise>
           </xsl:choose>
-          <span class="badge-left badge list-record-badge">
-            <!-- count the number of dataset locations that end with this extension -->
-            <xsl:value-of select="count(//nx:dataset/nx:location[$input = substring(., string-length() - string-length($input) + 1)])"/>
-          </span>
-          <span class="badge-right badge list-record-badge">
-            <xsl:value-of select="$input"/>
-          </span>
+        </xsl:attribute>
+        <span class="badge-left badge list-record-badge">
+          <xsl:value-of select="@count"/>
         </span>
-      </xsl:otherwise>
-    </xsl:choose>
+        <span class="badge-right badge list-record-badge">
+          <xsl:value-of select="./text()"/>
+        </span>
+      </span>
+      
+    </xsl:for-each>
+    
   </xsl:template>
   
 </xsl:stylesheet>
