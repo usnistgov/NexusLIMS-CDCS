@@ -521,13 +521,24 @@ Use it like:
                 
                 }
                 
-                div#img_gallery { /* make entire gallery unselectable to prevent highlighting when clicking nav buttons */
+                div#img_gallery { 
+                  /* make entire gallery unselectable to prevent highlighting when clicking nav buttons */
                   -webkit-touch-callout: none;
                   -webkit-user-select: none;
                   -khtml-user-select: none;
                   -moz-user-select: none;
                   -ms-user-select: none;
                   user-select: none;
+                }
+                
+                .gallery-caption > span, .gallery-caption > a { 
+                    /* make caption spans selectable */
+                    -webkit-touch-callout: text !important;
+                    -webkit-user-select: text !important;
+                    -khtml-user-select: text !important;
+                    -moz-user-select: text !important;
+                    -ms-user-select: text !important;
+                    user-select: text !important;
                 }
                 
                 div#img_gallery .fa-stack-2x{
@@ -1836,33 +1847,39 @@ Use it like:
                                             </div>
                                             <xsl:variable name="dataset-number" select="count(ancestor::nx:acquisitionActivity/preceding-sibling::nx:acquisitionActivity/nx:dataset) + count(preceding-sibling::nx:dataset) + 1"/>
                                             <div class="gallery-caption">
-                                                <span>Preview <xsl:value-of select="position()"/> of <xsl:value-of select="count(//nx:dataset[nx:preview])" /> (dataset #<xsl:value-of select="$dataset-number"/>)</span>
-                                            <span>Activity <xsl:value-of select="$aa_num"/> of <xsl:value-of select="count(//nx:acquisitionActivity)"/>
-                                            </span>
-                                            <xsl:choose> 
-                                                <xsl:when test="not($simpleDisplay)">
-                                                    <!-- make link to activity -->
-                                                    <span>
-                                                        <a style="font-size: x-small;"
-                                                            href="#{generate-id(..)}" 
-                                                            data-toggle='tooltip'
-                                                            data-placement='bottom'
-                                                            title='Jump to activity {$aa_num} in record'>
-                                                            <i class='fa fa-link'/></a>
-                                                    </span>
-                                                </xsl:when>
-                                                <xsl:otherwise>
-                                                    <!-- make link to dataset in simple-filelist-table -->
-                                                    <span>
-                                                        <a style="font-size: x-small;"
-                                                            href="#{generate-id(current())}" 
-                                                            data-toggle='tooltip'
-                                                            data-placement='bottom'
-                                                            title='Jump to dataset {$dataset-number} details'
-                                                            onclick='$("#simple-filelist-table tr").removeClass("table-warning"); $("a[name={generate-id(current())}").parent().parent().addClass("table-warning")'><i class='fa fa-link'/></a>
-                                                    </span>
-                                                </xsl:otherwise>
-                                            </xsl:choose>
+                                                <span>Preview <xsl:value-of select="position()"/> of <xsl:value-of select="count(//nx:dataset[nx:preview])" />
+                                                    (<xsl:choose>
+                                                            <!-- if simple display, make dataset text a link -->
+                                                            <xsl:when test="$simpleDisplay">
+                                                                <a href="#{generate-id(current())}" 
+                                                                   data-toggle='tooltip'
+                                                                   data-placement='bottom'
+                                                                   title='Jump to dataset {$dataset-number} details'
+                                                                   onclick='$("#simple-filelist-table tr").removeClass("table-warning"); $("a[name={generate-id(current())}").parent().parent().addClass("table-warning")'>
+                                                                    dataset #<xsl:value-of select="$dataset-number"/><xsl:text> </xsl:text>
+                                                                    <sup style="font-size: xx-small;"><i class='fa fa-link'/></sup><xsl:text> </xsl:text>
+                                                                </a>
+                                                            </xsl:when>
+                                                            <!-- if not simple, make dataset text just text -->
+                                                            <xsl:otherwise>dataset #<xsl:value-of select="$dataset-number"/></xsl:otherwise>
+                                                        </xsl:choose>)
+                                                </span>
+                                                <xsl:choose>
+                                                    <xsl:when test="$simpleDisplay">
+                                                        <!-- if simple display, just show activity text -->
+                                                        <span>Activity <xsl:value-of select="$aa_num"/> of <xsl:value-of select="count(//nx:acquisitionActivity)"/></span>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <!-- if not simple, make activity text a clickable link -->
+                                                        <a href="#{generate-id(..)}" 
+                                                           data-toggle='tooltip'
+                                                           data-placement='bottom'
+                                                           title='Jump to activity {$aa_num} in record'>
+                                                            Activity <xsl:value-of select="$aa_num"/> of <xsl:value-of select="count(//nx:acquisitionActivity)"/>
+                                                            <xsl:text> </xsl:text><sup style="font-size: xx-small;"><i class='fa fa-link'/></sup></a>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+
                                             </div>
                                             <div class='' style="">
                                                 <a  class="gal-nav" onclick="plusSlide(1); disable_gallery_tooltips();"
