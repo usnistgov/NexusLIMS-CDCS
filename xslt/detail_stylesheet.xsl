@@ -1277,7 +1277,7 @@ Use it like:
                             let tt_text = "Click here to copy this record's PID";
                             
                             $('#btn-copy-pid').mouseout(() => {
-                                console.log('processing mouseout');
+                                // console.log('processing mouseout');
                                 setTimeout(() => {  
                                     $('#btn-copy-pid').attr('data-original-title', tt_text);
                                     $('#btn-copy-pid').tooltip('update');
@@ -3713,12 +3713,12 @@ Use it like:
                             this_file_size += window.file_sizes[this_aux_url];
                           }
                           if (this_file_size > size_limit) {
-                            console.log('Adding ' + full_data_path + ' to individual file downloads');
+                            //console.log('Adding ' + full_data_path + ' to individual file downloads');
                             individual_files.push(combinedArray[index][0]);
-                            console.log('Adding ' + full_json_path + ' to individual file downloads');
+                            //console.log('Adding ' + full_json_path + ' to individual file downloads');
                             individual_files.push(combinedArray[index][1]);
                             if (full_aux_path && (! isNaN(window.file_sizes[this_aux_url]))) {
-                              console.log('Adding ' + full_aux_path + ' to individual file downloads');
+                              //console.log('Adding ' + full_aux_path + ' to individual file downloads');
                               individual_files.push(combinedArray[index][3]);
                             }
                             indiv_dl_sizes.push(window.file_sizes[this_data_url]);
@@ -3924,9 +3924,9 @@ Use it like:
                             })
                             .catch(err => {
                               if (abortSignal.aborted) {
-                                console.log('[XSLT] [zip-pipeTo] User clicked cancel');
+                                //console.log('[XSLT] [zip-pipeTo] User clicked cancel');
                               } else {
-                                console.log('[XSLT] [zip-pipeTo] Other error');
+                                //console.log('[XSLT] [zip-pipeTo] Other error');
                                 console.error(err);
                                 dlError = true;
                                 showError('There was an error during the download:', err.message);
@@ -3988,9 +3988,9 @@ Use it like:
                                   })
                                 .catch(err => {
                                   if (abortSignal.aborted) {
-                                    console.log('[XSLT] [indivFile-pipeTo] User clicked cancel');
+                                    //console.log('[XSLT] [indivFile-pipeTo] User clicked cancel');
                                   } else {
-                                    console.log('[XSLT] [indivFile-pipeTo] Other error');
+                                    //console.log('[XSLT] [indivFile-pipeTo] Other error');
                                     dlError = true;
                                     showError('There was an error during the download:', err.message);
                                   }
@@ -4018,13 +4018,13 @@ Use it like:
                         Promise.all(promList).then(function () {
                           // if the download was aborted:
                           if (abortSignal.aborted) {
-                            console.log('[XSLT] [final Promise] Cancel button was clicked');
+                            //console.log('[XSLT] [final Promise] Cancel button was clicked');
                             showMessage("Download canceled by user (any already completed downloads were saved)", 'warning');
                           } else if (dlError) {
-                            console.log('[XSLT] [final Promise] Error during downloading!');
+                            //console.log('[XSLT] [final Promise] Error during downloading!');
                             errorProgress();
                           } else { // otherwise we finished normally
-                            console.log('[XSLT] [final Promise] All downloads finished');
+                            //console.log('[XSLT] [final Promise] All downloads finished');
                             finishProgress();
                             showMessage("Finished downloading all files!", 'success');
                           }
