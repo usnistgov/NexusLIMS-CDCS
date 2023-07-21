@@ -5093,7 +5093,14 @@ Use it like:
                     <xsl:attribute name="data-toggle">tooltip</xsl:attribute>
                     <xsl:attribute name="data-placement">top</xsl:attribute>
                     <xsl:attribute name="title">Click to view directory structure directly in the browser</xsl:attribute>
-                    <xsl:value-of select="$filelist-rootpath"/>
+                    <xsl:variable name="decoded-rootpath">
+                        <xsl:call-template name="decode">
+                            <xsl:with-param 
+                                name="encoded"
+                                select="$filelist-rootpath"/>
+                        </xsl:call-template>
+                    </xsl:variable>
+                    <xsl:value-of select="$decoded-rootpath"/>
             </a></code>
         </div>
         <table id="simple-filelist-table"   
