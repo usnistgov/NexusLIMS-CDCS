@@ -582,6 +582,32 @@ Use it like:
                     line-height: 150%;
                 }
                 
+                .gallery-filename {
+                    width: 50vw; 
+                    text-overflow: ellipsis; 
+                    overflow: hidden; 
+                    white-space: nowrap; 
+                    color: #4b65a0
+                }
+
+                @media (min-width: 768px) {
+                    .gallery-filename {
+                        width: 150px; 
+                    }
+                }
+
+                @media (min-width: 992px) {
+                    .gallery-filename {
+                        width: 230px; 
+                    }
+                }
+                
+                @media (min-width: 1200px) {
+                   .gallery-filename {
+                        width: 350px; 
+                   }
+                }
+                
                 .aa_header_row {
                     /* width: 95%; */
                     margin-bottom: .5em;
@@ -1864,6 +1890,12 @@ Use it like:
                                                             <xsl:otherwise>dataset #<xsl:value-of select="$dataset-number"/></xsl:otherwise>
                                                         </xsl:choose>)
                                                 </span>
+                                                <code class='gallery-filename'>  <!-- show the name of the file with a fixed width and tooltip of full name -->
+                                                    <xsl:attribute name="data-toggle">tooltip</xsl:attribute>
+                                                    <xsl:attribute name="data-placement">top</xsl:attribute>
+                                                    <xsl:attribute name="title"><xsl:value-of select="./nx:name"/></xsl:attribute>
+                                                    <xsl:value-of select="./nx:name"/>
+                                                </code>
                                                 <xsl:choose>
                                                     <xsl:when test="$simpleDisplay">
                                                         <!-- if simple display, just show activity text -->
