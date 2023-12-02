@@ -179,6 +179,8 @@
         <instr instr-PID="Zeiss-Gemini_300_SEM-936834">#791212</instr>
         <instr instr-PID="FEI-Quanta_400_SEM-938570">#154157</instr>
         <instr instr-PID="JEOL-7800F_SEM-N113138">#81538d</instr>
+        <instr instr-PID="FEI-Titan-ETEM-644764">#CC8B2F</instr>
+        <instr instr-PID="Thermo-Scios-DB-9957773">#496BC4</instr>
     </xsl:variable>
     <xsl:key name="lookup.instr.color" match="instr" use="@instr-PID"/>
     
