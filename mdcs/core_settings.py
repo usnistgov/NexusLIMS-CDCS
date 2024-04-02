@@ -4,11 +4,17 @@ import os
 
 SERVER_URI = os.environ["SERVER_URI"] if "SERVER_URI" in os.environ else None
 
+PROJECT_VERSION = os.getenv("PROJECT_VERSION", "3.6.0")
+""" :py:class:`str`: Project version number.
+"""
+
 # Website customization
 WEBSITE_SHORT_TITLE = "MDCS"
 CUSTOM_DATA = "Materials Data"
-CUSTOM_NAME = os.environ["SERVER_NAME"] if "SERVER_NAME" in os.environ else "Curator"
-CUSTOM_TITLE = "Welcome to NexusLIMS!"
+CUSTOM_NAME = (
+    os.environ["SERVER_NAME"] if "SERVER_NAME" in os.environ else "Curator"
+)
+CUSTOM_TITLE = "Materials Data Curation System"
 CUSTOM_SUBTITLE = "Part of the Materials Genome Initiative"
 CURATE_MENU_NAME = "Data Curation"
 WEBSITE_ADMIN_COLOR = "yellow"
@@ -16,7 +22,6 @@ WEBSITE_ADMIN_COLOR = "yellow"
 
 DATA_SOURCES_EXPLORE_APPS = [
     "core_explore_federated_search_app",
-    "core_explore_oaipmh_app",
 ]
 
 # Lists in data not stored if number of elements is over the limit (e.g. 100)
@@ -31,7 +36,7 @@ EXPLORE_ADD_DEFAULT_LOCAL_DATA_SOURCE_TO_QUERY = True
 """
 
 SSL_CERTIFICATES_DIR = True
-""" Either a boolean, in which case it controls whether requests verify the server's TLS certificate, 
+""" Either a boolean, in which case it controls whether requests verify the server's TLS certificate,
 or a string, in which case it must be a path to a CA bundle to use.
 """
 
@@ -39,11 +44,15 @@ XSD_URI_RESOLVER = "REQUESTS_RESOLVER"
 """ :py:class:`str`: XSD URI Resolver for lxml validation. Choose from:  None, 'REQUESTS_RESOLVER'.
 """
 
+AUTO_ESCAPE_XML_ENTITIES = True
+""" boolean: Automatically escape XML entities.
+"""
+
 DISPLAY_EDIT_BUTTON = True
 """ boolean: Display the edit button on the result page
 """
 DATA_SORTING_FIELDS = ["-last_modification_date"]
-""" Array<string>: Default sort fields for the data query. 
+""" Array<string>: Default sort fields for the data query.
 """
 DATA_DISPLAYED_SORTING_FIELDS = [
     {
@@ -118,10 +127,74 @@ AUTO_SET_PID = os.getenv("AUTO_SET_PID", "False").lower() == "true"
 """ boolean: enable the automatic pid generation for saved data.
 """
 
-ENABLE_SAML2_SSO_AUTH = os.getenv("ENABLE_SAML2_SSO_AUTH", "False").lower() == "true"
+ENABLE_SAML2_SSO_AUTH = (
+    os.getenv("ENABLE_SAML2_SSO_AUTH", "False").lower() == "true"
+)
 """ boolean: enable SAML2 SSO authentication.
 """
 
 ENABLE_HANDLE_PID = os.getenv("ENABLE_HANDLE_PID", "False").lower() == "true"
 """ boolean: enable handle server PID support.
+"""
+
+MONGODB_INDEXING = True
+""" :py:class:`bool`: Use MongoDB for data indexing.
+    If True:
+        - a copy of the data will be stored in MongoDB,
+        - queries will be executed against MongoDB.
+"""
+
+MONGODB_ASYNC_SAVE = True
+""" :py:class:`bool`: Save data in MongoDB asynchronously.
+    If True, data are saved in MongoDB asynchronously.
+"""
+
+GRIDFS_STORAGE = True
+""" :py:class:`bool`: Use GridFS for file storage.
+"""
+
+MONGO_HOST = os.getenv("MONGO_HOST", "localhost")
+""" :py:class:`str`: MongoDB host.
+"""
+
+MONGO_PORT = os.getenv("MONGO_PORT", "27017")
+""" :py:class:`str`: MongoDB port.
+"""
+
+MONGO_DB = os.getenv("MONGO_DB", "")
+""" :py:class:`str`: MongoDB database.
+"""
+
+MONGO_USER = os.getenv("MONGO_USER", "")
+""" :py:class:`str`: MongoDB user.
+"""
+
+MONGO_PASS = os.getenv("MONGO_PASS", "")
+""" :py:class:`str`: MongoDB password.
+"""
+
+CUSTOM_FILE_STORAGE = dict()
+""" :py:class:`dict`: File Storage by model.
+    Example:
+    {
+        'data': 'django.core.files.storage.FileSystemStorage',
+        'blob': 'core_main_app.utils.storage.gridfs_storage.GridFSStorage',
+        'exported_compressed_files': 'core_main_app.utils.storage.gridfs_storage.GridFSStorage'
+    }
+"""
+
+GA_TRACKING_ID = os.getenv("GA_TRACKING_ID", None)
+""" :py:class:`str`: Google Analytics tracking ID. Adds gtag to user pages if set.
+"""
+
+ENABLE_XML_ENTITIES_TOOLTIPS = True
+""" :py:class:`bool`: Enable XML entities tooltips during curation.
+"""
+
+CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT = False
+""" :py:class:`bool`: Can anonymous user access public document.
+"""
+
+BOOTSTRAP_VERSION = os.getenv("BOOTSTRAP_VERSION", "5.1.3")
+""" :py:class:`str`: Version of the boostrap library.
 """

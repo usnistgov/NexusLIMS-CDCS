@@ -193,28 +193,28 @@ function create_tour() {
         ],
     });
 
-    menu_tour.addStep({
-        id: 'tut-tutorial',
-        title: 'Explanations of each page',
-        text: 'This link runs <em>this</em> tutorial, but will load a customized introduction on the other pages within the application. If you are uncertain about a certain page\'s content, click this link to take a guided tour.',
-        attachTo: {
-            element: '#menu-tutorial',
-            on: 'bottom'
-        },
-        buttons: [{
-                text: '<i class="fa fa-arrow-left menu-fa"></i> Back',
-                classes: 'btn btn-default',
-                action: menu_tour.back,
-                label: 'Back'
-            },
-            {
-                text: 'Next <i class="fa fa-arrow-right menu-fa"></i>',
-                classes: 'btn btn-primary',
-                action: menu_tour.next,
-                label: 'Next'
-            }
-        ],
-    });
+    // menu_tour.addStep({
+    //     id: 'tut-tutorial',
+    //     title: 'Explanations of each page',
+    //     text: 'This link runs <em>this</em> tutorial, but will load a customized introduction on the other pages within the application. If you are uncertain about a certain page\'s content, click this link to take a guided tour.',
+    //     attachTo: {
+    //         element: '#menu-tutorial',
+    //         on: 'bottom'
+    //     },
+    //     buttons: [{
+    //             text: '<i class="fa fa-arrow-left menu-fa"></i> Back',
+    //             classes: 'btn btn-default',
+    //             action: menu_tour.back,
+    //             label: 'Back'
+    //         },
+    //         {
+    //             text: 'Next <i class="fa fa-arrow-right menu-fa"></i>',
+    //             classes: 'btn btn-primary',
+    //             action: menu_tour.next,
+    //             label: 'Next'
+    //         }
+    //     ],
+    // });
 
     menu_tour.addStep({
         id: 'tut-help',
@@ -325,11 +325,12 @@ function create_tour() {
 $(document).ready(function() {
     // if there is more than one click handler on the tutorial menu link, 
     // we've already added one from the XSLT, so don't rebind it
-    if ( $._data($('a#menu-tutorial')[0], 'events')['click'].length > 1 ){
-       // do nothing
-    } else {
-        // otherwise there's only one handler (the default), so bind this tutorial
-        $('a#menu-tutorial').on('click', () => create_tour());
-    }
+    // if ( $._data($('a#menu-tutorial')[0], 'events')['click'].length > 1 ){
+    //    // do nothing
+    // } else {
+    //     // otherwise there's only one handler (the default), so bind this tutorial
+    //     $('a#menu-tutorial').on('click', () => create_tour());
+    // }
+    $('a#menu-tutorial').on('click', () => create_tour());
     $('#homepage-tutorial').on('click', () => create_tour());
 });

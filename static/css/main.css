@@ -2372,12 +2372,14 @@
 			}
 
                 /* Added by NIST */
-			    #nav > ul > li > a:not(.btn-custom) {
+			    #nav > ul > li > a:not(.btn-custom),
+				#nav > ul > li > div > a:not(.btn-custom){
 					color: #444/*#c0c0c0*/;
 					padding: 0.7em;
 				}
 
-				#nav > ul > li a {
+				#nav > ul > li a,
+				#nav > ul > li > div a {
 					text-decoration: none;
 					border: 0;
 					display: block;
@@ -2387,11 +2389,12 @@
 				}
 
 
-				#nav > ul > li:first-child {
+				#nav > ul > li:first-child{
 					margin-left: 0;
 				}
 
-				#nav > ul > li > a:hover{
+				#nav > ul > li > a:hover,
+				#nav > ul > li > div > a:hover{
 					color: #888;
 					background-color: transparent;
 				}
@@ -2483,19 +2486,22 @@
 			/*padding: 0 1.1em 0 1em;*/
 		}
 
-			.dropotron > li > a {
+			.dropotron > li > a,
+			.dropdown-item > a{
 				color: #000/*#c0c0c0*/;
 				text-decoration: none;
 				border: 0;
 				padding-left: 1em;
 			}
 
-			.dropotron > li.active > a, .dropotron > li:hover > a {
+			.dropotron > li.active > a, .dropotron > li:hover > a,
+			.dropdown-item.active > a, .dropdown-item:hover > a{
 				/* Added by NIST */
 				background-color: #e0e0e0;
 			}
 
-		.dropotron.level-0 {
+		.dropotron.level-0,
+		.dropdown-menu.dropdown-menu-right {
 			border-radius: 0 0 5px 5px;
 			font-size: 0.8em;
 			padding-top: 0;

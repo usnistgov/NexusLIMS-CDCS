@@ -402,7 +402,7 @@ Use it like:
                 }
                 
                 .sidebar {
-                    visibility: hidden; /* Make hidden, to be revealed when jQuery is done paginating results */    
+                    visibility: hidden; /* Make hidden, to be revealed when jQuery is done paginating results */ 
                 }
                 
                 .sidebar::-webkit-scrollbar { /* WebKit */
@@ -1239,7 +1239,7 @@ Use it like:
             <!-- ============= Main Generation of the Page ============= -->
             <!-- Add sidebar to the page -->
             <xsl:if test="not($simpleDisplay)">
-              <div class="sidebar">
+              <div class="sidebar" style="padding-left: 3%;">
                   <table id="nav-table" class="table table-sm table-hover">
                       <!-- Procedurally generate unique id numbers which relate each acquisition event to its position on
                           the webpage such that it will jump there when the link is clicked -->
