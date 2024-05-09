@@ -16,22 +16,34 @@
             <!-- Start float left menu-->
             {% block navigation_menu %}
             {% generate_menu %}
+            {% for item in menus.record_search %}
+            <li>
+                <a href="{{ item.url }}">{% if item|get_attribute:'icon' %}<i class="{{ item.iconClass }} fa-{{ item.icon }} menu-fa"></i>{% endif %} {{ item.title }}</a>
+            </li>
+            {% endfor %}
+            <li class="nested">
+                <a href="#">
+                    <i class="far fa-calendar-alt menu-fa"></i> Tool Reservations <i class="fa fa-caret-down menu-fa"></i></a>
+                </a>
+                <ul>
+                    {% generate_menu %}
+                    {% for item in menus.reservation %}
+                        <li>
+                            <a href="{{ item.url }}" class="cdcs-menu-item">
+                                {% if item|get_attribute:'icon' %}
+                                <i class="fas fa-{{ item.icon }} menu-fa"></i>
+                                {% endif %} 
+                                {{ item.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
             {% for item in menus.nodropdown %}
             <li>
                 <a href="{{ item.url }}">{% if item|get_attribute:'icon' %}<i class="{{ item.iconClass }} fa-{{ item.icon }} menu-fa"></i>{% endif %} {{ item.title }}</a>
             </li>
             {% endfor %}
-            <!-- <li class="nested">
-                <a href="#">
-                    Browse and Search Records</a>
-                </a>
-                <ul>
-                    {% generate_menu %}
-                    {% for item in menus.explorer %}
-                        <li><a href="{{ item.url }}" class="cdcs-menu-item">{% if item|get_attribute:'icon' %}<i class="fas fa-{{ item.icon }}"></i>{% endif %} {{ item.title }}</a></li>
-                    {% endfor %}
-                </ul>
-            </li> -->
             <!-- <li class="nested">
                 <a href="#">
                     Composer <i class="fas fa-caret-down"></i>
