@@ -72,7 +72,7 @@ Menu.add_item(
 Menu.add_item(
     "reservation",
     MenuItem("CRUSH (Boulder)",
-             "https://nemo.nist.gov",
+             "https://crush.nist.gov",
              icon="fish",
              iconClass="fas")
 )
