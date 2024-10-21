@@ -43,12 +43,11 @@ def render_xml_as_html(*args, **kwargs):
     template_hash = kwargs.pop("template_hash", None)
     xsl_transform_id = kwargs.pop("xslt_id", None)
     detail_url = '"{}"'.format(kwargs.pop('detail_url', '#'))
-
-    print(f"xml_content: {xml_content}")
-    print(f"template_id: {template_id}")
-    print(f"template_hash: {template_hash}")
-    print(f"xsl_transform_id: {xsl_transform_id}")
-    print(f"detail_url: {detail_url}")
+    # print(f"xml_content: {xml_content}")
+    # print(f"template_id: {template_id}")
+    # print(f"template_hash: {template_hash}")
+    # print(f"xsl_transform_id: {xsl_transform_id}")
+    # print(f"detail_url: {detail_url}")
 
     return _render_xml_as_html(
         xml_content,

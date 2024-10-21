@@ -57,7 +57,7 @@ from core_main_app.utils.labels import get_form_label, get_data_label
 # )
 
 Menu.add_item(
-    "nodropdown", 
+    "record_search",
     MenuItem("Browse and Search Records", 
              reverse("core_explore_keyword_app_search"),
              icon="search",
@@ -65,7 +65,7 @@ Menu.add_item(
 )
 
 Menu.add_item(
-    "nodropdown",
+    "reservation",
     MenuItem("MARLIN",
              "https://marlin.nist.gov",
              icon="fish",
@@ -73,8 +73,16 @@ Menu.add_item(
 )
 
 Menu.add_item(
-    "nodropdown",
-    MenuItem("NEMO",
+    "reservation",
+    MenuItem("NEMO (CNST)",
+             "https://nemo.nist.gov",
+             icon="fish",
+             iconClass="fas")
+)
+
+Menu.add_item(
+    "reservation",
+    MenuItem("CRUSH (Boulder)",
              "https://nemo.nist.gov",
              icon="fish",
              iconClass="fas")
@@ -82,7 +90,7 @@ Menu.add_item(
 
 Menu.add_item(
     "nodropdown",
-    MenuItem("EM Community SharePoint",
+    MenuItem("EM Community Page",
              "https://nistgov.sharepoint.com/sites/microscopy/",
              icon="users",
              iconClass="fas")

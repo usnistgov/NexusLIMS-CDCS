@@ -17,7 +17,7 @@
         <!-- Start float left menu-->
         {% block navigation_menu %}
             {% generate_menu %}
-            {% for item in menus.nodropdown %}
+            {% for item in menus.record_search %}
                 <li>
                     <a href="{{ item.url }}">{% if item|get_attribute:'icon' %}
                         <i class="fas fa-{{ item.icon }}"></i>{% endif %} {{ item.title }}

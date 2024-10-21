@@ -38,19 +38,19 @@ def xsl_transform(xml_string, xslt_string, **kwargs):
     try:
         # print(f"xsl_transform - xml_string: {xml_string}")
         # print(f"xsl_transform - xslt_string: {xslt_string}")
-        print(f"xsl_transform - kwargs: {kwargs}")
+        # print(f"xsl_transform - kwargs: {kwargs}")
         # Build the XSD and XSLT etrees
         xslt_tree = XSDTree.build_tree(xslt_string)
         xsd_tree = XSDTree.build_tree(xml_string)
 
-        print(f"xsl_transform - xslt_tree: {xslt_tree}")
-        print(f"xsl_transform - xsd_tree: {xsd_tree}")
+        # print(f"xsl_transform - xslt_tree: {xslt_tree}")
+        # print(f"xsl_transform - xsd_tree: {xsd_tree}")
 
         # Get the XSLT transformation and transform the XSD
         transform = XSDTree.transform_to_xslt(xslt_tree)   # etree.XSLT object
-        print(f"xsl_transform - transform: {transform}")
+        # print(f"xsl_transform - transform: {transform}")
         transformed_tree = transform(xsd_tree, **kwargs)
-        print(f"xsl_transform - transformed_tree: {transformed_tree}")
+        # print(f"xsl_transform - transformed_tree: {transformed_tree}")
         return str(transformed_tree)
     except Exception:
         raise exceptions.CoreError("An unexpected exception happened while transforming the XML")
