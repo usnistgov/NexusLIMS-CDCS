@@ -325,11 +325,16 @@ function create_tour() {
 $(document).ready(function() {
     // if there is more than one click handler on the tutorial menu link, 
     // we've already added one from the XSLT, so don't rebind it
-    if ( $._data($('a#menu-tutorial')[0], 'events')['click'].length > 1 ){
-       // do nothing
+
+    if ($._data($('a#menu-tutorial')[0], 'events') != null) {
+       if ( $._data($('a#menu-tutorial')[0], 'events')['click'].length > 1 ){
+          // do nothing
+       } else {
+          // otherwise there's only one handler (the default), so bind this tutorial
+          $('a#menu-tutorial').on('click', () => create_tour());
+       }
     } else {
-        // otherwise there's only one handler (the default), so bind this tutorial
-        $('a#menu-tutorial').on('click', () => create_tour());
+       $('a#menu-tutorial').on('click', () => create_tour());
     }
     $('a#menu-tutorial').on('click', () => create_tour());
     $('#homepage-tutorial').on('click', () => create_tour());

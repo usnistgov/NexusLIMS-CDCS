@@ -51,6 +51,7 @@ def tiles(request):
             "link": reverse("core_curate_index"),
             "title": "Curate your Materials Data",
             "text": "Click here to select a form template and then fill out the corresponding form.",
+            "id": "app-curate",
         }
 
         # context["tiles"].append(curate_tile)
@@ -61,6 +62,7 @@ def tiles(request):
             "link": reverse("core_explore_example_index"),
             "title": "Build your own queries",
             "text": "Click here to search for Materials Data in the repository using flexible queries.",
+            "id": "app_explore",
         }
 
         # context["tiles"].append(explore_example_tile)
@@ -82,6 +84,7 @@ def tiles(request):
             "link": reverse("core_composer_index"),
             "title": "Compose a template",
             "text": "Click here to compose your own template.",
+            "id": "app_compose",
         }
 
         # context["tiles"].append(compose_tile)

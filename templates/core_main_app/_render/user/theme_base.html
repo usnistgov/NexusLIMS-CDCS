@@ -120,5 +120,33 @@
     From the documentation:
         Add the detection template tag to your site, ideally in your base layout just before the </body> tag
     -->
+    <style>
+	.row>* {
+          width: auto;
+        }
+    </style>
+    <script>
+	    //Function which scrolls to the top of the page
+            function toTop(){
+               document.body.scrollTop = document.documentElement.scrollTop = 0;
+            }
+
+	    function copy_and_change_tt() {
+	       copyToClipboard('#pid-to-copy')
+               let new_title = "Copied PID to clipboard!";
+               $('#btn-copy-pid').attr('data-original-title', new_title);
+               $('#btn-copy-pid').tooltip('update');
+               $('#btn-copy-pid').tooltip('show');
+            }
+
+	    // function to copy to clipboard
+                    function copyToClipboard(element) {
+                        var $temp = $("<input>");
+                        $("body").append($temp);
+                        $temp.val($(element).text()).select();
+                        document.execCommand("copy");
+                        $temp.remove();
+                    }
+    </script>
 </body>
 </html>

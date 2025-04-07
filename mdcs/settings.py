@@ -83,6 +83,7 @@ CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 # Application definition
 
 INSTALLED_APPS = (
+    "rest_framework.authtoken",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -267,6 +268,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+        "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
@@ -325,8 +327,8 @@ LOGGER_FILE_APP = os.path.join(BASE_DIR, "logfile_app.txt")
 LOGGER_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
 LOGGER_CLIENT_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "INFO")
 LOGGER_SERVER_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
-LOGGER_DB_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
 LOGGER_APP_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
+LOGGER_DB_LEVEL = os.getenv("LOGGER_DB_LEVEL", "DEBUG")
 
 LOGGER_MAX_BYTES = 500000
 LOGGER_BACKUP_COUNT = 2
@@ -549,4 +551,10 @@ LOGIN_URL = "core_main_app_login"
 # Default view for Django Exception Reports
 DEFAULT_EXCEPTION_REPORTER_FILTER = (
     "core_main_app.views.admin.views.CustomExceptionReporter"
+
 )
+SSL_CERTIFICATES_DIR = False
+
+MAX_DOCUMENT_EDITING_SIZE = 50 * 1024 * 1024
+PARSER_MAX_IN_MEMORY_ELEMENTS = 100000
+BACKWARD_COMPATIBILITY_DATA_XML_CONTENT = True
