@@ -3,7 +3,7 @@
 /**
  * Get data sources results html holders
  */
- var getDataSourcesResultsHTML = function() {
+var getDataSourcesResultsHTML = function() {
     var query_id = $("#query_id").html();
 
     updateKeywordForm(dataSortingFields.split(';'));

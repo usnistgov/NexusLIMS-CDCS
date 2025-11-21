@@ -6,17 +6,21 @@
 #nexuslims-logo {
     width: 100%;
 }
-
+/* NEW */
 #intro .vert-center-col {
     float:none; 
     display:inline-block; 
     vertical-align: middle;
 }
-
 #intro .vert-center-col {
     float:none; 
     display:inline-block; 
     vertical-align: middle;
+}
+/* NEW */
+
+#intro #mgi-diagram {
+    width: 15em;
 }
 
 #browse-btn {
@@ -56,6 +60,7 @@
     transition: all 0.3s ease-in-out;
 }
 
+/* NEW */
 .tile a > i {
     color: white;
 }
@@ -75,15 +80,7 @@
     color: #333;
     transition: all 0.3s ease-in-out;
 }
-
-/* Done with jQuery instead */
-/* .tile:hover {
-    background-color: #11659c22;
-} 
-.tile a:hover {
-    color: #f5c636;
-    transition: all 0.3s ease-in-out;
-} */
+/* NEW */
 
 .tile .text h3 {
     margin-bottom: 0.1em;
@@ -98,6 +95,10 @@
 /**
  *
  **/
+#available-options {
+    margin-bottom: 0;
+}
+
 #tiles {
     padding: 0 0 0 50px;
 }
