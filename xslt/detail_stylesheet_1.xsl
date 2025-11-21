@@ -10,8 +10,8 @@
     
     <xsl:param name="xmlName" select="''"/>
 
-    <xsl:variable name="datasetBaseUrl">https://CHANGE.THIS.VALUE</xsl:variable>
-    <xsl:variable name="previewBaseUrl">https://CHANGE.THIS.VALUE</xsl:variable>
+    <xsl:variable name="datasetBaseUrl">https://limsimages.campus.nist.gov/mmfnexus/</xsl:variable>
+    <xsl:variable name="previewBaseUrl">https://limsimages.campus.nist.gov/nexusLIMS/mmfnexus/</xsl:variable>
    
     <!--
         These variables control the limit for interactive dataset display. More than this
@@ -402,7 +402,7 @@ Use it like:
                 }
                 
                 .sidebar {
-                    visibility: hidden; /* Make hidden, to be revealed when jQuery is done paginating results */ 
+                    visibility: hidden; /* Make hidden, to be revealed when jQuery is done paginating results */    
                 }
                 
                 .sidebar::-webkit-scrollbar { /* WebKit */
@@ -1134,8 +1134,6 @@ Use it like:
                 
                 .slideshow-col {
                     padding: 0;
-                    margin-top: 1em;
-                    margin-bottom: -1em;
                 }
                 
                 .badge a {
@@ -1241,7 +1239,7 @@ Use it like:
             <!-- ============= Main Generation of the Page ============= -->
             <!-- Add sidebar to the page -->
             <xsl:if test="not($simpleDisplay)">
-              <div class="sidebar" style="padding-left: 3%;">
+              <div class="sidebar">
                   <table id="nav-table" class="table table-sm table-hover">
                       <!-- Procedurally generate unique id numbers which relate each acquisition event to its position on
                           the webpage such that it will jump there when the link is clicked -->
@@ -1315,16 +1313,18 @@ Use it like:
                             <i class="fas fa-link menu-fa"></i> Copy record PID
                         </button>
                         <script>
-                            let tt_text = "Click here to copy this record's PID";
-                            
-                            $('#btn-copy-pid').mouseout(() => {
-                                // console.log('processing mouseout');
-                                setTimeout(() => {  
-                                    $('#btn-copy-pid').attr('data-original-title', tt_text);
-                                    $('#btn-copy-pid').tooltip('update');
-                                   // $('#btn-copy-pid').tooltip('show');
-                                }, 150);
-                            })
+                            document.addEventListener("DOMContentLoaded", function(event) { 
+                                let tt_text = "Click here to copy this record's PID";
+                                
+                                $('#btn-copy-pid').mouseout(() => {
+                                    // console.log('processing mouseout');
+                                    setTimeout(() => {  
+                                        $('#btn-copy-pid').attr('data-original-title', tt_text);
+                                        $('#btn-copy-pid').tooltip('update');
+                                    // $('#btn-copy-pid').tooltip('show');
+                                    }, 150);
+                                })
+                            });
                         </script>
                     </xsl:when>
                 </xsl:choose>
@@ -2560,688 +2560,714 @@ Use it like:
             <script language="javascript">
                 <![CDATA[
                 
-                // Detect browser type:
-                // Opera 8.0+
-                var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-                // Firefox 1.0+
-                var isFirefox = typeof InstallTrigger !== 'undefined';
-                // Safari 3.0+ "[object HTMLElementConstructor]" 
-                var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
-                // Internet Explorer 6-11
-                var isIE = /*@cc_on!@*/false || !!document.documentMode;
-                // Edge 20+
-                var isEdge = !isIE && !!window.StyleMedia;
-                // Chrome 1 - 79
-                var isChrome = !!window.chrome;
-                // Edge (based on chromium) detection
-                var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
-                // Blink engine detection
-                var isBlink = (isChrome || isOpera) && !!window.CSS;
-                                
-                // Function to find common path from list of paths (https://www.rosettacode.org/wiki/Find_common_directory_path#JavaScript)
-                //
-                // Given an array of strings, return an array of arrays, containing the
-                // strings split at the given separator
-                // @param {!Array<!string>} a
-                // @param {string} sep
-                // @returns {!Array<!Array<string>>}
-                //
-                const splitStrings = (a, sep = '/') => a.map(i => i.split(sep));
-                 
-                //
-                 // Given an index number, return a function that takes an array and returns the
-                 // element at the given index
-                 // @param {number} i
-                 // @return {function(!Array<*>): *}
-                 //
-                const elAt = i => a => a[i];
-                 
-                //
-                 // Transpose an array of arrays:
-                 // Example:
-                 // [['a', 'b', 'c'], ['A', 'B', 'C'], [1, 2, 3]] ->
-                 // [['a', 'A', 1], ['b', 'B', 2], ['c', 'C', 3]]
-                 // @param {!Array<!Array<*>>} a
-                 // @return {!Array<!Array<*>>}
-                 //
-                const rotate = a => a[0].map((e, i) => a.map(elAt(i)));
-                 
-                //
-                 // Checks of all the elements in the array are the same.
-                 // @param {!Array<*>} arr
-                 // @return {boolean}
-                 //
-                const allElementsEqual = arr => arr.every(e => e === arr[0]);
-                function commonPath(input, sep = '/') {
-                    return rotate(splitStrings(input, sep)).filter(allElementsEqual).map(elAt(0)).join(sep);
-                 }
-                 
-                // functions to cacluate array average and sum:
-                const arrSum = arr => arr.reduce((a, b) => a + b, 0)
-                const arrAvg = arr => arrSum(arr) / arr.length
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    // Detect browser type:
+                    // Opera 8.0+
+                    var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+                    // Firefox 1.0+
+                    var isFirefox = typeof InstallTrigger !== 'undefined';
+                    // Safari 3.0+ "[object HTMLElementConstructor]" 
+                    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+                    // Internet Explorer 6-11
+                    var isIE = /*@cc_on!@*/false || !!document.documentMode;
+                    // Edge 20+
+                    var isEdge = !isIE && !!window.StyleMedia;
+                    // Chrome 1 - 79
+                    var isChrome = !!window.chrome;
+                    // Edge (based on chromium) detection
+                    var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
+                    // Blink engine detection
+                    var isBlink = (isChrome || isOpera) && !!window.CSS;
+                                    
+                    // Function to find common path from list of paths (https://www.rosettacode.org/wiki/Find_common_directory_path#JavaScript)
+                    //
+                    // Given an array of strings, return an array of arrays, containing the
+                    // strings split at the given separator
+                    // @param {!Array<!string>} a
+                    // @param {string} sep
+                    // @returns {!Array<!Array<string>>}
+                    //
+                    const splitStrings = (a, sep = '/') => a.map(i => i.split(sep));
+                    
+                    //
+                    // Given an index number, return a function that takes an array and returns the
+                    // element at the given index
+                    // @param {number} i
+                    // @return {function(!Array<*>): *}
+                    //
+                    const elAt = i => a => a[i];
+                    
+                    //
+                    // Transpose an array of arrays:
+                    // Example:
+                    // [['a', 'b', 'c'], ['A', 'B', 'C'], [1, 2, 3]] ->
+                    // [['a', 'A', 1], ['b', 'B', 2], ['c', 'C', 3]]
+                    // @param {!Array<!Array<*>>} a
+                    // @return {!Array<!Array<*>>}
+                    //
+                    const rotate = a => a[0].map((e, i) => a.map(elAt(i)));
+                    
+                    //
+                    // Checks of all the elements in the array are the same.
+                    // @param {!Array<*>} arr
+                    // @return {boolean}
+                    //
+                    const allElementsEqual = arr => arr.every(e => e === arr[0]);
+                    function commonPath(input, sep = '/') {
+                        return rotate(splitStrings(input, sep)).filter(allElementsEqual).map(elAt(0)).join(sep);
+                    }
+                    
+                    // functions to cacluate array average and sum:
+                    const arrSum = arr => arr.reduce((a, b) => a + b, 0)
+                    const arrAvg = arr => arrSum(arr) / arr.length
 
-                function copy_and_change_tt() {
-                    copyToClipboard('#pid-to-copy')
-                    let new_title = "Copied PID to clipboard!";
-                    $('#btn-copy-pid').attr('data-original-title', new_title);
-                    $('#btn-copy-pid').tooltip('update');
-                    $('#btn-copy-pid').tooltip('show');
-                }
+                    function copy_and_change_tt() {
+                        copyToClipboard('#pid-to-copy')
+                        let new_title = "Copied PID to clipboard!";
+                        $('#btn-copy-pid').attr('data-original-title', new_title);
+                        $('#btn-copy-pid').tooltip('update');
+                        $('#btn-copy-pid').tooltip('show');
+                    }
 
-                // function to copy to clipboard
-                function copyToClipboard(element) {
-                  var $temp = $("<input>");
-                  $("body").append($temp);
-                  $temp.val($(element).text()).select();
-                  document.execCommand("copy");
-                  $temp.remove();
-                }
-                
+                    // function to copy to clipboard
+                    function copyToClipboard(element) {
+                    var $temp = $("<input>");
+                    $("body").append($temp);
+                    $temp.val($(element).text()).select();
+                    document.execCommand("copy");
+                    $temp.remove();
+                    }
+                    
 
-                // Functions to enable/disable scrolling and add appropriate classes
-                var $body = $('body'),
-                    scrollDisabled = false,
-                    scrollTop;
-                    
-                function scrollDisable() {
-                    if (scrollDisabled) {
-                        return;
-                    }
-               
-                    scrollTop = $(window).scrollTop();
-               
-                    $body.addClass('scrollDisabled').css({
-                       top: -1 * scrollTop
-                    });
-               
-                    scrollDisabled = true;
-                }
-            
-                function scrollEnable() {
-                    if (!scrollDisabled) {
-                        return;
-                    }
-                
-                    $body.removeClass('scrollDisabled');
-                    $(window).scrollTop(scrollTop);
-                
-                    scrollDisabled = false;
-                }
-                
-                //Function which scrolls to the top of the page
-                function toTop(){
-                    document.body.scrollTop = document.documentElement.scrollTop = 0;
-                }               
-            
-                //Function checks where the page is scrolled to and either shows or hides the button which jumps to the top.
-                //If the page is scrolled within 30px of the top, the button is hidden (it is hidden when the page loads).
-                // (only show when we're not using simpleDisplay)
-                window.onscroll = function() {showButtonOnScroll()};
-                
-                function showButtonOnScroll() {
-                    var header_pos = $('.list-record-experimenter').first().position()['top'];
-                    if (document.body.scrollTop > header_pos || document.documentElement.scrollTop > header_pos) {
-                        document.getElementById("to-top-btn").style.visibility = "visible";
-                        document.getElementById("to-top-btn").style.opacity = 1;
-                        if ( $('#simpleDisplay').text() == 'true') { 
-                            document.getElementById("to-top-btn").style.top = header_pos + 'px'
+                    // Functions to enable/disable scrolling and add appropriate classes
+                    var $body = $('body'),
+                        scrollDisabled = false,
+                        scrollTop;
+                        
+                    function scrollDisable() {
+                        if (scrollDisabled) {
+                            return;
                         }
-                    } 
-                    else {
-                        document.getElementById("to-top-btn").style.visibility = "hidden";
-                        document.getElementById("to-top-btn").style.opacity = 0;
+                
+                        scrollTop = $(window).scrollTop();
+                
+                        $body.addClass('scrollDisabled').css({
+                        top: -1 * scrollTop
+                        });
+                
+                        scrollDisabled = true;
                     }
-                }
-            
-                //Function to open a modal box with id 'name' and prevent scrolling while the box is open
-                function openModal(name){
-                    var modal = document.getElementById(name); 
-                    modal.style.opacity = 1;
-                    modal.style.visibility = "visible";
-                    
-                    scrollDisable();
-                    
-                    window.onclick = function(event) {
-                        if (event.target == modal) {
-                            closeModal(name);
+                
+                    function scrollEnable() {
+                        if (!scrollDisabled) {
+                            return;
                         }
-                    };
-                }
-            
-                //Function to close a modal box with id 'name' and re-allow page scrolling
-                function closeModal(name){
-                    var modal = document.getElementById(name); 
-                    modal.style.opacity = 0;
-                    modal.style.visibility = "hidden";
                     
-                    scrollEnable();                
-                }
-                
-                // Function to get width of scrollbar for padding offset above 
-                // (from https://stackoverflow.com/a/13382873/1435788)
-                function getScrollbarWidth() {
-                  // Creating invisible container
-                  const outer = document.createElement('div');
-                  outer.style.visibility = 'hidden';
-                  outer.style.overflow = 'scroll'; // forcing scrollbar to appear
-                  outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
-                  document.body.appendChild(outer);
-                
-                  // Creating inner element and placing it in the container
-                  const inner = document.createElement('div');
-                  outer.appendChild(inner);
-                
-                  // Calculating difference between container's full width and the child width
-                  const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
-                
-                  // Removing temporary elements from the DOM
-                  outer.parentNode.removeChild(outer);
-                
-                  return scrollbarWidth;
-                }
-                
-                //Handler for accordions used to hide parameter and metadata tables
-                var acc = document.getElementsByClassName("accordion");
-                var i;
-            
-                for (i = 0; i < acc.length; i++) {
-                    acc[i].addEventListener("click", function() {
-                        togglePanel($(this));
-                    });
-                }
-            
-                // Function to close an accordion panel
-                function closePanel(acc) {
-                    // acc is a jquery object
-                    var panel = acc.next();
-                    acc.removeClass("active-accordion");
-                    panel.css('maxHeight', 0);
-                }
-            
-                // Function to open an accordion panel
-                function openPanel(acc) {
-                    // acc is a jquery object
-                    var panel = acc.next();
-                    acc.addClass("active-accordion");
-                    panel.css('maxHeight', panel.prop('scrollHeight') + "px");
-                }
-            
-                // Function to toggle an accordion panel
-                function togglePanel(acc) {
-                    // acc is a jquery object
-                    if (acc.hasClass("active-accordion")) {
-                        closePanel(acc);
-                    } else {
-                        openPanel(acc);
+                        $body.removeClass('scrollDisabled');
+                        $(window).scrollTop(scrollTop);
+                    
+                        scrollDisabled = false;
                     }
-                }
-            
-                //Function to close all open accordions
-                function closeAccords() {
-                    $('button[id*=idm]').each(function(){
-                        toggleAA($(this).prop('id'), force_open=false, force_close=true);
-                    });
-                }
-            
-                //Function to open all accordions 
-                function openAccords() {
-                   $('button[id*=idm]').each(function(){
-                        toggleAA($(this).prop('id'), force_open=true, force_close=false);
-                    });
-                }
-            
-                // Function to toggle an aquisition activity section
-                function toggleAA(btn_id, force_open=false, force_close=false) {
-                    // btn_id is like "idm45757030174584-btn"
                     
-                    // strings
-                    var collapse_str = "<i class='fa fa-minus-square-o'></i> Collapse Activity"
-                    var expand_str = "<i class='fa fa-plus-square-o'></i> Expand Activity"
-            
-                    // get jquery object
-                    var btn = $('#' + btn_id);
+                    //Function which scrolls to the top of the page
+                    function toTop(){
+                        document.body.scrollTop = document.documentElement.scrollTop = 0;
+                    }               
+                
+                    //Function checks where the page is scrolled to and either shows or hides the button which jumps to the top.
+                    //If the page is scrolled within 30px of the top, the button is hidden (it is hidden when the page loads).
+                    // (only show when we're not using simpleDisplay)
+                    window.onscroll = function() {showButtonOnScroll()};
                     
-                    // determine what to do
-                    var action_is_expand = btn.text().includes('Expand');
-                    if ( force_close ) {
-                        action_is_expand = false;
-                    }
-            
-                    // get list of accordions to toggle
-                    var acc = btn.parents().eq(2).nextUntil('.container-fluid').filter('.accordion');
-                    
-                    // loop through all accordions, and toggle
-                    acc.each(function( index ) {
-                        var panel = $(this).next();
-                        if (action_is_expand || force_open) {   
-                            // expand panel
-                            openPanel($(this));
-            
-                            // change button to collapse
-                            btn.html(collapse_str)
-                            btn.addClass('btn-danger')
-                            btn.removeClass('btn-success')
-                        } else if (!(action_is_expand) || force_close) { // collapse
-                            closePanel($(this));
-            
-                            // change button to expand
-                            btn.html(expand_str)
-                            btn.addClass('btn-success')
-                            btn.removeClass('btn-danger')
+                    function showButtonOnScroll() {
+                        var header_pos = $('.list-record-experimenter').first().position()['top'];
+                        if (document.body.scrollTop > header_pos || document.documentElement.scrollTop > header_pos) {
+                            document.getElementById("to-top-btn").style.visibility = "visible";
+                            document.getElementById("to-top-btn").style.opacity = 1;
+                            if ( $('#simpleDisplay').text() == 'true') { 
+                                document.getElementById("to-top-btn").style.top = header_pos + 'px'
+                            }
+                        } 
+                        else {
+                            document.getElementById("to-top-btn").style.visibility = "hidden";
+                            document.getElementById("to-top-btn").style.opacity = 0;
                         }
-                    });
-                };
+                    }
                 
-                //Handler for moving through an image gallery
-                var slideIndex = 1;
-                showSlides(slideIndex);
+                    //Function to open a modal box with id 'name' and prevent scrolling while the box is open
+                    function openModal(name){
+                        var modal = document.getElementById(name); 
+                        modal.style.opacity = 1;
+                        modal.style.visibility = "visible";
+                        
+                        scrollDisable();
+                        
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                closeModal(name);
+                            }
+                        };
+                    }
                 
-                function plusSlide(n) {
-                    showSlides(slideIndex += n);
-                }
-                
-                function currentSlide(n) {
-                    showSlides(slideIndex = n);
-                }
-                
-                function showSlides(n) {
+                    //Function to close a modal box with id 'name' and re-allow page scrolling
+                    function closeModal(name){
+                        var modal = document.getElementById(name); 
+                        modal.style.opacity = 0;
+                        modal.style.visibility = "hidden";
+                        
+                        scrollEnable();                
+                    }
+                    
+                    // Function to get width of scrollbar for padding offset above 
+                    // (from https://stackoverflow.com/a/13382873/1435788)
+                    function getScrollbarWidth() {
+                    // Creating invisible container
+                    const outer = document.createElement('div');
+                    outer.style.visibility = 'hidden';
+                    outer.style.overflow = 'scroll'; // forcing scrollbar to appear
+                    outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+                    document.body.appendChild(outer);
+                    
+                    // Creating inner element and placing it in the container
+                    const inner = document.createElement('div');
+                    outer.appendChild(inner);
+                    
+                    // Calculating difference between container's full width and the child width
+                    const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
+                    
+                    // Removing temporary elements from the DOM
+                    outer.parentNode.removeChild(outer);
+                    
+                    return scrollbarWidth;
+                    }
+                    
+                    //Handler for accordions used to hide parameter and metadata tables
+                    var acc = document.getElementsByClassName("accordion");
                     var i;
-                    var slides = document.getElementsByClassName("slide");
-                    if (slides.length === 0) {
-                        document.getElementById('img_gallery').remove()
-                    } else {
-                        if (n > slides.length) {slideIndex = 1}    
-                        if (n < 1) {slideIndex = slides.length}
-                        for (i = 0; i < slides.length; i++) {
-                            slides[i].style.display = "none";  
-                        }
-                        slides[slideIndex-1].style.display = "block";
+                
+                    for (i = 0; i < acc.length; i++) {
+                        acc[i].addEventListener("click", function() {
+                            togglePanel($(this));
+                        });
                     }
-                }
-            
-                //Function which adds a new slide to the overall image gallery for each dataset
-                function addSlide(source) {
-                    var slide = document.createElement("div");
-                    slide.class = "slide";                    
-                    var image = document.createElement("img");
-                    image.src = source;
-                    var text = document.createElement("div");
-                    text.class = "text"
-                    text.innerHTML = source;
-                    
-                    slide.innerHTML = image + source;
-                    
-                    document.getElementById("img_gallery").appendChild(slide);
-                }
                 
-                // Function to disable gallery tooltips
-                function disable_gallery_tooltips() {
-                    $('#img_gallery a.gal-nav[data-toggle=tooltip]').tooltip('disable');
-                }
-                
-                function activate_metadata_tooltips(){
-                    // activate tooltips (on demand)
-                    $('table.meta-table [data-toggle="tooltip"]').tooltip({trigger: 'hover'}); 
-                }
-                
-                function activate_modal_tooltips(id) {
-                    // tooltips on modals like to be placed at the top of the screen, even if you've
-                    // scrolled down, so dispose of existing tooltip, and create new one attached to modal
-                    // container; this appears to work to allow tooltips to show up properly 
-                    // in the modal windows (make sure to call this function when showing the modal)
-                    $(`#${id} [data-toggle="tooltip"]`).tooltip('dispose');
-                    $(`#${id} [data-toggle="tooltip"]`).tooltip({trigger: 'hover', container: `#${id}`}); 
-                }
-            
-                // Key handlers
-                document.onkeydown = function(evt) {
-                    evt = evt || window.event;
-                    var isLeft = false;
-                    var isRight = false;
-                    var isEscape = false;
-                    isLeft = (evt.keyCode === 37);
-                    isRight = (evt.keyCode === 39);
-                    isEscape = (evt.keyCode === 27);
-                    if (isLeft) {
-                        // if we're in a tutorial, go back a step
-                        if (Shepherd.activeTour) {
-                            Shepherd.activeTour.back();
-                            } else {
-                            // otherwise send arrow key to gallery
-                            plusSlide(-1);
-                        }
+                    // Function to close an accordion panel
+                    function closePanel(acc) {
+                        // acc is a jquery object
+                        var panel = acc.next();
+                        acc.removeClass("active-accordion");
+                        panel.css('maxHeight', 0);
                     }
-                    if (isRight) {
-                        // if we're in a tutorial, advance a step
-                        if (Shepherd.activeTour) {
-                            Shepherd.activeTour.next();
+                
+                    // Function to open an accordion panel
+                    function openPanel(acc) {
+                        // acc is a jquery object
+                        var panel = acc.next();
+                        acc.addClass("active-accordion");
+                        panel.css('maxHeight', panel.prop('scrollHeight') + "px");
+                    }
+                
+                    // Function to toggle an accordion panel
+                    function togglePanel(acc) {
+                        // acc is a jquery object
+                        if (acc.hasClass("active-accordion")) {
+                            closePanel(acc);
                         } else {
-                            // otherwise send arrow key to gallery
-                            plusSlide(1);
+                            openPanel(acc);
                         }
                     }
-                    if (isEscape) {
-                        var i;
-                        for (i = 0; i < document.getElementsByClassName("modal").length; i++) {
-                          closeModal(document.getElementsByClassName("modal")[i].id);
-                        }
-                    }
-                }
-            
-                // Prevent buttons from getting focus property when clicking 
-                // https://stackoverflow.com/a/30949767/1435788 
-                $('button').on('mousedown', 
-                    // @param {!jQuery.Event} event 
-                    function(event) {
-                        event.preventDefault();
-                    }
-                );
-            
-                // Shepherd tutorial code
-                function create_detail_tour() {
-                    
-                    // check if any modals are visible, and if so close them and
-                    // remember it to reopen at the end
-                    var already_open_modal = false;
-                    $('.modal').each(function(index, val){
-                        if ($(val).css('visibility') === 'visible') {
-                            closeModal(val.id);
-                            already_open_modal = val.id;
-                        }
-                    })
                 
-                    var topScrollHandler = function (element, offset) {
-                        if (!offset) {
-                            offset = 75;
+                    //Function to close all open accordions
+                    function closeAccords() {
+                        $('button[id*=idm]').each(function(){
+                            toggleAA($(this).prop('id'), force_open=false, force_close=true);
+                        });
+                    }
+                
+                    //Function to open all accordions 
+                    function openAccords() {
+                    $('button[id*=idm]').each(function(){
+                            toggleAA($(this).prop('id'), force_open=true, force_close=false);
+                        });
+                    }
+                
+                    // Function to toggle an aquisition activity section
+                    function toggleAA(btn_id, force_open=false, force_close=false) {
+                        // btn_id is like "idm45757030174584-btn"
+                        
+                        // strings
+                        var collapse_str = "<i class='fa fa-minus-square-o'></i> Collapse Activity"
+                        var expand_str = "<i class='fa fa-plus-square-o'></i> Expand Activity"
+                
+                        // get jquery object
+                        var btn = $('#' + btn_id);
+                        
+                        // determine what to do
+                        var action_is_expand = btn.text().includes('Expand');
+                        if ( force_close ) {
+                            action_is_expand = false;
                         }
-                        if (element) {
-                            var $element = $(element);
-                            var topOfElement = $element.offset().top;
-                            var heightOfElement = $element.height() + offset;
-                            $('html, body').animate({
-                                scrollTop: topOfElement - heightOfElement
-                            }, {
-                                duration: 500
-                            });
-                        }
+                
+                        // get list of accordions to toggle
+                        var acc = btn.parents().eq(2).nextUntil('.container-fluid').filter('.accordion');
+                        
+                        // loop through all accordions, and toggle
+                        acc.each(function( index ) {
+                            var panel = $(this).next();
+                            if (action_is_expand || force_open) {   
+                                // expand panel
+                                openPanel($(this));
+                
+                                // change button to collapse
+                                btn.html(collapse_str)
+                                btn.addClass('btn-danger')
+                                btn.removeClass('btn-success')
+                            } else if (!(action_is_expand) || force_close) { // collapse
+                                closePanel($(this));
+                
+                                // change button to expand
+                                btn.html(expand_str)
+                                btn.addClass('btn-success')
+                                btn.removeClass('btn-danger')
+                            }
+                        });
                     };
-                
-                    var detail_tour = new Shepherd.Tour({
-                        useModalOverlay: true,
-                        // keyboard navigation is taken care of by the keyboard
-                        // handler so we can send it to tour or gallery as needed
-                        // search for "plusSlide(" to see where that happens
-                        keyboardNavigation: false,
-                        defaultStepOptions: {
-                            when: {
-                                show() {
-                                    showStepNumber()
-                                }
-                            },
-                            modalOverlayOpeningPadding: 25,
-                            scrollTo: true,
-                            scrollToHandler: topScrollHandler,
-                            canClickTarget: false,
-                        }
-                    });
-                
-                    showStepNumber = () => {
-                        $("<span style='font-size: small'></span>")
-                            .insertBefore('.shepherd-footer .btn-primary')
-                            .html(`${detail_tour.steps.indexOf(detail_tour.currentStep) + 1}/${detail_tour.steps.length}`);
+                    
+                    //Handler for moving through an image gallery
+                    var slideIndex = 1;
+                    showSlides(slideIndex);
+                    
+                    function plusSlide(n) {
+                        showSlides(slideIndex += n);
                     }
-                
-                    end_button = {
-                        text: 'End',
-                        classes: 'btn btn-danger',
-                        action: detail_tour.next,
-                        label: 'End'
+                    
+                    function currentSlide(n) {
+                        showSlides(slideIndex = n);
                     }
-                
-                    next_button = {
-                        text: 'Next <i class="fa fa-arrow-right menu-fa"></i>',
-                        classes: 'btn btn-primary',
-                        action: detail_tour.next,
-                        label: 'Next'
-                    }
-                
-                    var back_button = (enabled) => {
-                        return {
-                            text: '<i class="fa fa-arrow-left menu-fa"></i> Back',
-                            classes: 'btn btn-default',
-                            disabled: (!enabled),
-                            action: detail_tour.back,
-                            label: 'Back'
+                    
+                    function showSlides(n) {
+                        var i;
+                        var slides = document.getElementsByClassName("slide");
+                        if (slides.length === 0) {
+                            document.getElementById('img_gallery').remove()
+                        } else {
+                            if (n > slides.length) {slideIndex = 1}    
+                            if (n < 1) {slideIndex = slides.length}
+                            for (i = 0; i < slides.length; i++) {
+                                slides[i].style.display = "none";  
+                            }
+                            slides[slideIndex-1].style.display = "block";
                         }
                     }
                 
-                    // add steps to tour
-                    detail_tour.addStep({
-                        id: 'tut-welcome',
-                        title: 'This is the record detail page',
-                        text: 'The <em>detail</em> page shows all the details of a record generated from an Experiment on one of the Nexus Facility instruments. Click <em>Next</em> for a tour of the features of this record. You can also use the keyboard arrow keys to navigate through the tutorial.',
-                        buttons: [
-                            back_button(false),
-                            next_button
-                        ],
-                    });
+                    //Function which adds a new slide to the overall image gallery for each dataset
+                    function addSlide(source) {
+                        var slide = document.createElement("div");
+                        slide.class = "slide";                    
+                        var image = document.createElement("img");
+                        image.src = source;
+                        var text = document.createElement("div");
+                        text.class = "text"
+                        text.innerHTML = source;
+                        
+                        slide.innerHTML = image + source;
+                        
+                        document.getElementById("img_gallery").appendChild(slide);
+                    }
+                    
+                    // Function to disable gallery tooltips
+                    function disable_gallery_tooltips() {
+                        $('#img_gallery a.gal-nav[data-toggle=tooltip]').tooltip('disable');
+                    }
+                    
+                    function activate_metadata_tooltips(){
+                        // activate tooltips (on demand)
+                        $('table.meta-table [data-toggle="tooltip"]').tooltip({trigger: 'hover'}); 
+                    }
+                    
+                    function activate_modal_tooltips(id) {
+                        // tooltips on modals like to be placed at the top of the screen, even if you've
+                        // scrolled down, so dispose of existing tooltip, and create new one attached to modal
+                        // container; this appears to work to allow tooltips to show up properly 
+                        // in the modal windows (make sure to call this function when showing the modal)
+                        $(`#${id} [data-toggle="tooltip"]`).tooltip('dispose');
+                        $(`#${id} [data-toggle="tooltip"]`).tooltip({trigger: 'hover', container: `#${id}`}); 
+                    }
                 
-                    detail_tour.addStep({
-                        id: 'tut-record-header',
-                        title: 'The record header',
-                        text: 'The top of the record contains basic information, such as the title of the experiment (taken from the calendar reservation), the instrument that was used, the number and types of files contained within, the user, date, and experimental motivation. This utility of this section relies heavily on the quality of data inputted into the reservation form.',
-                        attachTo: {
-                            element: '#record-header',
-                            on: 'bottom'
-                        },
-                        buttons: [
-                            back_button(true),
-                            next_button
-                        ],
-                        popperOptions: {
-                            modifiers: [{
-                                name: 'offset',
-                                options: {
-                                    offset: [0, 25]
-                                }
-                            }]
+                    // Key handlers
+                    document.onkeydown = function(evt) {
+                        evt = evt || window.event;
+                        var isLeft = false;
+                        var isRight = false;
+                        var isEscape = false;
+                        isLeft = (evt.keyCode === 37);
+                        isRight = (evt.keyCode === 39);
+                        isEscape = (evt.keyCode === 27);
+                        if (isLeft) {
+                            // if we're in a tutorial, go back a step
+                            if (Shepherd.activeTour) {
+                                Shepherd.activeTour.back();
+                                } else {
+                                // otherwise send arrow key to gallery
+                                plusSlide(-1);
+                            }
                         }
-                    });
-                
-                    detail_tour.addStep({
-                        id: 'tut-session_info_column',
-                        title: 'Session summary information',
-                        text: 'The session summary section contains further details about the experiment, such as the precise date and time (from the calendar), the sample information and ID, and any sample description.',
-                        attachTo: {
-                            element: '#session_info_column',
-                            on: 'bottom'
-                        },
-                        scrollTo: false,
-                        buttons: [
-                            back_button(true),
-                            next_button
-                        ],
-                        popperOptions: {
-                            modifiers: [{
-                                name: 'offset',
-                                options: {
-                                    offset: [0, 25]
-                                }
-                            }]
+                        if (isRight) {
+                            // if we're in a tutorial, advance a step
+                            if (Shepherd.activeTour) {
+                                Shepherd.activeTour.next();
+                            } else {
+                                // otherwise send arrow key to gallery
+                                plusSlide(1);
+                            }
                         }
-                    });
-                
-                    detail_tour.addStep({
-                        id: 'tut-img_gallery',
-                        title: 'Image gallery',
-                        text: "The gallery shows a preview image of each dataset contained within the experiment's record. These can be browsed using the mouse buttons, or via the left and right arrow keys on the keyboard.",
-                        attachTo: {
-                            element: '#img_gallery',
-                            on: 'left'
-                        },
-                        scrollTo: false,
-                        buttons: [
-                            back_button(true),
-                            next_button
-                        ],
-                        popperOptions: {
-                            modifiers: [{
-                                name: 'offset',
-                                options: {
-                                    offset: [0, 25]
-                                }
-                            }]
+                        if (isEscape) {
+                            var i;
+                            for (i = 0; i < document.getElementsByClassName("modal").length; i++) {
+                            closeModal(document.getElementsByClassName("modal")[i].id);
+                            }
                         }
-                    });
+                    }
                 
-                    if ( $('#simpleDisplay').text() == 'false') { 
+                    // Prevent buttons from getting focus property when clicking 
+                    // https://stackoverflow.com/a/30949767/1435788 
+                    $('button').on('mousedown', 
+                        // @param {!jQuery.Event} event 
+                        function(event) {
+                            event.preventDefault();
+                        }
+                    );
+                
+                    // Shepherd tutorial code
+                    function create_detail_tour() {
+                        
+                        // check if any modals are visible, and if so close them and
+                        // remember it to reopen at the end
+                        var already_open_modal = false;
+                        $('.modal').each(function(index, val){
+                            if ($(val).css('visibility') === 'visible') {
+                                closeModal(val.id);
+                                already_open_modal = val.id;
+                            }
+                        })
+                    
+                        var topScrollHandler = function (element, offset) {
+                            if (!offset) {
+                                offset = 75;
+                            }
+                            if (element) {
+                                var $element = $(element);
+                                var topOfElement = $element.offset().top;
+                                var heightOfElement = $element.height() + offset;
+                                $('html, body').animate({
+                                    scrollTop: topOfElement - heightOfElement
+                                }, {
+                                    duration: 500
+                                });
+                            }
+                        };
+                    
+                        var detail_tour = new Shepherd.Tour({
+                            useModalOverlay: true,
+                            // keyboard navigation is taken care of by the keyboard
+                            // handler so we can send it to tour or gallery as needed
+                            // search for "plusSlide(" to see where that happens
+                            keyboardNavigation: false,
+                            defaultStepOptions: {
+                                when: {
+                                    show() {
+                                        showStepNumber()
+                                    }
+                                },
+                                modalOverlayOpeningPadding: 25,
+                                scrollTo: true,
+                                scrollToHandler: topScrollHandler,
+                                canClickTarget: false,
+                            }
+                        });
+                    
+                        showStepNumber = () => {
+                            $("<span style='font-size: small'></span>")
+                                .insertBefore('.shepherd-footer .btn-primary')
+                                .html(`${detail_tour.steps.indexOf(detail_tour.currentStep) + 1}/${detail_tour.steps.length}`);
+                        }
+                    
+                        end_button = {
+                            text: 'End',
+                            classes: 'btn btn-danger',
+                            action: detail_tour.next,
+                            label: 'End'
+                        }
+                    
+                        next_button = {
+                            text: 'Next <i class="fa fa-arrow-right menu-fa"></i>',
+                            classes: 'btn btn-primary',
+                            action: detail_tour.next,
+                            label: 'Next'
+                        }
+                    
+                        var back_button = (enabled) => {
+                            return {
+                                text: '<i class="fa fa-arrow-left menu-fa"></i> Back',
+                                classes: 'btn btn-default',
+                                disabled: (!enabled),
+                                action: detail_tour.back,
+                                label: 'Back'
+                            }
+                        }
+                    
+                        // add steps to tour
                         detail_tour.addStep({
-                            id: 'tut-aa',
-                            title: 'Acquisition activities',
-                            text: 'The remainder of the record contains details about the various "activities" that were detected in the records (determined via file creation times). Click <em>Next</em> for further details about the contents of each activity.',
+                            id: 'tut-welcome',
+                            title: 'This is the record detail page',
+                            text: 'The <em>detail</em> page shows all the details of a record generated from an Experiment on one of the Nexus Facility instruments. Click <em>Next</em> for a tour of the features of this record. You can also use the keyboard arrow keys to navigate through the tutorial.',
+                            buttons: [
+                                back_button(false),
+                                next_button
+                            ],
+                        });
+                    
+                        detail_tour.addStep({
+                            id: 'tut-record-header',
+                            title: 'The record header',
+                            text: 'The top of the record contains basic information, such as the title of the experiment (taken from the calendar reservation), the instrument that was used, the number and types of files contained within, the user, date, and experimental motivation. This utility of this section relies heavily on the quality of data inputted into the reservation form.',
                             attachTo: {
-                                element: $('.aa_header_row')[0],
-                                on: 'left'
+                                element: '#record-header',
+                                on: 'bottom'
                             },
                             buttons: [
                                 back_button(true),
                                 next_button
                             ],
-                            scrollToHandler: (element) => {topScrollHandler(element, -1 * $(element).height() + 75)},
+                            popperOptions: {
+                                modifiers: [{
+                                    name: 'offset',
+                                    options: {
+                                        offset: [0, 25]
+                                    }
+                                }]
+                            }
                         });
-                                    
-                         detail_tour.addStep({
-                             id: 'tut-setup-params',
-                             title: 'Setup parameters',
-                             text: 'The setup parameters button will show you the metadata extracted from the raw files that is common to all the datasets contained in this activity. Clicking here will open a dialog box showing the setup parameters for this activity',
-                             attachTo: {
-                                 element: $('.aa_header_row .param-button')[0],
-                                 on: 'bottom'
-                             },
-                             buttons: [
-                                 back_button(true),
-                                 next_button
-                             ],
-                             scrollTo: false,     
-                             canClickTarget: false,
-                             modalOverlayOpeningPadding: 15,
-                             popperOptions: {
-                                 modifiers: [{
-                                     name: 'offset',
-                                     options: {
-                                         offset: [0, 15]
-                                     }
-                                 }]
-                             }
-                         });
-                         
-                         detail_tour.addStep({
-                             id: 'tut-aa-gallery',
-                             title: 'Activity image gallery',
-                             text: "Another preview of the datasets in this activity is shown here. Mouse over a dataset in the accompanying table to view its preview",
-                             attachTo: {
-                                 element: $('.aa_header_row .aa-img-col')[0],
-                                 on: 'bottom'
-                             },
-                             scrollTo: false,
-                             buttons: [
-                                 back_button(true),
-                                 next_button
-                             ]
-                         });
-                     
-                         detail_tour.addStep({
-                             id: 'tut-aa-table',
-                             title: 'Activity dataset table',
-                             text: "The activity details table lists each dataset contained in this activty with some basic information such as the dataset's name, its creation time, the type of data contained, and its role.",
-                             attachTo: {
-                                 element: $('.aa_header_row .aa-table-col')[0],
-                                 on: 'bottom'
-                             },
-                             scrollTo: false,
-                             buttons: [
-                                 back_button(true),
-                                 next_button
-                             ]
-                         });
-                     
-                         detail_tour.addStep({
-                             id: 'tut-aa-meta',
-                             title: 'Metadata viewer/downloader',
-                             text: "The metadata column allows you to view the metadata unique to this dataset using the left button, or you can download the entire extracted metadata using the button on the right in JSON format.",
-                             attachTo: {
-                                 element: $('.aa_header_row .aa-table-col .aa-meta-col')[0],
-                                 on: 'left'
-                             },
-                             buttons: [
-                                 back_button(true),
-                                 next_button
-                             ],
-                             scrollTo: false,
-                             modalOverlayOpeningPadding: 5,
-                             popperOptions: {
-                                 modifiers: [{
-                                     name: 'offset',
-                                     options: {
-                                         offset: [0, 10]
-                                     }
-                                 }]
-                             }
-                         });
-                     
-                         detail_tour.addStep({
-                             id: 'tut-aa-dl',
-                             title: 'Individual file downloader',
-                             text: "The final column provides a link to download this single file in its native format (Note: there is a bulk file downloader at the top of the record)",
-                             attachTo: {
-                                 element: $('.aa_header_row .aa-table-col .aa-dl-col')[0],
-                                 on: 'left'
-                             },
-                             buttons: [
-                                 back_button(true),
-                                 next_button
-                             ],
-                             scrollTo: false,
-                             modalOverlayOpeningPadding: 5,
-                             popperOptions: {
-                                 modifiers: [{
-                                     name: 'offset',
-                                     options: {
-                                         offset: [0, 10]
-                                     }
-                                 }]
-                             }
-                         });
-                    }
-                
-                    if ( $('#simpleDisplay').text() == 'false') { 
-                        var sidebar_vis = $('.sidebar').position()['left'] === 0;
-                        var sidebar_text = "The sidebar provides an easy way to navigate through the different activities in the record, and also provides a button to return to the top of the page.";
-                        if (!sidebar_vis) {
-                            sidebar_text += " If the window is too narrow, the sidebar is hidden from view. Clicking this button will show it.";
-                        }
                     
                         detail_tour.addStep({
-                            id: 'tut-sidebar',
-                            title: 'Record navigation sidebar',
-                            text: sidebar_text,
+                            id: 'tut-session_info_column',
+                            title: 'Session summary information',
+                            text: 'The session summary section contains further details about the experiment, such as the precise date and time (from the calendar), the sample information and ID, and any sample description.',
                             attachTo: {
-                                element: sidebar_vis ? $('.sidebar')[0] : $('#btn-sidebar')[0],
-                                on: 'right'
+                                element: '#session_info_column',
+                                on: 'bottom'
                             },
                             scrollTo: false,
                             buttons: [
                                 back_button(true),
                                 next_button
-                            ]
+                            ],
+                            popperOptions: {
+                                modifiers: [{
+                                    name: 'offset',
+                                    options: {
+                                        offset: [0, 25]
+                                    }
+                                }]
+                            }
                         });
+                    
+                        detail_tour.addStep({
+                            id: 'tut-img_gallery',
+                            title: 'Image gallery',
+                            text: "The gallery shows a preview image of each dataset contained within the experiment's record. These can be browsed using the mouse buttons, or via the left and right arrow keys on the keyboard.",
+                            attachTo: {
+                                element: '#img_gallery',
+                                on: 'left'
+                            },
+                            scrollTo: false,
+                            buttons: [
+                                back_button(true),
+                                next_button
+                            ],
+                            popperOptions: {
+                                modifiers: [{
+                                    name: 'offset',
+                                    options: {
+                                        offset: [0, 25]
+                                    }
+                                }]
+                            }
+                        });
+                    
+                        if ( $('#simpleDisplay').text() == 'false') { 
+                            detail_tour.addStep({
+                                id: 'tut-aa',
+                                title: 'Acquisition activities',
+                                text: 'The remainder of the record contains details about the various "activities" that were detected in the records (determined via file creation times). Click <em>Next</em> for further details about the contents of each activity.',
+                                attachTo: {
+                                    element: $('.aa_header_row')[0],
+                                    on: 'left'
+                                },
+                                buttons: [
+                                    back_button(true),
+                                    next_button
+                                ],
+                                scrollToHandler: (element) => {topScrollHandler(element, -1 * $(element).height() + 75)},
+                            });
+                                        
+                            detail_tour.addStep({
+                                id: 'tut-setup-params',
+                                title: 'Setup parameters',
+                                text: 'The setup parameters button will show you the metadata extracted from the raw files that is common to all the datasets contained in this activity. Clicking here will open a dialog box showing the setup parameters for this activity',
+                                attachTo: {
+                                    element: $('.aa_header_row .param-button')[0],
+                                    on: 'bottom'
+                                },
+                                buttons: [
+                                    back_button(true),
+                                    next_button
+                                ],
+                                scrollTo: false,     
+                                canClickTarget: false,
+                                modalOverlayOpeningPadding: 15,
+                                popperOptions: {
+                                    modifiers: [{
+                                        name: 'offset',
+                                        options: {
+                                            offset: [0, 15]
+                                        }
+                                    }]
+                                }
+                            });
+                            
+                            detail_tour.addStep({
+                                id: 'tut-aa-gallery',
+                                title: 'Activity image gallery',
+                                text: "Another preview of the datasets in this activity is shown here. Mouse over a dataset in the accompanying table to view its preview",
+                                attachTo: {
+                                    element: $('.aa_header_row .aa-img-col')[0],
+                                    on: 'bottom'
+                                },
+                                scrollTo: false,
+                                buttons: [
+                                    back_button(true),
+                                    next_button
+                                ]
+                            });
+                        
+                            detail_tour.addStep({
+                                id: 'tut-aa-table',
+                                title: 'Activity dataset table',
+                                text: "The activity details table lists each dataset contained in this activty with some basic information such as the dataset's name, its creation time, the type of data contained, and its role.",
+                                attachTo: {
+                                    element: $('.aa_header_row .aa-table-col')[0],
+                                    on: 'bottom'
+                                },
+                                scrollTo: false,
+                                buttons: [
+                                    back_button(true),
+                                    next_button
+                                ]
+                            });
+                        
+                            detail_tour.addStep({
+                                id: 'tut-aa-meta',
+                                title: 'Metadata viewer/downloader',
+                                text: "The metadata column allows you to view the metadata unique to this dataset using the left button, or you can download the entire extracted metadata using the button on the right in JSON format.",
+                                attachTo: {
+                                    element: $('.aa_header_row .aa-table-col .aa-meta-col')[0],
+                                    on: 'left'
+                                },
+                                buttons: [
+                                    back_button(true),
+                                    next_button
+                                ],
+                                scrollTo: false,
+                                modalOverlayOpeningPadding: 5,
+                                popperOptions: {
+                                    modifiers: [{
+                                        name: 'offset',
+                                        options: {
+                                            offset: [0, 10]
+                                        }
+                                    }]
+                                }
+                            });
+                        
+                            detail_tour.addStep({
+                                id: 'tut-aa-dl',
+                                title: 'Individual file downloader',
+                                text: "The final column provides a link to download this single file in its native format (Note: there is a bulk file downloader at the top of the record)",
+                                attachTo: {
+                                    element: $('.aa_header_row .aa-table-col .aa-dl-col')[0],
+                                    on: 'left'
+                                },
+                                buttons: [
+                                    back_button(true),
+                                    next_button
+                                ],
+                                scrollTo: false,
+                                modalOverlayOpeningPadding: 5,
+                                popperOptions: {
+                                    modifiers: [{
+                                        name: 'offset',
+                                        options: {
+                                            offset: [0, 10]
+                                        }
+                                    }]
+                                }
+                            });
+                        }
+                    
+                        if ( $('#simpleDisplay').text() == 'false') { 
+                            var sidebar_vis = $('.sidebar').position()['left'] === 0;
+                            var sidebar_text = "The sidebar provides an easy way to navigate through the different activities in the record, and also provides a button to return to the top of the page.";
+                            if (!sidebar_vis) {
+                                sidebar_text += " If the window is too narrow, the sidebar is hidden from view. Clicking this button will show it.";
+                            }
+                        
+                            detail_tour.addStep({
+                                id: 'tut-sidebar',
+                                title: 'Record navigation sidebar',
+                                text: sidebar_text,
+                                attachTo: {
+                                    element: sidebar_vis ? $('.sidebar')[0] : $('#btn-sidebar')[0],
+                                    on: 'right'
+                                },
+                                scrollTo: false,
+                                buttons: [
+                                    back_button(true),
+                                    next_button
+                                ]
+                            });
+                            
+                            detail_tour.addStep({
+                                id: 'tut-filelisting',
+                                title: 'Record file listing and downloader',
+                                text: "The <i class='fa fa-cloud-download menu-fa'></i> <em>Download files</em> button provides an overview of all the dataset files in this record, and provides a means to download all (or a selected number of) files as a .zip archive. This dialogue also allows you to export a list of files into a variety of formats.",
+                                attachTo: {
+                                    element: '#btn-filelisting',
+                                    on: 'bottom'
+                                },
+                                scrollTo: true,
+                                buttons: [
+                                    back_button(true),
+                                    next_button
+                                ],
+                                modalOverlayOpeningPadding: 5,
+                                popperOptions: {
+                                    modifiers: [{
+                                        name: 'offset',
+                                        options: {
+                                            offset: [0, 10]
+                                        }
+                                    }]
+                                }
+                            });
+                        }
                         
                         detail_tour.addStep({
-                            id: 'tut-filelisting',
-                            title: 'Record file listing and downloader',
-                            text: "The <i class='fa fa-cloud-download menu-fa'></i> <em>Download files</em> button provides an overview of all the dataset files in this record, and provides a means to download all (or a selected number of) files as a .zip archive. This dialogue also allows you to export a list of files into a variety of formats.",
+                            id: 'tut-xml-dl',
+                            title: 'Record exporter',
+                            text: "The <i class='fa fa-code menu-fa'></i> <em>Download XML</em> button will download the metadata record (not the actual datafiles) in an structured format for additional analysis, if desired.",
                             attachTo: {
-                                element: '#btn-filelisting',
+                                element: '#btn-xml-dl',
                                 on: 'bottom'
                             },
                             scrollTo: true,
@@ -3259,1309 +3285,1284 @@ Use it like:
                                 }]
                             }
                         });
-                    }
-                    
-                    detail_tour.addStep({
-                        id: 'tut-xml-dl',
-                        title: 'Record exporter',
-                        text: "The <i class='fa fa-code menu-fa'></i> <em>Download XML</em> button will download the metadata record (not the actual datafiles) in an structured format for additional analysis, if desired.",
-                        attachTo: {
-                            element: '#btn-xml-dl',
-                            on: 'bottom'
-                        },
-                        scrollTo: true,
-                        buttons: [
-                            back_button(true),
-                            next_button
-                        ],
-                        modalOverlayOpeningPadding: 5,
-                        popperOptions: {
-                            modifiers: [{
-                                name: 'offset',
-                                options: {
-                                    offset: [0, 10]
-                                }
-                            }]
-                        }
-                    });
-                    
-                    detail_tour.addStep({
-                        id: 'tut-edit-record',
-                        title: 'Record editor',
-                        text: "The <i class='fa fa-file-text menu-fa'></i> <em>Edit this record</em> button will allow you (if logged in and you have ownership of this record) to edit the metadata information contained within. Currently, this process is a bit cumbersome, but an improvement to the interface is on the NexusLIMS team's roadmap.",
-                        attachTo: {
-                            element: '#btn-edit-record',
-                            on: 'bottom'
-                        },
-                        scrollTo: false,
-                        buttons: [
-                            back_button(true),
-                            end_button
-                        ],
-                        modalOverlayOpeningPadding: 5,
-                        popperOptions: {
-                            modifiers: [{
-                                name: 'offset',
-                                options: {
-                                    offset: [0, 10]
-                                }
-                            }]
-                        }
-                    });
-                
-                    let cur_pos = $(document).scrollTop();
-                    
-                    function clean_up_on_exit(modal_to_open) {
-                        // return to initial position on page if we're not there,
-                        // otherwise just re-open the modal if needed
-                        if ( $(document).scrollTop() === cur_pos ) {
-                            if (modal_to_open) { openModal(modal_to_open) } 
-                        } else {
-                            $('html, body').animate({
-                                scrollTop: cur_pos
-                            }, {
-                                duration: 500,
-                                // if there was already a modal dialogue open, re-open it when the animation is finished
-                                complete: modal_to_open ? () => {openModal(modal_to_open)} : null
-                            });
-                        }
-                    }
-                    
-                    // set clean up function to trigger when tutorial is closed
-                    detail_tour.on('complete', () => clean_up_on_exit(already_open_modal));
-                    detail_tour.on('cancel', () => clean_up_on_exit(already_open_modal));
-                    detail_tour.on('hide', () => clean_up_on_exit(already_open_modal));
-                    
-                    $('.shepherd-modal-overlay-container').on('click', () => detail_tour.cancel());
-                    detail_tour.start()
-                }
-            
-                // Things to do when document is ready
-                $(document).ready(function(){
-
-                    if ($('#simpleDisplay').text() == 'false') { 
-                     // make each row in nav-table clickable as the header link
-                     // before DataTables conversion
-                     $('#nav-table tbody tr').click(function() {
-                         window.location = $(this).find('a').attr('href');
-                         return false;
-                     });
-
-
-                        /* Add navigation to sidenav using DataTables */
-                        var navTable = $('#nav-table').DataTable({
-                                        destroy: true,
-                                        pagingType: "simple",
-                                        info: false,
-                                        ordering: false,
-                                        processing: false,
-                                        searching: false,
-                                        lengthChange: false,
-                                        pageLength: 5,
-                                        language: {
-                                                    paginate: {
-                                                        previous: "<i class='fa fa-angle-double-left'></i>",
-                                                        next: "<i class='fa fa-angle-double-right'></i>"
-                                                    }
-                                                },
-                                            "bInfo" : false,
-                                            responsive: true,
-                                            altEditor: false,    
-                                            drawCallback: function(){
-                                                $('.paginate_button.next', this.api().table().container())          
-                                                    .on('click', function(){
-                                                    var info = navTable.page.info();
-                                                        $('.cdatatableDetails').remove();
-                                                        $('.sidebar .paginate_button.next').before($('<span>',{
-                                                        'text':' Page '+ (info.page+1) +' of '+info.pages + ' ',
-                                                        class:'cdatatableDetails'
-                                                        }));
-                                                    $('.sidebar .pagination').first().addClass('vertical-align');
-                                                    });    
-                                                    $('.paginate_button.previous', this.api().table().container())          
-                                                    .on('click', function(){
-                                                    var info = navTable.page.info();
-                                                        $('.cdatatableDetails').remove();
-                                                        $('.sidebar .paginate_button.next').before($('<span>',{
-                                                        'text':'Page '+ (info.page+1) +' of '+info.pages,
-                                                        class:'cdatatableDetails'
-                                                        }));
-                                                        $('.sidebar .pagination').first().addClass('vertical-align');
-                                                    }); 
-                                            },
-                                            ordering: false,
-                                            "dom": 'pt'
-                                        });
-                                        
-                        var info = navTable.page.info();
-                        $('.sidebar .paginate_button.next').before($('<span>',{
-                            'text':' Page '+ (info.page+1) +' of '+info.pages + ' ' ,
-                            class:'cdatatableDetails'
-                        }));
-                        $('.sidebar .pagination').first().addClass('vertical-align');
-            
-                    // Make dataset metadata tables DataTables
-                    $('.meta-table').each(function() {
-                        $(this).DataTable({
-                            destroy: true,
-                            pagingType: "simple_numbers",
-                            info: false,
-                            ordering: false,
-                            processing: true,
-                            searching: true,
-                            lengthChange: false,
-                            pageLength: 10,
-                            language: {
-                                paginate: {
-                                    previous: "<i class='fa fa-angle-double-left'></i>",
-                                    next: "<i class='fa fa-angle-double-right'></i>"
-                                }
+                        
+                        detail_tour.addStep({
+                            id: 'tut-edit-record',
+                            title: 'Record editor',
+                            text: "The <i class='fa fa-file-text menu-fa'></i> <em>Edit this record</em> button will allow you (if logged in and you have ownership of this record) to edit the metadata information contained within. Currently, this process is a bit cumbersome, but an improvement to the interface is on the NexusLIMS team's roadmap.",
+                            attachTo: {
+                                element: '#btn-edit-record',
+                                on: 'bottom'
                             },
-                            responsive: true,
-                            ordering: false,
-                            dom: "<'row'<'col-sm-6'f><'col-sm-6'p>><'row'<'col-sm-12't>>",
-                            drawCallback: function(){
-                                            $('.paginate_button.next', this.api().table().container())          
-                                                .on('click', activate_metadata_tooltips());    
-                                                $('.paginate_button.previous', this.api().table().container())          
-                                                .on('click', activate_metadata_tooltips()); 
-                                        },
-                        });
-                    });
-                    
-                    // Make AA filelist tables DataTables
-                    $('.aa-table').each(function() {
-                        var this_table = $(this).DataTable({
-                            destroy: true,
-                            pagingType: "simple_numbers",
-                            info: false,
-                            ordering: false,
-                            processing: true,
-                            searching: true,
-                            lengthChange: false,
-                            pageLength: 5,
-                            language: {
-                                paginate: {
-                                    previous: "<i class='fa fa-angle-double-left'></i>",
-                                    next: "<i class='fa fa-angle-double-right'></i>"
-                                }
-                            },
-                            // make dataset column as wide as possible without causing remaining
-                            // columns to wrap
-                            columnDefs: [
-                                { "width": "53%", "targets": 0 }
+                            scrollTo: false,
+                            buttons: [
+                                back_button(true),
+                                end_button
                             ],
-                            responsive: true,
-                            ordering: false,
-                            dom: '<"row table-row"<"col-xs-12 table-col"t>><"row pager-row"<"col-xs-12 pager-col"p>>'
+                            modalOverlayOpeningPadding: 5,
+                            popperOptions: {
+                                modifiers: [{
+                                    name: 'offset',
+                                    options: {
+                                        offset: [0, 10]
+                                    }
+                                }]
+                            }
                         });
+                    
+                        let cur_pos = $(document).scrollTop();
                         
-                        // controls to reveal appropriate image on row hover
-                        $(this).on('mouseenter', '> tbody > tr', function() {
-                            // get the id of the correct image by looking at the row's img-id attribute
-                            var this_rows_img = $(this).first().attr('img-id');
-                            // the image we want to show is the one with that id
-                            var img_to_show = $('#' + this_rows_img);
-                            // get any img that have the visible class (so we can hide them)
-                            var img_to_hide = img_to_show.siblings('.aa-img.visible');
-                            // show/hide by adding and removing appropriate classes
-                            img_to_hide.addClass('hidden');
-                            img_to_hide.removeClass('visible');
-                            img_to_show.addClass('visible');
-                            img_to_show.removeClass('hidden');
-                        });
-                        
-                        var new_container = $(this).closest('.aa-content-row').next('.dt_paginate_container');
-                        var to_move = $(this).closest('.table-row').next('.pager-row').find('.pager-col');
-                        new_container.append(to_move);
-                    });
-                    
-                    const addEndingSlash = function(str){
-                        if (! (str.charAt(str.length -  1) === '/')){
-                            return str + '/';
-                        } else {
-                            return str;
-                        }
-                    }
-                    // Get array of filepaths from filelist-modal using jQuery:
-                    $('div#filelist-modal').each(function() {
-                      var paths = $('td.filepath').map(function() {
-                              return $(this).text();
-                          }).get();
-                      var rootPath = commonPath(paths, '/');
-                      $('td.filepath > code > a').each(function() {
-                        curText = $(this).text();
-                        // replace common path with blank in each file's path
-                        newText = curText.replace(rootPath, '');
-                        if (newText.length == 0) {
-                            newText = '/';
-                        }
-                        newText = addEndingSlash(newText);
-                        $(this).attr("href", $(this).attr("href") + rootPath + newText);
-                        $(this).text(decodeURIComponent(newText));
-                      });
-                      
-                      rootPath = addEndingSlash(rootPath);
-                      // put root path text into modal header link
-                      $('code#filelist-rootpath > a').each(function() {
-                        $(this).text(decodeURIComponent(rootPath));
-                        $(this).attr("href", $(this).attr("href") + rootPath);
-                      });
-                      
-                      window.rootPath = rootPath;
-                      
-                    });
-                    
-                    // Helper functions for messaging and progress:
-                    //
-                    // * Reset the message.
-                    //
-                    function resetMessage () {
-                        $result = $("#download-result"); 
-                        if (! $result.is(':visible') ) {
-                            $result.closest('.row').slideDown();
-                        }
-                        $result.text(" ");
-                    }
-                    //
-                    // show a successful message.
-                    // @param {String} text : the text to show.
-                    // @param {String} type : warning, danger, or success.
-                    //
-                    function showMessage(text, type) {
-                        resetMessage();
-                        $("#download-result")
-                        .removeClass('alert-warning alert-success alert-info alert-danger')
-                        .addClass("alert alert-" + type)
-                        .text(text);
-                    }
-                    function showExtraMessage(text, type) {
-                        // set message width to that of the table (sometimes the
-                        // table doesn't get rendered quite fast enough, so make
-                        // sure width is at least 500 px
-                        //let w = Math.max($('#filelist-table').width(), 500);
-                        
-                        $("#download-extra").closest('.row').slideDown();
-                        $("#download-extra")
-                        .removeClass('alert-warning alert-success alert-info alert-danger')
-                        .addClass("alert alert-" + type)
-                        .text(text);
-                        //$( "#download-extra" ).width(w);
-                        // resize this element everytime the window is changed
-                        //$(window).resize(function() {
-                        //    $( "#download-extra" ).width($('#download-result').width());
-                        //});
-                    }
-                    function hideExtraMessage() {
-                        $("#download-extra").closest('.row').slideUp();
-                    }
-                    //
-                    // show an error message.
-                    // @param {String} text the text to show.
-                    //
-                    function showError(text) {
-                        resetMessage();
-                        $("#download-result")
-                        .removeClass('alert-sucess alert-warning alert-info')
-                        .addClass("alert alert-danger")
-                        .text(text);
-                    }
-                    //
-                    // Update the progress bar.
-                    // @param {Integer} percent the current percent
-                    //
-                    function updatePercent(percent) {
-                        $("#progress_bar").addClass('active')
-                        
-                        $("#progress_bar").closest('.row').slideDown()
-                        .find(".progress-bar")
-                        .attr("aria-valuenow", percent)
-                        .removeClass("progress-bar-warning progress-bar-success")
-                        .addClass("progress-bar-info")
-                        .css({
-                            width : percent + "%",
-                            'min-width' : "5%"
-                        }).text(percent + '%');
-                    
-                    }
-                    
-                    function updateProgressBar(bytesDownloaded, totalToDownload) {
-                        let percent = (bytesDownloaded / totalToDownload * 100)|0;
-                        $("#progress_bar").addClass('active')
-                        //console.log('setting width to', percent+"%");
-                        $("#progress_bar").closest('.row').slideDown()
-                        .find(".progress-bar")
-                        .attr("aria-valuenow", percent)
-                        .removeClass("progress-bar-warning progress-bar-success progress-bar-danger")
-                        .addClass("progress-bar-info")
-                        .css({
-                            width : percent + "%",
-                            'min-width' : "5%"
-                        }).text(percent + '%');
-                        updateProgressMessage(bytesDownloaded, totalToDownload);
-                    }
-                    
-                    function updateProgressMessage(bytesDownloaded, totalToDownload) {
-                        if (bytesDownloaded === '0 B') {
-                            var msg = "Download is starting, please be patient..."
-                        } else {
-                            var msg = "Downloaded " + 
-                                      humanFileSize(bytesDownloaded) + 
-                                      ' out of ' + 
-                                      humanFileSize(totalToDownload) + '.';
-                        }
-                        showMessage(msg, 'info');
-                    }
-                    
-                    function errorProgress() {
-                        updatePercent(100);
-                        $("#progress_bar")
-                        .removeClass('active')
-                        .closest('.row').slideDown()
-                        .find(".progress-bar")
-                        .removeClass('progress-bar-info progress-bar-success progress-bar-warning')
-                        .addClass('progress-bar-danger')
-                        .text('Error!');
-                    }
-                    function finishProgress() {
-                        updatePercent(100);
-                        $("#progress_bar")
-                        .removeClass('active')
-                        .closest('.row').slideDown()
-                        .find(".progress-bar")
-                        .removeClass('progress-bar-info progress-bar-danger progress-bar-warning')
-                        .addClass('progress-bar-success')
-                        .text('Finished!');
-                    }
-                    
-                    //
-                    // initiate download of files with their metadata
-                    // @param {Array} data_urls : the URLs of the data files to include in zip
-                    // @param {Array} json_urls : the URLs of the json files to include in zip
-                    // @param {Array} paths : the containing folder of each file to include in zip
-                    // @param {String} zip_title: the name of the .zip to download
-                    //
-                    var downloadFn = function (data_urls, json_urls, paths, zip_title) {
-                      if (!(isChrome || isOpera || isFirefox || isEdgeChromium)) {
-                        alert('Due to browser limitations, downloading of files ' +
-                          'into a zip archive is only supported in up-to-date versions of ' +
-                          'the Chrome, Firefox, Opera, and Edge browsers. Please either download ' +
-                          'the files individually using the buttons in the table, or ' +
-                          'download them manually from the central file ' +
-                          'server instead.');
-                        $('button.dl-btns').removeClass('disabled');
-                        filelist_dt.select.style('multi');
-                      } else {
-                        resetMessage();
-                        updatePercent(0);
-
-                        // go through data_urls to check for .ser files and 
-                        // add the auxillary .emi files if needed
-                        let aux_urls = data_urls.map(getEmiName);
-
-                        // show cancel button
-                        $('#btn-cancel-row').slideDown();
-
-                        // combinedObject will have items [data_url, json_url, path, aux_url]
-                        let combinedObject = data_urls.map(function (e, i) {
-                          return [e, json_urls[i], paths[i], aux_urls[i]];
-                        });
-                        // combinedArray will be of type array, so it can looped through with forEach
-                        let combinedArray = $.map(combinedObject, function (value, index) {
-                          return [value];
-                        });
-
-                        // array of zips (not actually used besides as a counter)
-                        let zips = [];
-                        // array of total zip sizes
-                        let zip_total_sizes = [];
-                        let indiv_dl_sizes = [];
-                        // array of arrays listing which urls are in each zip 
-                        let zip_url_listing = [];
-                        // array of arrays listing the filepaths in each zip 
-                        let zip_path_listing = [];
-                        let cur_zip_idx = 0;
-                        let this_zip_size = 0;
-
-                        // limit zip size to 4.0 GiB (4294967296 bytes)
-                        // zips larger than 4.0 GiB are corrupted by the zip-stream.js
-                        // library and cannot be read, so we have to stay under that size
-                        const size_limit = 4294967296;
-
-                        // specify loopLength so we can change it if we need to ignore files
-                        var loopLength = combinedArray.length;
-                        var individual_files = [];
-                        // Allocate each url to a particular zip based on size:
-                        // this_aux_url will be null if there's no auxiliary file
-                        // present, but sometimes .emi files are missing, and 
-                        // we already checked for that when checking file sizes,
-                        // so if aux_url is not null, check window.file_sizes. 
-                        // The value for that url will be NaN if it wasn't 
-                        // found on the server
-                        for (var index = 0; index < loopLength; index += 1) {
-                          let this_path = null;
-                          let this_file_size = 0;
-
-                          let this_data_url = null;
-                          let this_json_url = null;
-                          let this_aux_url = null;
-
-                          let data_filename = null;
-                          let json_filename = null;
-                          let aux_filename = null;
-
-                          let full_data_path = null;
-                          let full_json_path = null;
-                          let full_aux_path = null;
-
-                          let item = combinedArray[index];
-                          this_data_url = item[0];
-                          this_json_url = item[1];
-                          this_path = item[2];
-                          this_aux_url = item[3];
-
-                          // remove leading slash:
-                          if (this_path.charAt(0) === '/') {
-                            this_path = this_path.substr(1);
-                          }
-                          // convert url to filename
-                          data_filename = this_data_url.replace(/.*\//g, "");
-                          json_filename = this_json_url.replace(/.*\//g, "");
-                          if (this_aux_url) {
-                            aux_filename = this_aux_url.replace(/.*\//g, "");
-                          } else {
-                            aux_filename = null;
-                          }
-                          // add appropriate path structure for the file
-                          if (this_path.length > 0) {
-                            full_data_path = this_path + '/' + data_filename
-                            full_json_path = this_path + '/' + json_filename
-                            if (aux_filename) {
-                              full_aux_path = this_path + '/' + aux_filename
+                        function clean_up_on_exit(modal_to_open) {
+                            // return to initial position on page if we're not there,
+                            // otherwise just re-open the modal if needed
+                            if ( $(document).scrollTop() === cur_pos ) {
+                                if (modal_to_open) { openModal(modal_to_open) } 
                             } else {
-                              full_aux_path = null;
+                                $('html, body').animate({
+                                    scrollTop: cur_pos
+                                }, {
+                                    duration: 500,
+                                    // if there was already a modal dialogue open, re-open it when the animation is finished
+                                    complete: modal_to_open ? () => {openModal(modal_to_open)} : null
+                                });
                             }
-                          } else {
-                            full_data_path = data_filename;
-                            full_json_path = json_filename;
-                            if (aux_filename) {
-                              full_aux_path = aux_filename
-                            } else {
-                              full_aux_path = null;
-                            }
-                          }
-
-                          // make paths like files and not like URLs
-                          full_data_path = decodeURIComponent(full_data_path);
-                          full_json_path = decodeURIComponent(full_json_path);
-                          if (full_aux_path) {
-                            full_aux_path = decodeURIComponent(full_aux_path);
-                          }
-
-                          // if this file is larger than the zip limit, process it separately
-                          // and adjust the for loop to compensate
-                          this_file_size = window.file_sizes[this_data_url] +
-                            window.file_sizes[this_json_url];
-                          if (! isNaN(window.file_sizes[this_aux_url])) {
-                            this_file_size += window.file_sizes[this_aux_url];
-                          }
-                          if (this_file_size > size_limit) {
-                            //console.log('Adding ' + full_data_path + ' to individual file downloads');
-                            individual_files.push(combinedArray[index][0]);
-                            //console.log('Adding ' + full_json_path + ' to individual file downloads');
-                            individual_files.push(combinedArray[index][1]);
-                            if (full_aux_path && (! isNaN(window.file_sizes[this_aux_url]))) {
-                              //console.log('Adding ' + full_aux_path + ' to individual file downloads');
-                              individual_files.push(combinedArray[index][3]);
-                            }
-                            indiv_dl_sizes.push(window.file_sizes[this_data_url]);
-                            indiv_dl_sizes.push(window.file_sizes[this_json_url]);
-                            if (! isNaN(window.file_sizes[this_aux_url])) {
-                              indiv_dl_sizes.push(window.file_sizes[this_aux_url]);
-                            }
-                            loopLength -= 1;
-                            combinedArray.splice(index, 1);
-                            index -= 1;
-                            continue;
-                          }
-
-                          // If this is the first file (i.e. zip size == 0), 
-                          // create new zip object and add it to array
-                          if (this_zip_size === 0) {
-                            zips.push({});
-                            zip_url_listing.push([]);
-                            zip_path_listing.push([]);
-                          }
-                          // this is not the first file:
-                          else {
-                            // check to make sure adding this file would not
-                            // put us over the zip size limit
-                            let new_size = window.file_sizes[this_data_url] +
-                              window.file_sizes[this_json_url] +
-                              this_zip_size;
-                            if (! isNaN(window.file_sizes[this_aux_url])) {
-                              new_size += window.file_sizes[this_aux_url];
-                            }
-                            // if we're over the limit, end this zip, start
-                            // new one and repeat iteration by decrementing index
-                            if (new_size > size_limit) {
-                              zip_total_sizes.push(this_zip_size);
-                              this_zip_size = 0;
-                              cur_zip_idx += 1;
-                              index--;
-                              continue;
-                            }
-                          }
-
-                          // replace any double slashes
-                          full_data_path = full_data_path.replace('//', '/');
-                          full_json_path = full_json_path.replace('//', '/');
-                          if (full_aux_path) {
-                            full_aux_path = full_aux_path.replace('//', '/');
-                          }
-
-                          // assign file to zip
-                          zip_url_listing[cur_zip_idx].push(this_data_url);
-                          zip_url_listing[cur_zip_idx].push(this_json_url);
-                          zip_path_listing[cur_zip_idx].push(full_data_path);
-                          zip_path_listing[cur_zip_idx].push(full_json_path);
-                          // only add zip file if we have a size for it
-                          if (! isNaN(window.file_sizes[this_aux_url])) {
-                            // multiple ser files could have the same emi, so 
-                            // check to make sure we do not add it twice
-                            if (! zip_url_listing[cur_zip_idx].includes(this_aux_url)){
-                              zip_url_listing[cur_zip_idx].push(this_aux_url);
-                              zip_path_listing[cur_zip_idx].push(full_aux_path);
-                            }
-                          }
-
-                          console.debug('Adding', humanFileSize(window.file_sizes[this_data_url]), 'file:', full_data_path, 'to zip #:', cur_zip_idx);
-                          console.debug('Adding', humanFileSize(window.file_sizes[this_json_url]), 'file:', full_data_path, 'to zip #:', cur_zip_idx);
-                          if (! isNaN(window.file_sizes[this_aux_url])) {
-                            console.debug('Adding', humanFileSize(window.file_sizes[this_aux_url]), 'file:', full_aux_path, 'to zip #:', cur_zip_idx);
-                          }
-
-                          this_zip_size += window.file_sizes[this_data_url];
-                          this_zip_size += window.file_sizes[this_json_url];
-                          // only add to the zip size if we actually have a file
-                          if (! isNaN(window.file_sizes[this_aux_url])) {
-                            this_zip_size += window.file_sizes[this_aux_url];
-                          }
                         }
-                        console.debug('this_zip_size is', humanFileSize(this_zip_size));
-                        zip_total_sizes.push(this_zip_size);
-
-                        var msg = '';
-                        if (zips.length > 1) {
-                          msg = 'Due to limitations of the .zip format, your ' + window.human_dl_size +
-                            ' download will be split into ' + zips.length +
-                            ' .zip files (each a maximum of ' +
-                            humanFileSize(size_limit) + ' in size). ' +
-                            'You can extract them all to the same ' +
-                            'folder to view all your data at once. \n'
-                          showExtraMessage(msg, 'warning');
-                        }
-
-                        // an array to hold async zip promises so we can do 
-                        // something after they all complete with Promise.all
-                        promList = [];
-                        // an array to hold each zip's percentage complete
-                        indiv_percs = [];
-                        // an array to hold each zip's downloaded bytes count
-                        indiv_dl_size = [];
-
-                        filesArr = [];
-                        for (var i = 0; i < zip_url_listing.length; i += 1) {
-                          filesArr.push([]);
-                          for (var j = 0; j < zip_url_listing[i].length; j += 1) {
-                            filesArr[i].push([zip_path_listing[i][j], zip_url_listing[i][j]]);
-                          }
-                        }
-                        // get iterators so we can do async loops
-                        // have to iterate over values but can't use a for-loop, due to async nature
-                        filesIters = filesArr.map(f => f.values());
-
-                        var bytesDownloaded = 0
-
-                        // use ponyfill if needed for TransformStream
-                        const TransformStream = window.TransformStream ?
-                          window.TransformStream : ponyfill.TransformStream;
-
-                        console.debug(`${zips.length} zips to download; ${individual_files.length} individual files to download`);
-
-                        // create array of TransformStreams to process progress
-                        // while downloading
-                        progressArr = [];
-                        for (var i = 0; i < zips.length; i++) {
-                          p = new TransformStream({
-                            transform(chunk, ctrl) {
-                              bytesDownloaded += chunk.byteLength
-                              //console.debug(`Downloaded ${humanFileSize(bytesDownloaded)} of the zip data`);
-                              updateProgressBar(bytesDownloaded,
-                                arrSum(zip_total_sizes) +
-                                arrSum(indiv_dl_sizes));
-                              ctrl.enqueue(chunk);
-                            }
-                          });
-                          progressArr.push(p);
-                        }
-
-                        // add transformstreams for the individual file downloads
-                        for (var i = 0; i < individual_files.length; i++) {
-                          p = new TransformStream({
-                            transform(chunk, ctrl) {
-                              bytesDownloaded += chunk.byteLength
-                              console.debug(`Downloaded ${humanFileSize(bytesDownloaded)} of the individual file data`);
-                              updateProgressBar(bytesDownloaded,
-                                arrSum(zip_total_sizes) +
-                                arrSum(indiv_dl_sizes));
-                              ctrl.enqueue(chunk)
-                            }
-                          });
-                          progressArr.push(p);
-                        }
-
-                        var fileStreamArr = [];
-                        var readableStreamArr = [];
-
-                        var abortController = new AbortController();
-                        var abortSignal = abortController.signal;
-                        var dlError = false;
                         
-                        // get name of zip files
-                        for (var i = 0; i < zips.length; i++) {
-                          if (zips.length === 1) {
-                            this_zip_title = zip_title;
-                          } else {
-                            this_zip_title = zip_title.replace(
-                              '.zip', '-' + (i + 1) + 'of' +
-                              zips.length + '.zip');
-                          }
+                        // set clean up function to trigger when tutorial is closed
+                        detail_tour.on('complete', () => clean_up_on_exit(already_open_modal));
+                        detail_tour.on('cancel', () => clean_up_on_exit(already_open_modal));
+                        detail_tour.on('hide', () => clean_up_on_exit(already_open_modal));
+                        
+                        $('.shepherd-modal-overlay-container').on('click', () => detail_tour.cancel());
+                        detail_tour.start()
+                    }
+                
+                    // Things to do when document is ready
+                    $(document).ready(function(){
 
-                          console.info(`Creating writeStream with name ${this_zip_title}`);
-                          let ws = streamSaver.createWriteStream(
-                            this_zip_title, {
-                              size: zip_total_sizes[i]
+                        if ($('#simpleDisplay').text() == 'false') { 
+                        // make each row in nav-table clickable as the header link
+                        // before DataTables conversion
+                        $('#nav-table tbody tr').click(function() {
+                            window.location = $(this).find('a').attr('href');
+                            return false;
+                        });
+
+
+                            /* Add navigation to sidenav using DataTables */
+                            var navTable = $('#nav-table').DataTable({
+                                            destroy: true,
+                                            pagingType: "simple",
+                                            info: false,
+                                            ordering: false,
+                                            processing: false,
+                                            searching: false,
+                                            lengthChange: false,
+                                            pageLength: 5,
+                                            language: {
+                                                        paginate: {
+                                                            previous: "<i class='fa fa-angle-double-left'></i>",
+                                                            next: "<i class='fa fa-angle-double-right'></i>"
+                                                        }
+                                                    },
+                                                "bInfo" : false,
+                                                responsive: true,
+                                                altEditor: false,    
+                                                drawCallback: function(){
+                                                    $('.paginate_button.next', this.api().table().container())          
+                                                        .on('click', function(){
+                                                        var info = navTable.page.info();
+                                                            $('.cdatatableDetails').remove();
+                                                            $('.sidebar .paginate_button.next').before($('<span>',{
+                                                            'text':' Page '+ (info.page+1) +' of '+info.pages + ' ',
+                                                            class:'cdatatableDetails'
+                                                            }));
+                                                        $('.sidebar .pagination').first().addClass('vertical-align');
+                                                        });    
+                                                        $('.paginate_button.previous', this.api().table().container())          
+                                                        .on('click', function(){
+                                                        var info = navTable.page.info();
+                                                            $('.cdatatableDetails').remove();
+                                                            $('.sidebar .paginate_button.next').before($('<span>',{
+                                                            'text':'Page '+ (info.page+1) +' of '+info.pages,
+                                                            class:'cdatatableDetails'
+                                                            }));
+                                                            $('.sidebar .pagination').first().addClass('vertical-align');
+                                                        }); 
+                                                },
+                                                ordering: false,
+                                                "dom": 'pt'
+                                            });
+                                            
+                            var info = navTable.page.info();
+                            $('.sidebar .paginate_button.next').before($('<span>',{
+                                'text':' Page '+ (info.page+1) +' of '+info.pages + ' ' ,
+                                class:'cdatatableDetails'
+                            }));
+                            $('.sidebar .pagination').first().addClass('vertical-align');
+                
+                        // Make dataset metadata tables DataTables
+                        $('.meta-table').each(function() {
+                            $(this).DataTable({
+                                destroy: true,
+                                pagingType: "simple_numbers",
+                                info: false,
+                                ordering: false,
+                                processing: true,
+                                searching: true,
+                                lengthChange: false,
+                                pageLength: 10,
+                                language: {
+                                    paginate: {
+                                        previous: "<i class='fa fa-angle-double-left'></i>",
+                                        next: "<i class='fa fa-angle-double-right'></i>"
+                                    }
+                                },
+                                responsive: true,
+                                ordering: false,
+                                dom: "<'row'<'col-sm-6'f><'col-sm-6'p>><'row'<'col-sm-12't>>",
+                                drawCallback: function(){
+                                                $('.paginate_button.next', this.api().table().container())          
+                                                    .on('click', activate_metadata_tooltips());    
+                                                    $('.paginate_button.previous', this.api().table().container())          
+                                                    .on('click', activate_metadata_tooltips()); 
+                                            },
+                            });
+                        });
+                        
+                        // Make AA filelist tables DataTables
+                        $('.aa-table').each(function() {
+                            var this_table = $(this).DataTable({
+                                destroy: true,
+                                pagingType: "simple_numbers",
+                                info: false,
+                                ordering: false,
+                                processing: true,
+                                searching: true,
+                                lengthChange: false,
+                                pageLength: 5,
+                                language: {
+                                    paginate: {
+                                        previous: "<i class='fa fa-angle-double-left'></i>",
+                                        next: "<i class='fa fa-angle-double-right'></i>"
+                                    }
+                                },
+                                // make dataset column as wide as possible without causing remaining
+                                // columns to wrap
+                                columnDefs: [
+                                    { "width": "53%", "targets": 0 }
+                                ],
+                                responsive: true,
+                                ordering: false,
+                                dom: '<"row table-row"<"col-xs-12 table-col"t>><"row pager-row"<"col-xs-12 pager-col"p>>'
+                            });
+                            
+                            // controls to reveal appropriate image on row hover
+                            $(this).on('mouseenter', '> tbody > tr', function() {
+                                // get the id of the correct image by looking at the row's img-id attribute
+                                var this_rows_img = $(this).first().attr('img-id');
+                                // the image we want to show is the one with that id
+                                var img_to_show = $('#' + this_rows_img);
+                                // get any img that have the visible class (so we can hide them)
+                                var img_to_hide = img_to_show.siblings('.aa-img.visible');
+                                // show/hide by adding and removing appropriate classes
+                                img_to_hide.addClass('hidden');
+                                img_to_hide.removeClass('visible');
+                                img_to_show.addClass('visible');
+                                img_to_show.removeClass('hidden');
+                            });
+                            
+                            var new_container = $(this).closest('.aa-content-row').next('.dt_paginate_container');
+                            var to_move = $(this).closest('.table-row').next('.pager-row').find('.pager-col');
+                            new_container.append(to_move);
+                        });
+                        
+                        const addEndingSlash = function(str){
+                            if (! (str.charAt(str.length -  1) === '/')){
+                                return str + '/';
+                            } else {
+                                return str;
+                            }
+                        }
+                        // Get array of filepaths from filelist-modal using jQuery:
+                        $('div#filelist-modal').each(function() {
+                        var paths = $('td.filepath').map(function() {
+                                return $(this).text();
+                            }).get();
+                        var rootPath = commonPath(paths, '/');
+                        $('td.filepath > code > a').each(function() {
+                            curText = $(this).text();
+                            // replace common path with blank in each file's path
+                            newText = curText.replace(rootPath, '');
+                            if (newText.length == 0) {
+                                newText = '/';
+                            }
+                            newText = addEndingSlash(newText);
+                            $(this).attr("href", $(this).attr("href") + rootPath + newText);
+                            $(this).text(decodeURIComponent(newText));
+                        });
+                        
+                        rootPath = addEndingSlash(rootPath);
+                        // put root path text into modal header link
+                        $('code#filelist-rootpath > a').each(function() {
+                            $(this).text(decodeURIComponent(rootPath));
+                            $(this).attr("href", $(this).attr("href") + rootPath);
+                        });
+                        
+                        window.rootPath = rootPath;
+                        
+                        });
+                        
+                        // Helper functions for messaging and progress:
+                        //
+                        // * Reset the message.
+                        //
+                        function resetMessage () {
+                            $result = $("#download-result"); 
+                            if (! $result.is(':visible') ) {
+                                $result.closest('.row').slideDown();
+                            }
+                            $result.text(" ");
+                        }
+                        //
+                        // show a successful message.
+                        // @param {String} text : the text to show.
+                        // @param {String} type : warning, danger, or success.
+                        //
+                        function showMessage(text, type) {
+                            resetMessage();
+                            $("#download-result")
+                            .removeClass('alert-warning alert-success alert-info alert-danger')
+                            .addClass("alert alert-" + type)
+                            .text(text);
+                        }
+                        function showExtraMessage(text, type) {
+                            // set message width to that of the table (sometimes the
+                            // table doesn't get rendered quite fast enough, so make
+                            // sure width is at least 500 px
+                            //let w = Math.max($('#filelist-table').width(), 500);
+                            
+                            $("#download-extra").closest('.row').slideDown();
+                            $("#download-extra")
+                            .removeClass('alert-warning alert-success alert-info alert-danger')
+                            .addClass("alert alert-" + type)
+                            .text(text);
+                            //$( "#download-extra" ).width(w);
+                            // resize this element everytime the window is changed
+                            //$(window).resize(function() {
+                            //    $( "#download-extra" ).width($('#download-result').width());
+                            //});
+                        }
+                        function hideExtraMessage() {
+                            $("#download-extra").closest('.row').slideUp();
+                        }
+                        //
+                        // show an error message.
+                        // @param {String} text the text to show.
+                        //
+                        function showError(text) {
+                            resetMessage();
+                            $("#download-result")
+                            .removeClass('alert-sucess alert-warning alert-info')
+                            .addClass("alert alert-danger")
+                            .text(text);
+                        }
+                        //
+                        // Update the progress bar.
+                        // @param {Integer} percent the current percent
+                        //
+                        function updatePercent(percent) {
+                            $("#progress_bar").addClass('active')
+                            
+                            $("#progress_bar").closest('.row').slideDown()
+                            .find(".progress-bar")
+                            .attr("aria-valuenow", percent)
+                            .removeClass("progress-bar-warning progress-bar-success")
+                            .addClass("progress-bar-info")
+                            .css({
+                                width : percent + "%",
+                                'min-width' : "5%"
+                            }).text(percent + '%');
+                        
+                        }
+                        
+                        function updateProgressBar(bytesDownloaded, totalToDownload) {
+                            let percent = (bytesDownloaded / totalToDownload * 100)|0;
+                            $("#progress_bar").addClass('active')
+                            //console.log('setting width to', percent+"%");
+                            $("#progress_bar").closest('.row').slideDown()
+                            .find(".progress-bar")
+                            .attr("aria-valuenow", percent)
+                            .removeClass("progress-bar-warning progress-bar-success progress-bar-danger")
+                            .addClass("progress-bar-info")
+                            .css({
+                                width : percent + "%",
+                                'min-width' : "5%"
+                            }).text(percent + '%');
+                            updateProgressMessage(bytesDownloaded, totalToDownload);
+                        }
+                        
+                        function updateProgressMessage(bytesDownloaded, totalToDownload) {
+                            if (bytesDownloaded === '0 B') {
+                                var msg = "Download is starting, please be patient..."
+                            } else {
+                                var msg = "Downloaded " + 
+                                        humanFileSize(bytesDownloaded) + 
+                                        ' out of ' + 
+                                        humanFileSize(totalToDownload) + '.';
+                            }
+                            showMessage(msg, 'info');
+                        }
+                        
+                        function errorProgress() {
+                            updatePercent(100);
+                            $("#progress_bar")
+                            .removeClass('active')
+                            .closest('.row').slideDown()
+                            .find(".progress-bar")
+                            .removeClass('progress-bar-info progress-bar-success progress-bar-warning')
+                            .addClass('progress-bar-danger')
+                            .text('Error!');
+                        }
+                        function finishProgress() {
+                            updatePercent(100);
+                            $("#progress_bar")
+                            .removeClass('active')
+                            .closest('.row').slideDown()
+                            .find(".progress-bar")
+                            .removeClass('progress-bar-info progress-bar-danger progress-bar-warning')
+                            .addClass('progress-bar-success')
+                            .text('Finished!');
+                        }
+                        
+                        //
+                        // initiate download of files with their metadata
+                        // @param {Array} data_urls : the URLs of the data files to include in zip
+                        // @param {Array} json_urls : the URLs of the json files to include in zip
+                        // @param {Array} paths : the containing folder of each file to include in zip
+                        // @param {String} zip_title: the name of the .zip to download
+                        //
+                        var downloadFn = function (data_urls, json_urls, paths, zip_title) {
+                        if (!(isChrome || isOpera || isFirefox || isEdgeChromium)) {
+                            alert('Due to browser limitations, downloading of files ' +
+                            'into a zip archive is only supported in up-to-date versions of ' +
+                            'the Chrome, Firefox, Opera, and Edge browsers. Please either download ' +
+                            'the files individually using the buttons in the table, or ' +
+                            'download them manually from the central file ' +
+                            'server instead.');
+                            $('button.dl-btns').removeClass('disabled');
+                            filelist_dt.select.style('multi');
+                        } else {
+                            resetMessage();
+                            updatePercent(0);
+
+                            // go through data_urls to check for .ser files and 
+                            // add the auxillary .emi files if needed
+                            let aux_urls = data_urls.map(getEmiName);
+
+                            // show cancel button
+                            $('#btn-cancel-row').slideDown();
+
+                            // combinedObject will have items [data_url, json_url, path, aux_url]
+                            let combinedObject = data_urls.map(function (e, i) {
+                            return [e, json_urls[i], paths[i], aux_urls[i]];
+                            });
+                            // combinedArray will be of type array, so it can looped through with forEach
+                            let combinedArray = $.map(combinedObject, function (value, index) {
+                            return [value];
                             });
 
-                          fileStreamArr.push(ws);
+                            // array of zips (not actually used besides as a counter)
+                            let zips = [];
+                            // array of total zip sizes
+                            let zip_total_sizes = [];
+                            let indiv_dl_sizes = [];
+                            // array of arrays listing which urls are in each zip 
+                            let zip_url_listing = [];
+                            // array of arrays listing the filepaths in each zip 
+                            let zip_path_listing = [];
+                            let cur_zip_idx = 0;
+                            let this_zip_size = 0;
 
-                          let files = filesIters[i];
-                          // ZIP is a ReadableStream
-                          z = new ZIP({
-                              pull(ctrl) {
-                                const it = files.next()
-                                if (it.done) {
-                                  ctrl.close()
+                            // limit zip size to 4.0 GiB (4294967296 bytes)
+                            // zips larger than 4.0 GiB are corrupted by the zip-stream.js
+                            // library and cannot be read, so we have to stay under that size
+                            const size_limit = 4294967296;
+
+                            // specify loopLength so we can change it if we need to ignore files
+                            var loopLength = combinedArray.length;
+                            var individual_files = [];
+                            // Allocate each url to a particular zip based on size:
+                            // this_aux_url will be null if there's no auxiliary file
+                            // present, but sometimes .emi files are missing, and 
+                            // we already checked for that when checking file sizes,
+                            // so if aux_url is not null, check window.file_sizes. 
+                            // The value for that url will be NaN if it wasn't 
+                            // found on the server
+                            for (var index = 0; index < loopLength; index += 1) {
+                            let this_path = null;
+                            let this_file_size = 0;
+
+                            let this_data_url = null;
+                            let this_json_url = null;
+                            let this_aux_url = null;
+
+                            let data_filename = null;
+                            let json_filename = null;
+                            let aux_filename = null;
+
+                            let full_data_path = null;
+                            let full_json_path = null;
+                            let full_aux_path = null;
+
+                            let item = combinedArray[index];
+                            this_data_url = item[0];
+                            this_json_url = item[1];
+                            this_path = item[2];
+                            this_aux_url = item[3];
+
+                            // remove leading slash:
+                            if (this_path.charAt(0) === '/') {
+                                this_path = this_path.substr(1);
+                            }
+                            // convert url to filename
+                            data_filename = this_data_url.replace(/.*\//g, "");
+                            json_filename = this_json_url.replace(/.*\//g, "");
+                            if (this_aux_url) {
+                                aux_filename = this_aux_url.replace(/.*\//g, "");
+                            } else {
+                                aux_filename = null;
+                            }
+                            // add appropriate path structure for the file
+                            if (this_path.length > 0) {
+                                full_data_path = this_path + '/' + data_filename
+                                full_json_path = this_path + '/' + json_filename
+                                if (aux_filename) {
+                                full_aux_path = this_path + '/' + aux_filename
                                 } else {
-                                  const [name, url] = it.value
-
-                                  return fetch(url, {
-                                      signal: abortSignal
-                                    })
-                                    .then(res => {
-                                      ctrl.enqueue({
-                                        name,
-                                        stream: () => {
-                                          r = res.body;
-                                          readableStreamArr.push(r);
-                                          return r
-                                        }
-                                      });
-                                    });
+                                full_aux_path = null;
                                 }
-                              }
-                            }).pipeThrough(progressArr[i])
-                            .pipeTo(fileStreamArr[i], {
-                              signal: abortSignal
-                            })
-                            .catch(err => {
-                              if (abortSignal.aborted) {
-                                //console.log('[XSLT] [zip-pipeTo] User clicked cancel');
-                              } else {
-                                //console.log('[XSLT] [zip-pipeTo] Other error');
-                                console.error(err);
-                                dlError = true;
-                                showError('There was an error during the download:', err.message);
-                              }
+                            } else {
+                                full_data_path = data_filename;
+                                full_json_path = json_filename;
+                                if (aux_filename) {
+                                full_aux_path = aux_filename
+                                } else {
+                                full_aux_path = null;
+                                }
+                            }
+
+                            // make paths like files and not like URLs
+                            full_data_path = decodeURIComponent(full_data_path);
+                            full_json_path = decodeURIComponent(full_json_path);
+                            if (full_aux_path) {
+                                full_aux_path = decodeURIComponent(full_aux_path);
+                            }
+
+                            // if this file is larger than the zip limit, process it separately
+                            // and adjust the for loop to compensate
+                            this_file_size = window.file_sizes[this_data_url] +
+                                window.file_sizes[this_json_url];
+                            if (! isNaN(window.file_sizes[this_aux_url])) {
+                                this_file_size += window.file_sizes[this_aux_url];
+                            }
+                            if (this_file_size > size_limit) {
+                                //console.log('Adding ' + full_data_path + ' to individual file downloads');
+                                individual_files.push(combinedArray[index][0]);
+                                //console.log('Adding ' + full_json_path + ' to individual file downloads');
+                                individual_files.push(combinedArray[index][1]);
+                                if (full_aux_path && (! isNaN(window.file_sizes[this_aux_url]))) {
+                                //console.log('Adding ' + full_aux_path + ' to individual file downloads');
+                                individual_files.push(combinedArray[index][3]);
+                                }
+                                indiv_dl_sizes.push(window.file_sizes[this_data_url]);
+                                indiv_dl_sizes.push(window.file_sizes[this_json_url]);
+                                if (! isNaN(window.file_sizes[this_aux_url])) {
+                                indiv_dl_sizes.push(window.file_sizes[this_aux_url]);
+                                }
+                                loopLength -= 1;
+                                combinedArray.splice(index, 1);
+                                index -= 1;
+                                continue;
+                            }
+
+                            // If this is the first file (i.e. zip size == 0), 
+                            // create new zip object and add it to array
+                            if (this_zip_size === 0) {
+                                zips.push({});
+                                zip_url_listing.push([]);
+                                zip_path_listing.push([]);
+                            }
+                            // this is not the first file:
+                            else {
+                                // check to make sure adding this file would not
+                                // put us over the zip size limit
+                                let new_size = window.file_sizes[this_data_url] +
+                                window.file_sizes[this_json_url] +
+                                this_zip_size;
+                                if (! isNaN(window.file_sizes[this_aux_url])) {
+                                new_size += window.file_sizes[this_aux_url];
+                                }
+                                // if we're over the limit, end this zip, start
+                                // new one and repeat iteration by decrementing index
+                                if (new_size > size_limit) {
+                                zip_total_sizes.push(this_zip_size);
+                                this_zip_size = 0;
+                                cur_zip_idx += 1;
+                                index--;
+                                continue;
+                                }
+                            }
+
+                            // replace any double slashes
+                            full_data_path = full_data_path.replace('//', '/');
+                            full_json_path = full_json_path.replace('//', '/');
+                            if (full_aux_path) {
+                                full_aux_path = full_aux_path.replace('//', '/');
+                            }
+
+                            // assign file to zip
+                            zip_url_listing[cur_zip_idx].push(this_data_url);
+                            zip_url_listing[cur_zip_idx].push(this_json_url);
+                            zip_path_listing[cur_zip_idx].push(full_data_path);
+                            zip_path_listing[cur_zip_idx].push(full_json_path);
+                            // only add zip file if we have a size for it
+                            if (! isNaN(window.file_sizes[this_aux_url])) {
+                                // multiple ser files could have the same emi, so 
+                                // check to make sure we do not add it twice
+                                if (! zip_url_listing[cur_zip_idx].includes(this_aux_url)){
+                                zip_url_listing[cur_zip_idx].push(this_aux_url);
+                                zip_path_listing[cur_zip_idx].push(full_aux_path);
+                                }
+                            }
+
+                            console.debug('Adding', humanFileSize(window.file_sizes[this_data_url]), 'file:', full_data_path, 'to zip #:', cur_zip_idx);
+                            console.debug('Adding', humanFileSize(window.file_sizes[this_json_url]), 'file:', full_data_path, 'to zip #:', cur_zip_idx);
+                            if (! isNaN(window.file_sizes[this_aux_url])) {
+                                console.debug('Adding', humanFileSize(window.file_sizes[this_aux_url]), 'file:', full_aux_path, 'to zip #:', cur_zip_idx);
+                            }
+
+                            this_zip_size += window.file_sizes[this_data_url];
+                            this_zip_size += window.file_sizes[this_json_url];
+                            // only add to the zip size if we actually have a file
+                            if (! isNaN(window.file_sizes[this_aux_url])) {
+                                this_zip_size += window.file_sizes[this_aux_url];
+                            }
+                            }
+                            console.debug('this_zip_size is', humanFileSize(this_zip_size));
+                            zip_total_sizes.push(this_zip_size);
+
+                            var msg = '';
+                            if (zips.length > 1) {
+                            msg = 'Due to limitations of the .zip format, your ' + window.human_dl_size +
+                                ' download will be split into ' + zips.length +
+                                ' .zip files (each a maximum of ' +
+                                humanFileSize(size_limit) + ' in size). ' +
+                                'You can extract them all to the same ' +
+                                'folder to view all your data at once. \n'
+                            showExtraMessage(msg, 'warning');
+                            }
+
+                            // an array to hold async zip promises so we can do 
+                            // something after they all complete with Promise.all
+                            promList = [];
+                            // an array to hold each zip's percentage complete
+                            indiv_percs = [];
+                            // an array to hold each zip's downloaded bytes count
+                            indiv_dl_size = [];
+
+                            filesArr = [];
+                            for (var i = 0; i < zip_url_listing.length; i += 1) {
+                            filesArr.push([]);
+                            for (var j = 0; j < zip_url_listing[i].length; j += 1) {
+                                filesArr[i].push([zip_path_listing[i][j], zip_url_listing[i][j]]);
+                            }
+                            }
+                            // get iterators so we can do async loops
+                            // have to iterate over values but can't use a for-loop, due to async nature
+                            filesIters = filesArr.map(f => f.values());
+
+                            var bytesDownloaded = 0
+
+                            // use ponyfill if needed for TransformStream
+                            const TransformStream = window.TransformStream ?
+                            window.TransformStream : ponyfill.TransformStream;
+
+                            console.debug(`${zips.length} zips to download; ${individual_files.length} individual files to download`);
+
+                            // create array of TransformStreams to process progress
+                            // while downloading
+                            progressArr = [];
+                            for (var i = 0; i < zips.length; i++) {
+                            p = new TransformStream({
+                                transform(chunk, ctrl) {
+                                bytesDownloaded += chunk.byteLength
+                                //console.debug(`Downloaded ${humanFileSize(bytesDownloaded)} of the zip data`);
+                                updateProgressBar(bytesDownloaded,
+                                    arrSum(zip_total_sizes) +
+                                    arrSum(indiv_dl_sizes));
+                                ctrl.enqueue(chunk);
+                                }
                             });
-                          promList.push(z);
-                        }
-
-                        // add warning text if downloading any individual files
-                        if (individual_files.length > 0) {
-                          if (msg.length > 0) {
-                            msg += '\n';
-                          }
-
-                          msg += 'Because their individual size is larger than can be ' +
-                            'included in a .zip file, the following files (and their metadata) ' +
-                            'will not be included in the .zip and instead downloaded individually: \n';
-
-                          for (let f of individual_files) {
-                            // f is a url, so convert to filename
-                            if (!f.endsWith('.json')) {
-                              msg += '    - ' + decodeURIComponent(f.replace(/.*\//g, "")) + '\n';
+                            progressArr.push(p);
                             }
-                          }
 
-                          showExtraMessage(msg, 'warning');
-                        }
-
-                        // used to convert the response of a fetch api to a modern ReadableStream with pipeThrough
-                        toPonyRS = WebStreamsAdapter.createReadableStreamWrapper(ponyfill.ReadableStream)
-
-                        for (var i = 0; i < individual_files.length; i++) {
-                          let url = individual_files[i];
-                          let filename = decodeURIComponent(url.replace(/.*\//g, ""));
-                          console.warn(`Writing to ${filename}`);
-                          let fileStream = streamSaver.createWriteStream(
-                            filename, {
-                              size: window.file_sizes[url]
+                            // add transformstreams for the individual file downloads
+                            for (var i = 0; i < individual_files.length; i++) {
+                            p = new TransformStream({
+                                transform(chunk, ctrl) {
+                                bytesDownloaded += chunk.byteLength
+                                console.debug(`Downloaded ${humanFileSize(bytesDownloaded)} of the individual file data`);
+                                updateProgressBar(bytesDownloaded,
+                                    arrSum(zip_total_sizes) +
+                                    arrSum(indiv_dl_sizes));
+                                ctrl.enqueue(chunk)
+                                }
+                            });
+                            progressArr.push(p);
                             }
-                          );
-                          let writer = fileStream.getWriter();
-                          console.warn("ran getWriter()");
-                          writer.releaseLock();
-                          let this_prog = progressArr[i + zips.length]
-                          let p = fetch(url, {
-                              signal: abortSignal
-                            })
-                            .then(res => {
-                              rs = res.body;
-                              // use webstream adapter if we don't have pipeTo on the response (i.e. FF)
-                              rs = window.ReadableStream.prototype.pipeTo ?
-                                rs : toPonyRS(rs)
-                              readableStreamArr.push(rs);
-                              return rs.pipeThrough(this_prog)
-                                .pipeTo(fileStream,
-                                  // make sure this pipe is abortable
-                                  {
-                                    signal: abortSignal
-                                  })
+
+                            var fileStreamArr = [];
+                            var readableStreamArr = [];
+
+                            var abortController = new AbortController();
+                            var abortSignal = abortController.signal;
+                            var dlError = false;
+                            
+                            // get name of zip files
+                            for (var i = 0; i < zips.length; i++) {
+                            if (zips.length === 1) {
+                                this_zip_title = zip_title;
+                            } else {
+                                this_zip_title = zip_title.replace(
+                                '.zip', '-' + (i + 1) + 'of' +
+                                zips.length + '.zip');
+                            }
+
+                            console.info(`Creating writeStream with name ${this_zip_title}`);
+                            let ws = streamSaver.createWriteStream(
+                                this_zip_title, {
+                                size: zip_total_sizes[i]
+                                });
+
+                            fileStreamArr.push(ws);
+
+                            let files = filesIters[i];
+                            // ZIP is a ReadableStream
+                            z = new ZIP({
+                                pull(ctrl) {
+                                    const it = files.next()
+                                    if (it.done) {
+                                    ctrl.close()
+                                    } else {
+                                    const [name, url] = it.value
+
+                                    return fetch(url, {
+                                        signal: abortSignal
+                                        })
+                                        .then(res => {
+                                        ctrl.enqueue({
+                                            name,
+                                            stream: () => {
+                                            r = res.body;
+                                            readableStreamArr.push(r);
+                                            return r
+                                            }
+                                        });
+                                        });
+                                    }
+                                }
+                                }).pipeThrough(progressArr[i])
+                                .pipeTo(fileStreamArr[i], {
+                                signal: abortSignal
+                                })
                                 .catch(err => {
-                                  if (abortSignal.aborted) {
-                                    //console.log('[XSLT] [indivFile-pipeTo] User clicked cancel');
-                                  } else {
-                                    //console.log('[XSLT] [indivFile-pipeTo] Other error');
+                                if (abortSignal.aborted) {
+                                    //console.log('[XSLT] [zip-pipeTo] User clicked cancel');
+                                } else {
+                                    //console.log('[XSLT] [zip-pipeTo] Other error');
+                                    console.error(err);
                                     dlError = true;
                                     showError('There was an error during the download:', err.message);
-                                  }
+                                }
                                 });
+                            promList.push(z);
+                            }
+
+                            // add warning text if downloading any individual files
+                            if (individual_files.length > 0) {
+                            if (msg.length > 0) {
+                                msg += '\n';
+                            }
+
+                            msg += 'Because their individual size is larger than can be ' +
+                                'included in a .zip file, the following files (and their metadata) ' +
+                                'will not be included in the .zip and instead downloaded individually: \n';
+
+                            for (let f of individual_files) {
+                                // f is a url, so convert to filename
+                                if (!f.endsWith('.json')) {
+                                msg += '    - ' + decodeURIComponent(f.replace(/.*\//g, "")) + '\n';
+                                }
+                            }
+
+                            showExtraMessage(msg, 'warning');
+                            }
+
+                            // used to convert the response of a fetch api to a modern ReadableStream with pipeThrough
+                            toPonyRS = WebStreamsAdapter.createReadableStreamWrapper(ponyfill.ReadableStream)
+
+                            for (var i = 0; i < individual_files.length; i++) {
+                            let url = individual_files[i];
+                            let filename = decodeURIComponent(url.replace(/.*\//g, ""));
+                            console.warn(`Writing to ${filename}`);
+                            let fileStream = streamSaver.createWriteStream(
+                                filename, {
+                                size: window.file_sizes[url]
+                                }
+                            );
+                            let writer = fileStream.getWriter();
+                            console.warn("ran getWriter()");
+                            writer.releaseLock();
+                            let this_prog = progressArr[i + zips.length]
+                            let p = fetch(url, {
+                                signal: abortSignal
+                                })
+                                .then(res => {
+                                rs = res.body;
+                                // use webstream adapter if we don't have pipeTo on the response (i.e. FF)
+                                rs = window.ReadableStream.prototype.pipeTo ?
+                                    rs : toPonyRS(rs)
+                                readableStreamArr.push(rs);
+                                return rs.pipeThrough(this_prog)
+                                    .pipeTo(fileStream,
+                                    // make sure this pipe is abortable
+                                    {
+                                        signal: abortSignal
+                                    })
+                                    .catch(err => {
+                                    if (abortSignal.aborted) {
+                                        //console.log('[XSLT] [indivFile-pipeTo] User clicked cancel');
+                                    } else {
+                                        //console.log('[XSLT] [indivFile-pipeTo] Other error');
+                                        dlError = true;
+                                        showError('There was an error during the download:', err.message);
+                                    }
+                                    });
+                                });
+                            promList.push(p);
+                            fileStreamArr.push(fileStream);
+                            }
+
+                            // Add warning if user tries to leave page before download is finished:
+                            // In newer browsers, this message will not show (just the "unsaved changes" warning)
+                            $(window).bind('beforeunload', function () {
+                            return 'The download has not finished, are you sure you want to leave the page?';
                             });
-                          promList.push(p);
-                          fileStreamArr.push(fileStream);
+
+                            const cancel_downloads = function () {
+                            abortController.abort();
+                            }
+
+                            // make downloads cancel when leaving page or clicking cancel button
+                            window.onunload = cancel_downloads;
+                            $('#btn-cancel-dl').click(cancel_downloads);
+
+                            // clean up after all Promises have delivered
+                            Promise.all(promList).then(function () {
+                            // if the download was aborted:
+                            if (abortSignal.aborted) {
+                                //console.log('[XSLT] [final Promise] Cancel button was clicked');
+                                showMessage("Download canceled by user (any already completed downloads were saved)", 'warning');
+                            } else if (dlError) {
+                                //console.log('[XSLT] [final Promise] Error during downloading!');
+                                errorProgress();
+                            } else { // otherwise we finished normally
+                                //console.log('[XSLT] [final Promise] All downloads finished');
+                                finishProgress();
+                                showMessage("Finished downloading all files!", 'success');
+                            }
+                            hideExtraMessage();
+                            $(window).unbind('beforeunload');
+                            $('#btn-cancel-row').slideUp();
+                            $('#progressbar-row').slideUp();
+                            $('button.dl-btns').removeClass('disabled');
+                            filelist_dt.select.style('multi');
+
+                            });
                         }
-
-                        // Add warning if user tries to leave page before download is finished:
-                        // In newer browsers, this message will not show (just the "unsaved changes" warning)
-                        $(window).bind('beforeunload', function () {
-                          return 'The download has not finished, are you sure you want to leave the page?';
-                        });
-
-                        const cancel_downloads = function () {
-                          abortController.abort();
-                        }
-
-                        // make downloads cancel when leaving page or clicking cancel button
-                        window.onunload = cancel_downloads;
-                        $('#btn-cancel-dl').click(cancel_downloads);
-
-                        // clean up after all Promises have delivered
-                        Promise.all(promList).then(function () {
-                          // if the download was aborted:
-                          if (abortSignal.aborted) {
-                            //console.log('[XSLT] [final Promise] Cancel button was clicked');
-                            showMessage("Download canceled by user (any already completed downloads were saved)", 'warning');
-                          } else if (dlError) {
-                            //console.log('[XSLT] [final Promise] Error during downloading!');
-                            errorProgress();
-                          } else { // otherwise we finished normally
-                            //console.log('[XSLT] [final Promise] All downloads finished');
-                            finishProgress();
-                            showMessage("Finished downloading all files!", 'success');
-                          }
-                          hideExtraMessage();
-                          $(window).unbind('beforeunload');
-                          $('#btn-cancel-row').slideUp();
-                          $('#progressbar-row').slideUp();
-                          $('button.dl-btns').removeClass('disabled');
-                          filelist_dt.select.style('multi');
-
-                        });
-                      }
-                    };
-                 
-                    // https://stackoverflow.com/a/14919494/1435788
-                    function humanFileSize(bytes, si) {
-                        var thresh = si ? 1000 : 1024;
-                        if(Math.abs(bytes) < thresh) {
-                            return bytes + ' B';
-                        }
-                        var units = si
-                            ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
-                            : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
-                        var u = -1;
-                        do {
-                            bytes /= thresh;
-                            ++u;
-                        } while(Math.abs(bytes) >= thresh && u < units.length - 1);
-                        return bytes.toFixed(1)+' '+units[u];
-                    }
+                        };
                     
-                    //
-                    // get the size of a download for a url
-                    // @param {String} url : the URLs of the data file to query
-                    // @param {Boolean} update_table: whether the download size should be updated in the table or not (only on the first run)
-                    //
-                    async function get_url_size(url) {
-                        let res = await fetch(url, {method:'HEAD'})
-                        if (res.status == 200){
-                          contentlength = Number(res.headers.get('content-length'));
-                          return {'url': url, 'size': contentlength};
-                        } else {
-                          console.warn(`Could not fetch file size for ${url} (file might not exist)`)
-                          return {'url': url, 'size': NaN}
+                        // https://stackoverflow.com/a/14919494/1435788
+                        function humanFileSize(bytes, si) {
+                            var thresh = si ? 1000 : 1024;
+                            if(Math.abs(bytes) < thresh) {
+                                return bytes + ' B';
+                            }
+                            var units = si
+                                ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+                                : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+                            var u = -1;
+                            do {
+                                bytes /= thresh;
+                                ++u;
+                            } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+                            return bytes.toFixed(1)+' '+units[u];
                         }
-                    }
-                    
-                    window.file_sizes = {};
-                    //
-                    // get the size of a group of URLs and display it to user
-                    // @param {Array} data_urls : the URLs of the data files to query
-                    // @param {Array} json_urls : the URLs of the json files to query
-                    // @param {String} type : one of ['initial', 'select'] whether this is the 'initial' data size query or not (when page first loads)
-                    //
-                    function showDownloadSize(data_urls, json_urls, type) {
-                        resetMessage();
-                        showMessage('Calculating download size...', 'info');   
                         
-                        // go through data_urls to check for .ser files and 
-                        // add the auxillary .emi files if needed
-                        let aux_urls = data_urls.map(getEmiName);
+                        //
+                        // get the size of a download for a url
+                        // @param {String} url : the URLs of the data file to query
+                        // @param {Boolean} update_table: whether the download size should be updated in the table or not (only on the first run)
+                        //
+                        async function get_url_size(url) {
+                            let res = await fetch(url, {method:'HEAD'})
+                            if (res.status == 200){
+                            contentlength = Number(res.headers.get('content-length'));
+                            return {'url': url, 'size': contentlength};
+                            } else {
+                            console.warn(`Could not fetch file size for ${url} (file might not exist)`)
+                            return {'url': url, 'size': NaN}
+                            }
+                        }
                         
-                        // combinedObject will have items [data_url, json_url, null]
-                        // the third item is for any auxillary files (such as .emi metadata files that should be included in download)
-                        var combinedObject = data_urls.map(function(e, i) {
-                            return [e, json_urls[i], aux_urls[i]];
-                        });
-                        // combinedArray will be of type array, so it can looped through with forEach
-                        var combinedArray = $.map(combinedObject, function(value, index) {
-                            return [value];
-                        });
-                                                
-                        var total_size = 0;
-                        promList = [];
-                        sizeList = [];
-                        combinedArray.forEach(function (item, index) {
-                          this_data_url = item[0];
-                          this_json_url = item[1];
-                          this_aux_url = item[2];
-                          // if we've already cached this file's size, just use that instead of fetching again
-                          if (this_data_url in window.file_sizes) {
-                            promList.push(Promise.resolve());
-                            let this_data_size = window.file_sizes[this_data_url]
-                            total_size += this_data_size;
-                            sizeList.push({
-                              name: this_data_url,
-                              size: this_data_size
+                        window.file_sizes = {};
+                        //
+                        // get the size of a group of URLs and display it to user
+                        // @param {Array} data_urls : the URLs of the data files to query
+                        // @param {Array} json_urls : the URLs of the json files to query
+                        // @param {String} type : one of ['initial', 'select'] whether this is the 'initial' data size query or not (when page first loads)
+                        //
+                        function showDownloadSize(data_urls, json_urls, type) {
+                            resetMessage();
+                            showMessage('Calculating download size...', 'info');   
+                            
+                            // go through data_urls to check for .ser files and 
+                            // add the auxillary .emi files if needed
+                            let aux_urls = data_urls.map(getEmiName);
+                            
+                            // combinedObject will have items [data_url, json_url, null]
+                            // the third item is for any auxillary files (such as .emi metadata files that should be included in download)
+                            var combinedObject = data_urls.map(function(e, i) {
+                                return [e, json_urls[i], aux_urls[i]];
                             });
-                          } else {
-                            data_prom = get_url_size(this_data_url);
-                            promList.push(data_prom);
-                            data_prom.then(res => {
-                              total_size += res.size
-                              sizeList.push({
-                                name: res.url,
-                                size: res.size
-                              });
+                            // combinedArray will be of type array, so it can looped through with forEach
+                            var combinedArray = $.map(combinedObject, function(value, index) {
+                                return [value];
                             });
-                          }
-                          // if we've already cached this file's size, just use that instead of fetching again
-                          if (this_json_url in window.file_sizes) {
-                            promList.push(Promise.resolve());
-                            let this_json_size = window.file_sizes[this_json_url];
-                            total_size += this_json_size
-                            sizeList.push({
-                              name: this_json_url,
-                              size: this_json_size
-                            });
-                          } else {
-                            json_prom = get_url_size(this_json_url);
-                            promList.push(json_prom);
-                            json_prom.then(res => {
-                              total_size += res.size
-                              sizeList.push({
-                                name: res.url,
-                                size: res.size
-                              });
-                            });
-                          }
-                          // only do anything for aux urls if they're not null
-                          if (this_aux_url) {
-                            if (this_aux_url in window.file_sizes) {
-                              promList.push(Promise.resolve());
-                              let this_aux_size = window.file_sizes[this_aux_url];
-                              if (! isNaN(window.file_sizes[this_aux_url]) ){
-                                total_size += this_aux_size;
+                                                    
+                            var total_size = 0;
+                            promList = [];
+                            sizeList = [];
+                            combinedArray.forEach(function (item, index) {
+                            this_data_url = item[0];
+                            this_json_url = item[1];
+                            this_aux_url = item[2];
+                            // if we've already cached this file's size, just use that instead of fetching again
+                            if (this_data_url in window.file_sizes) {
+                                promList.push(Promise.resolve());
+                                let this_data_size = window.file_sizes[this_data_url]
+                                total_size += this_data_size;
                                 sizeList.push({
-                                  name: this_aux_url,
-                                  size: this_aux_size
+                                name: this_data_url,
+                                size: this_data_size
                                 });
-                              }
+                            } else {
+                                data_prom = get_url_size(this_data_url);
+                                promList.push(data_prom);
+                                data_prom.then(res => {
+                                total_size += res.size
+                                sizeList.push({
+                                    name: res.url,
+                                    size: res.size
+                                });
+                                });
+                            }
+                            // if we've already cached this file's size, just use that instead of fetching again
+                            if (this_json_url in window.file_sizes) {
+                                promList.push(Promise.resolve());
+                                let this_json_size = window.file_sizes[this_json_url];
+                                total_size += this_json_size
+                                sizeList.push({
+                                name: this_json_url,
+                                size: this_json_size
+                                });
+                            } else {
+                                json_prom = get_url_size(this_json_url);
+                                promList.push(json_prom);
+                                json_prom.then(res => {
+                                total_size += res.size
+                                sizeList.push({
+                                    name: res.url,
+                                    size: res.size
+                                });
+                                });
+                            }
+                            // only do anything for aux urls if they're not null
+                            if (this_aux_url) {
+                                if (this_aux_url in window.file_sizes) {
+                                promList.push(Promise.resolve());
+                                let this_aux_size = window.file_sizes[this_aux_url];
+                                if (! isNaN(window.file_sizes[this_aux_url]) ){
+                                    total_size += this_aux_size;
+                                    sizeList.push({
+                                    name: this_aux_url,
+                                    size: this_aux_size
+                                    });
+                                }
+                                }
+                                else {
+                                    aux_prom = get_url_size(this_aux_url);
+                                    promList.push(aux_prom);
+                                    aux_prom.then(res => {
+                                    if (res !== null) {
+                                        console.debug(`Adding ${res.size} for ${res.url}`);
+                                        if (!isNaN(res.size)){
+                                            total_size += res.size
+                                        }
+                                        sizeList.push({
+                                        name: res.url,
+                                        size: res.size
+                                        });
+                                    } 
+                                    })
+                                }
+                            } 
+                            });
+                            
+                            Promise.all(promList).then(function() {
+                                var human_dl_size = humanFileSize(total_size);
+                                window.total_size = total_size;
+                                window.human_dl_size = human_dl_size;
+                                sizeList.map(function(v, i){
+                                    window.file_sizes[v['name']] = v['size']})
+                                // if this is the initial run, update the filelisting table with sizes:    
+                                if ( type === 'initial' ) {
+                                    filelist_dt.rows().every( function (rowIdx,tableLoop,rowLoop) {
+                                        var d = this.data();
+                                        var a = d.data_dl;
+                                        var url = $(a)[0].href
+                                        // use datatables cell API to set this row's 'size' column to the human file size:
+                                        this.cell(rowIdx, 'size:name').data(humanFileSize(window.file_sizes[url]));
+                                    });
+                                }
+                                let msg = (type === 'initial' ? 
+                                        'Total size of all datasets: ' :
+                                        'Total download size: ')
+                            
+                                showMessage(msg + human_dl_size + (
+                                    aux_urls.toArray().some((obj) => obj !== null) ?
+                                    ' (includes some auxillary data files not explicitly listed below).'
+                                    :
+                                    '.'), 'info');
+                            });
+                        }
+
+
+                        
+                        var d = new Date($('span.list-record-date').text());
+                        var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                        var mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
+                        var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+                        var record_title = $('span#xmlName').text();
+                        if (record_title.endsWith('.xml')) {
+                            var zip_title = record_title.replace('.xml', '.zip')
+                        } else {
+                            var zip_title = record_title + '.zip';
+                        }
+                        var record_header = 'NexusLIMS Experiment: ' + $('span.list-record-title').text() + '\n' +
+                                            'Instrument: ' + $('span#instr-badge').text() + '\n' + 
+                                            'Experimenter: ' + $('span.list-record-experimenter').text() + '\n' + 
+                                            'Date: ' + $('span.list-record-date').text();
+                        
+                        var getEmiName = (serName) => {
+                            let re = /(.*)_[0-9]+\.ser/;
+                            let match = re.exec(serName);
+                            if (match == null) {
+                                return null;
                             }
                             else {
-                                aux_prom = get_url_size(this_aux_url);
-                                promList.push(aux_prom);
-                                aux_prom.then(res => {
-                                  if (res !== null) {
-                                    console.debug(`Adding ${res.size} for ${res.url}`);
-                                    if (!isNaN(res.size)){
-                                        total_size += res.size
-                                    }
-                                    sizeList.push({
-                                      name: res.url,
-                                      size: res.size
-                                    });
-                                  } 
-                                })
+                                return match[1] + '.emi'
                             }
-                          } 
+                        }
+                        
+                        // DataTables for filelist-modal table
+                        var filelist_dt = $('table#filelist-table').DataTable({
+                            dom: "<'row'<'col-sm-6'f><'col-sm-6'p>><'row'<'#button-col.col-sm-12 text-center'B>><'row'<'col-sm-12 w-100't>><'#filelist_info_row.row'<'col-sm-12'i>>",
+                            ordering: false,
+                            buttons: [
+                                { 
+                                    extend: 'selectAll',
+                                    className: 'btn-select-all dl-btns',
+                                    text: "<i class='fas fa-check-square menu-fa'/> <span class='filelist-btn'>Select all</span>"
+                                },
+                                { 
+                                    extend: 'selectNone',
+                                    className: 'btn-select-none dl-btns',
+                                    text: "<i class='far fa-square menu-fa'/> <span class='filelist-btn''>Select none</span>"
+                                },
+                                {
+                                    text: "<i class='fa fa-archive menu-fa'/> <span class='filelist-btn''>Download all as .zip</span>",
+                                    className: 'btn-dl-all dl-btns',
+                                    action: function ( e, dt, node, config ) {
+                                        var data_urls = dt.rows().data().map(x => $(x.data_dl).attr('href'));
+                                        var json_urls = dt.rows().data().map(x => $(x.json_dl).attr('href'));                                    
+                                        var paths = dt.rows().data().map(x => $(x.path).text());  
+                                        $('button.dl-btns').addClass('disabled');
+                                        filelist_dt.select.style('api');
+                                        downloadFn(data_urls, json_urls, paths, zip_title);
+                                    },
+                                    attr:  {
+                                        'data-toggle': 'tooltip',
+                                        'data-placement': 'top',
+                                        'data-html': true,
+                                        'title': 'Warning! This may take a significant amount of time depending on the number of files'
+                                    }
+                                },
+                                {
+                                    extend: 'selected',
+                                    text: "<i class='far fa-file-archive menu-fa'/> <span class='filelist-btn'>Download selected as .zip</span>",
+                                    attr:  {
+                                        'data-toggle': 'tooltip',
+                                        'data-placement': 'top',
+                                        'data-html': true,
+                                        'title': 'Warning! This may take a significant amount of time depending on the number of files'
+                                    },
+                                    className: 'btn-dl-selected dl-btns',
+                                    action: function ( e, dt, node, config ) {
+                                        var data_urls = dt.rows({selected:true}).data().map(x => $(x.data_dl).attr('href'));
+                                        var json_urls = dt.rows({selected:true}).data().map(x => $(x.json_dl).attr('href'));                                    
+                                        var paths = dt.rows({selected:true}).data().map(x => $(x.path).text());  
+                                        $('button.dl-btns').addClass('disabled');
+                                        filelist_dt.select.style('api');
+                                        downloadFn(data_urls, json_urls, 
+                                                paths, zip_title);
+                                    }
+                                }],
+                            select: {
+                                style:    'multi',
+                                //selector: 'td:first-child'
+                            },
+                            columnDefs: [ 
+                                { data: 'checkbox', orderable: false, width: '1em',
+                                className: 'select-checkbox', targets: 0, "defaultContent": ""},
+                                // give each column a "data" attribute so we can reference them by name
+                                { data: 'name', name: 'name', targets: 1 },
+                                { data: 'path', name: 'path', targets: 2 },
+                                { data: 'size', name: 'size', width: '4em', targets: 3 },
+                                { data: 'type', name: 'type', targets: 4 },
+                                { data: 'json_dl', name: 'json_dl', width: '3em', targets: 5 },
+                                { data: 'data_dl', name: 'data_dl', width: '3em', targets: 6 },
+                            ],
+                            language: {
+                                info: "Showing _START_ to _END_ of _TOTAL_ datasets",
+                                paginate: {
+                                    previous: "<i class='fa fa-angle-double-left'></i>",
+                                    next: "<i class='fa fa-angle-double-right'></i>"
+                                },
+                                select: {
+                                    rows: {
+                                        0: "",
+                                        _: "%d datasets selected",
+                                        1: "1 dataset selected"
+                                    }
+                                },
+                            },
+                        });
+                        // When table is first made, get all file sizes:
+                        showDownloadSize(
+                            filelist_dt.rows().data().map(x => $(x.data_dl).attr('href')),
+                            filelist_dt.rows().data().map(x => $(x.json_dl).attr('href')),
+                            'initial'
+                        );
+                        
+                        // check to see if we have any .ser files; if so, display warning
+                        let haveSers = filelist_dt.rows().data().map(x => 
+                                        $(x.data_dl).attr('href')).toArray().some(x => x.endsWith('.ser'))
+                        
+                        // Event listener to calculate download size on selection
+                        filelist_dt.on( 'select', function ( e, dt, items ) {
+                            var data_urls = dt.rows({selected:true}).data().map(x => $(x.data_dl).attr('href'));
+                            var json_urls = dt.rows({selected:true}).data().map(x => $(x.json_dl).attr('href'));
+                            showDownloadSize(data_urls, json_urls, 'select');
+                        });
+                        filelist_dt.on( 'deselect', function ( e, dt, items ) {
+                            var data_urls = dt.rows({selected:true}).data().map(x => $(x.data_dl).attr('href'));
+                            var json_urls = dt.rows({selected:true}).data().map(x => $(x.json_dl).attr('href'));
+                            showDownloadSize(data_urls, json_urls, 'select');
+                        });
+                    
+                                            
+                        var buttonCommon = {
+                            exportOptions: {
+                                format: {
+                                    body: function ( data, row, column, node ) {
+                                        // Make path column include root path
+                                        if ( column === 2 ){
+                                            return window.rootPath + $(data).text().replace('/','');
+                                        } else if ( column === 5 || column === 6 ) {
+                                            return $(data).attr('href').replace('mmfnexus//','mmfnexus/');;
+                                        } else {
+                                            return data;
+                                        }
+                                    }
+                                }
+                            }
+                        };                                        
+                                            
+                        // Add second group of buttons for export
+                        new $.fn.dataTable.Buttons( filelist_dt, {
+                            buttons: [
+                                $.extend( true, {}, buttonCommon, {
+                                    extend: 'copy',
+                                    title: record_title,
+                                    messageTop: record_header,
+                                    text: "<i class='far fa-copy menu-fa'/> <span class='filelist-btn'>Copy</span>"
+                                }),
+                                $.extend( true, {}, buttonCommon, {
+                                    extend: 'csv',
+                                    title: record_title,
+                                    messageTop: record_header,
+                                    text: "<i class='far fa-file-code menu-fa'/> <span class='filelist-btn'>CSV</span>"
+                                }),
+                                $.extend( true, {}, buttonCommon, {
+                                    extend: 'excel',
+                                    title: record_title,
+                                    messageTop: record_header,
+                                    text: "<i class='far fa-file-excel menu-fa'/> <span class='filelist-btn'>Excel</span>"
+                                }),
+                                $.extend( true, {}, buttonCommon, {
+                                    extend: 'print',
+                                    title: record_title,
+                                    exportOptions: {
+                                        columns: [ 0, 1, 2, 3, 4 ]
+                                    },
+                                    messageTop: function () {
+                                        // replace newlines with html break:
+                                        return record_header.split("\n").join("<br/>");
+                                    },
+                                    text: "<i class='fa fa-print menu-fa'/> <span class='filelist-btn'>Print</span>"
+                                })
+                            ]
                         });
                         
-                        Promise.all(promList).then(function() {
-                            var human_dl_size = humanFileSize(total_size);
-                            window.total_size = total_size;
-                            window.human_dl_size = human_dl_size;
-                            sizeList.map(function(v, i){
-                                window.file_sizes[v['name']] = v['size']})
-                            // if this is the initial run, update the filelisting table with sizes:    
-                            if ( type === 'initial' ) {
-                                filelist_dt.rows().every( function (rowIdx,tableLoop,rowLoop) {
-                                    var d = this.data();
-                                    var a = d.data_dl;
-                                    var url = $(a)[0].href
-                                    // use datatables cell API to set this row's 'size' column to the human file size:
-                                    this.cell(rowIdx, 'size:name').data(humanFileSize(window.file_sizes[url]));
-                                });
+                        // Explicitly insert a row containing the second group after the first group's row:
+                        var first_btn_row = filelist_dt.buttons( 0, null ).container().closest('.row');
+                        first_btn_row.after(
+                            '<div class="row"><div id="button-col" class="col-sm-12 text-center"><div id="second-btn-group" class="dt-buttons btn-group"></div></div></div>'
+                        );
+                        filelist_dt.buttons( 1, null ).container().appendTo(
+                            $('#second-btn-group')
+                        );
+                        
+                        // move progressbar row and dl-results row to after buttons
+                        $('#progressbar-row').detach().insertAfter($('#second-btn-group').closest('.row'));
+                        $('#dl-result-row').detach().insertAfter($('#progressbar-row'));
+                        $('#dl-extra-row').detach().insertBefore($('#dl-result-row'));
+                        $('#btn-cancel-row').detach().insertBefore($('#progressbar-row'));
+                        
+                        // hide these rows by default
+                        $('#progressbar-row').hide();
+                        $('#dl-result-row').hide();
+                        $('#dl-extra-row').hide();
+                        $('#btn-cancel-row').hide();       
+                        
+                        if (haveSers){
+                            let msg = 'At least one .ser file was detected in this record. While not listed in this table, any associated .emi metadata file will be added to the downloaded .zip archive and download size estimate.';
+                            showExtraMessage(msg , 'warning');
+                        }     
+            }                    
+                        // function to "prettify" XML export response using regex (from https://stackoverflow.com/a/49458964/1435788)                    
+                        function formatXml(xml, tab) { 
+                            var formatted = '', indent= '';
+                            tab = tab || '\t';
+                            xml.split(/>\s*</).forEach(function(node) {
+                                if (node.match( /^\/\w/ )) indent = indent.substring(tab.length); // decrease indent by one 'tab'
+                                formatted += indent + '<' + node + '>\r\n';
+                                if (node.match( /^<?\w[^>]*[^\/]$/ )) indent += tab;              // increase indent
+                            });
+                            // remove double spaces, which seem to be common in response
+                            formatted = formatted.split('  ').join(' ');
+                            return formatted.substring(1, formatted.length-3);
+                        }
+                        
+                        const prepDownloadXML = async function() {
+                            if (window.location.href.includes('/pid/')) {
+                            // we're accessing via PID, so use API to get real id
+                            try{
+                                let response = await fetch(window.location.href, 
+                                {headers: {'Accept': 'application/json'}});
+                                let res = await response.json();
+                                //console.log(res);
+                                return res.id;
+                            }catch(err){
+                                alert(`There was an error trying to download the record XML: ${err}`);
+                                console.error(err);
                             }
-                            let msg = (type === 'initial' ? 
-                                       'Total size of all datasets: ' :
-                                       'Total download size: ')
-                           
-                            showMessage(msg + human_dl_size + (
-                                aux_urls.toArray().some((obj) => obj !== null) ?
-                                ' (includes some auxillary data files not explicitly listed below).'
-                                :
-                                '.'), 'info');
-                        });
-                    }
-
-
-                    
-                    var d = new Date($('span.list-record-date').text());
-                    var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-                    var mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
-                    var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-                    var record_title = $('span#xmlName').text();
-                    if (record_title.endsWith('.xml')) {
-                        var zip_title = record_title.replace('.xml', '.zip')
-                    } else {
-                        var zip_title = record_title + '.zip';
-                    }
-                    var record_header = 'NexusLIMS Experiment: ' + $('span.list-record-title').text() + '\n' +
-                                        'Instrument: ' + $('span#instr-badge').text() + '\n' + 
-                                        'Experimenter: ' + $('span.list-record-experimenter').text() + '\n' + 
-                                        'Date: ' + $('span.list-record-date').text();
-                    
-                    var getEmiName = (serName) => {
-                        let re = /(.*)_[0-9]+\.ser/;
-                        let match = re.exec(serName);
-                        if (match == null) {
-                            return null;
-                        }
-                        else {
-                            return match[1] + '.emi'
-                        }
-                    }
-                    
-                    // DataTables for filelist-modal table
-                    var filelist_dt = $('table#filelist-table').DataTable({
-                        dom: "<'row'<'col-sm-6'f><'col-sm-6'p>><'row'<'#button-col.col-sm-12 text-center'B>><'row'<'col-sm-12 w-100't>><'#filelist_info_row.row'<'col-sm-12'i>>",
-                        ordering: false,
-                        buttons: [
-                            { 
-                                extend: 'selectAll',
-                                className: 'btn-select-all dl-btns',
-                                text: "<i class='fas fa-check-square menu-fa'/> <span class='filelist-btn'>Select all</span>"
-                            },
-                            { 
-                                extend: 'selectNone',
-                                className: 'btn-select-none dl-btns',
-                                text: "<i class='far fa-square menu-fa'/> <span class='filelist-btn''>Select none</span>"
-                            },
-                            {
-                                text: "<i class='fa fa-archive menu-fa'/> <span class='filelist-btn''>Download all as .zip</span>",
-                                className: 'btn-dl-all dl-btns',
-                                action: function ( e, dt, node, config ) {
-                                    var data_urls = dt.rows().data().map(x => $(x.data_dl).attr('href'));
-                                    var json_urls = dt.rows().data().map(x => $(x.json_dl).attr('href'));                                    
-                                    var paths = dt.rows().data().map(x => $(x.path).text());  
-                                    $('button.dl-btns').addClass('disabled');
-                                    filelist_dt.select.style('api');
-                                    downloadFn(data_urls, json_urls, paths, zip_title);
-                                },
-                                attr:  {
-                                    'data-toggle': 'tooltip',
-                                    'data-placement': 'top',
-                                    'data-html': true,
-                                    'title': 'Warning! This may take a significant amount of time depending on the number of files'
-                                }
-                            },
-                            {
-                                extend: 'selected',
-                                text: "<i class='far fa-file-archive menu-fa'/> <span class='filelist-btn'>Download selected as .zip</span>",
-                                attr:  {
-                                    'data-toggle': 'tooltip',
-                                    'data-placement': 'top',
-                                    'data-html': true,
-                                    'title': 'Warning! This may take a significant amount of time depending on the number of files'
-                                },
-                                className: 'btn-dl-selected dl-btns',
-                                action: function ( e, dt, node, config ) {
-                                    var data_urls = dt.rows({selected:true}).data().map(x => $(x.data_dl).attr('href'));
-                                    var json_urls = dt.rows({selected:true}).data().map(x => $(x.json_dl).attr('href'));                                    
-                                    var paths = dt.rows({selected:true}).data().map(x => $(x.path).text());  
-                                    $('button.dl-btns').addClass('disabled');
-                                    filelist_dt.select.style('api');
-                                    downloadFn(data_urls, json_urls, 
-                                               paths, zip_title);
-                                }
-                            }],
-                        select: {
-                            style:    'multi',
-                            //selector: 'td:first-child'
-                        },
-                        columnDefs: [ 
-                            { data: 'checkbox', orderable: false, width: '1em',
-                              className: 'select-checkbox', targets: 0, "defaultContent": ""},
-                            // give each column a "data" attribute so we can reference them by name
-                            { data: 'name', name: 'name', targets: 1 },
-                            { data: 'path', name: 'path', targets: 2 },
-                            { data: 'size', name: 'size', width: '4em', targets: 3 },
-                            { data: 'type', name: 'type', targets: 4 },
-                            { data: 'json_dl', name: 'json_dl', width: '3em', targets: 5 },
-                            { data: 'data_dl', name: 'data_dl', width: '3em', targets: 6 },
-                        ],
-                        language: {
-                            info: "Showing _START_ to _END_ of _TOTAL_ datasets",
-                            paginate: {
-                                previous: "<i class='fa fa-angle-double-left'></i>",
-                                next: "<i class='fa fa-angle-double-right'></i>"
-                            },
-                            select: {
-                                rows: {
-                                    0: "",
-                                    _: "%d datasets selected",
-                                    1: "1 dataset selected"
-                                }
-                            },
-                        },
-                    });
-                    // When table is first made, get all file sizes:
-                    showDownloadSize(
-                        filelist_dt.rows().data().map(x => $(x.data_dl).attr('href')),
-                        filelist_dt.rows().data().map(x => $(x.json_dl).attr('href')),
-                        'initial'
-                    );
-                    
-                    // check to see if we have any .ser files; if so, display warning
-                    let haveSers = filelist_dt.rows().data().map(x => 
-                                     $(x.data_dl).attr('href')).toArray().some(x => x.endsWith('.ser'))
-                    
-                    // Event listener to calculate download size on selection
-                    filelist_dt.on( 'select', function ( e, dt, items ) {
-                        var data_urls = dt.rows({selected:true}).data().map(x => $(x.data_dl).attr('href'));
-                        var json_urls = dt.rows({selected:true}).data().map(x => $(x.json_dl).attr('href'));
-                        showDownloadSize(data_urls, json_urls, 'select');
-                    });
-                    filelist_dt.on( 'deselect', function ( e, dt, items ) {
-                        var data_urls = dt.rows({selected:true}).data().map(x => $(x.data_dl).attr('href'));
-                        var json_urls = dt.rows({selected:true}).data().map(x => $(x.json_dl).attr('href'));
-                        showDownloadSize(data_urls, json_urls, 'select');
-                    });
-                   
-                                        
-                    var buttonCommon = {
-                        exportOptions: {
-                            format: {
-                                body: function ( data, row, column, node ) {
-                                    // Make path column include root path
-                                    if ( column === 2 ){
-                                        return window.rootPath + $(data).text().replace('/','');
-                                    } else if ( column === 5 || column === 6 ) {
-                                        return $(data).attr('href').replace('mmfnexus//','mmfnexus/');;
-                                    } else {
-                                        return data;
-                                    }
-                                }
+                            } else {
+                            // this method doesn't work if we're accessing via PID 
+                            // since there's no ID URL parameter
+                            // we're accessing via regular ID
+                            let id = new URLSearchParams(window.location.search).get('id');
+                            return Promise.resolve(id);
                             }
                         }
-                    };                                        
-                                        
-                    // Add second group of buttons for export
-                    new $.fn.dataTable.Buttons( filelist_dt, {
-                        buttons: [
-                            $.extend( true, {}, buttonCommon, {
-                                extend: 'copy',
-                                title: record_title,
-                                messageTop: record_header,
-                                text: "<i class='far fa-copy menu-fa'/> <span class='filelist-btn'>Copy</span>"
-                            }),
-                            $.extend( true, {}, buttonCommon, {
-                                extend: 'csv',
-                                title: record_title,
-                                messageTop: record_header,
-                                text: "<i class='far fa-file-code menu-fa'/> <span class='filelist-btn'>CSV</span>"
-                            }),
-                            $.extend( true, {}, buttonCommon, {
-                                extend: 'excel',
-                                title: record_title,
-                                messageTop: record_header,
-                                text: "<i class='far fa-file-excel menu-fa'/> <span class='filelist-btn'>Excel</span>"
-                            }),
-                            $.extend( true, {}, buttonCommon, {
-                                extend: 'print',
-                                title: record_title,
-                                exportOptions: {
-                                    columns: [ 0, 1, 2, 3, 4 ]
-                                },
-                                messageTop: function () {
-                                    // replace newlines with html break:
-                                    return record_header.split("\n").join("<br/>");
-                                },
-                                text: "<i class='fa fa-print menu-fa'/> <span class='filelist-btn'>Print</span>"
+                        
+                        const downloadXML = function() {
+                            let id = prepDownloadXML();
+                            //console.log(id);
+                            id.then(i => {
+                                //console.log(`id value inside then is: ${i}`);                                
+                                let xml_url = `/rest/data/download/${i}/`;  
+                                //console.log(`xml_url is: ${xml_url}`);                  
+                        
+                                fetch(xml_url)
+                                    .then(resp => resp.text())
+                                    // get text of response from CDCS API, run it through
+                                    // prettifier, and then return a blob so we can download it
+                                    .then(text => 
+                                        new Blob([formatXml(text)], {type:'text/xml'}))
+                                    // save blob to disk
+                                    .then(blob => {
+                                        const url = window.URL.createObjectURL(blob);
+                                        const a = document.createElement('a');
+                                        a.style.display = 'none';
+                                        a.href = url;
+                                        a.download = $('#xmlName').text();
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        window.URL.revokeObjectURL(url); 
+                                    })
                             })
-                        ]
-                    });
-                    
-                    // Explicitly insert a row containing the second group after the first group's row:
-                    var first_btn_row = filelist_dt.buttons( 0, null ).container().closest('.row');
-                    first_btn_row.after(
-                        '<div class="row"><div id="button-col" class="col-sm-12 text-center"><div id="second-btn-group" class="dt-buttons btn-group"></div></div></div>'
-                    );
-                    filelist_dt.buttons( 1, null ).container().appendTo(
-                        $('#second-btn-group')
-                    );
-                    
-                    // move progressbar row and dl-results row to after buttons
-                    $('#progressbar-row').detach().insertAfter($('#second-btn-group').closest('.row'));
-                    $('#dl-result-row').detach().insertAfter($('#progressbar-row'));
-                    $('#dl-extra-row').detach().insertBefore($('#dl-result-row'));
-                    $('#btn-cancel-row').detach().insertBefore($('#progressbar-row'));
-                    
-                    // hide these rows by default
-                    $('#progressbar-row').hide();
-                    $('#dl-result-row').hide();
-                    $('#dl-extra-row').hide();
-                    $('#btn-cancel-row').hide();       
-                    
-                    if (haveSers){
-                        let msg = 'At least one .ser file was detected in this record. While not listed in this table, any associated .emi metadata file will be added to the downloaded .zip archive and download size estimate.';
-                        showExtraMessage(msg , 'warning');
-                    }     
-          }                    
-                    // function to "prettify" XML export response using regex (from https://stackoverflow.com/a/49458964/1435788)                    
-                    function formatXml(xml, tab) { 
-                         var formatted = '', indent= '';
-                         tab = tab || '\t';
-                         xml.split(/>\s*</).forEach(function(node) {
-                             if (node.match( /^\/\w/ )) indent = indent.substring(tab.length); // decrease indent by one 'tab'
-                             formatted += indent + '<' + node + '>\r\n';
-                             if (node.match( /^<?\w[^>]*[^\/]$/ )) indent += tab;              // increase indent
-                         });
-                         // remove double spaces, which seem to be common in response
-                         formatted = formatted.split('  ').join(' ');
-                         return formatted.substring(1, formatted.length-3);
-                     }
-                    
-                     const prepDownloadXML = async function() {
-                        if (window.location.href.includes('/pid/')) {
-                          // we're accessing via PID, so use API to get real id
-                          try{
-                            let response = await fetch(window.location.href, 
-                               {headers: {'Accept': 'application/json'}});
-                            let res = await response.json();
-                            //console.log(res);
-                            return res.id;
-                          }catch(err){
-                            alert(`There was an error trying to download the record XML: ${err}`);
-                            console.error(err);
-                          }
-                        } else {
-                          // this method doesn't work if we're accessing via PID 
-                          // since there's no ID URL parameter
-                          // we're accessing via regular ID
-                          let id = new URLSearchParams(window.location.search).get('id');
-                          return Promise.resolve(id);
                         }
-                    }
-                    
-                    const downloadXML = function() {
-                        let id = prepDownloadXML();
-                        //console.log(id);
-                        id.then(i => {
-                            //console.log(`id value inside then is: ${i}`);                                
-                            let xml_url = `/rest/data/download/${i}/`;  
-                            //console.log(`xml_url is: ${xml_url}`);                  
-                    
-                            fetch(xml_url)
-                                .then(resp => resp.text())
-                                // get text of response from CDCS API, run it through
-                                // prettifier, and then return a blob so we can download it
-                                .then(text => 
-                                    new Blob([formatXml(text)], {type:'text/xml'}))
-                                // save blob to disk
-                                .then(blob => {
-                                    const url = window.URL.createObjectURL(blob);
-                                    const a = document.createElement('a');
-                                    a.style.display = 'none';
-                                    a.href = url;
-                                    a.download = $('#xmlName').text();
-                                    document.body.appendChild(a);
-                                    a.click();
-                                    window.URL.revokeObjectURL(url); 
-                                })
-                        })
-                    }
 
-                    $("#btn-xml-dl").on('click', downloadXML);                    
-                    $('a#menu-tutorial').on('click', () => create_detail_tour());
-                    
-                    // replace placeholder img src atributes with actual image data:
-                    const image_data = $("#placeholder-preview-src").text();
-                    $('img.preview-placeholder').attr("src", image_data).removeClass('preview-placeholder');
-                    
-                    // if using simple display, activate hover controllers for preview images
-                    if( $('#simpleDisplay').text() == 'true') {
-                        $("a.simple-filelist-preview").mouseover(function () {
-                            $("a.simple-filelist-preview img").css("display", "none"); // hide all product images
-                            $(this).find("img").css("display", "inline-block"); // show current hover image
-                        })
-                        $("a.simple-filelist-preview").mouseout(function () {
-                            $("a.simple-filelist-preview img").css("display", "none"); // hide all product images
-                        })
-                    }
-                    
-                    // Make sidebar visible after everything is done loading (only if not simple display):
-                    if( $('#simpleDisplay').text() == 'false') {
-                        $('.sidebar').first().css('visibility', 'visible');
-                    }
-                    
-                    // Fade out the loading screen
-                    $('#loading').fadeOut('slow');
+                        $("#btn-xml-dl").on('click', downloadXML);                    
+                        $('a#menu-tutorial').on('click', () => create_detail_tour());
+                        
+                        // replace placeholder img src atributes with actual image data:
+                        const image_data = $("#placeholder-preview-src").text();
+                        $('img.preview-placeholder').attr("src", image_data).removeClass('preview-placeholder');
+                        
+                        // if using simple display, activate hover controllers for preview images
+                        if( $('#simpleDisplay').text() == 'true') {
+                            $("a.simple-filelist-preview").mouseover(function () {
+                                $("a.simple-filelist-preview img").css("display", "none"); // hide all product images
+                                $(this).find("img").css("display", "inline-block"); // show current hover image
+                            })
+                            $("a.simple-filelist-preview").mouseout(function () {
+                                $("a.simple-filelist-preview img").css("display", "none"); // hide all product images
+                            })
+                        }
+                        
+                        // Make sidebar visible after everything is done loading (only if not simple display):
+                        if( $('#simpleDisplay').text() == 'false') {
+                            $('.sidebar').first().css('visibility', 'visible');
+                        }
+                        
+                        // Fade out the loading screen
+                        $('#loading').fadeOut('slow');
+                    });
                 });
-            
                 ]]>
             </script>
         </div>

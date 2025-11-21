@@ -1,7 +1,6 @@
 {% load static %}
-<div class="row align-items-center"
-     style="margin-top: 1em;">
-    <div class="col-md offset-md-1">
+<div class="row align-items-center" style="margin-top: 1em;">
+    <div class="col-md offset-md-1" id="intro">
         <h2>{{ CUSTOM_TITLE }}</h2>
         <p>
             This laboratory information management system (LIMS) allows
@@ -14,7 +13,7 @@
         </p>
         <p>
             To learn more about how to use NexusLIMS, please take the 
-            <a id="homepage-tutorial" href="#">interactive tutorial</a>, 
+            <a id="homepage-tutorial" href="#" onclick="create_tour();">interactive tutorial</a>, 
             or visit the 
             <a href="{{ DOCUMENTATION_LINK }}" target="_blank">documentation page</a>.
             To get started, please click the link below to start
@@ -23,10 +22,9 @@
     </div>
     <div class="col-md-3">
         <img class="img-responsive center-block" id="nexuslims-logo" 
-                src="{% static 'core_main_app/img/logo_horizontal_text.png' %}" 
-                alt="NexusLIMS Logo">
+            src="{% static 'core_main_app/img/logo_horizontal_text.png' %}" 
+            alt="NexusLIMS Logo">
     </div>
-    <div class="col-md-1"></div>
 </div>
 <div class="row" style='margin-top: 0;'>
     <div class="col-md-10 offset-md-1" id="tiles">

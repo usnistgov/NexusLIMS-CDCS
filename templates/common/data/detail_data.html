@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        {% xsl_transform_detail xmlName=data.data.title xml_content=data.data.xml_content template_id=data.data.template.id template_hash=data.data.template.hash as xml_representation %}
+        {% xsl_transform_detail xmlName=data.data.title xml_content=data.data.content template_id=data.data.template.id template_hash=data.data.template.hash as xml_representation %}
         {% if 'core_file_preview_app' in INSTALLED_APPS %}
             {% render_blob_links_in_span xml_string=xml_representation as xml_representation %}
         {% endif %}

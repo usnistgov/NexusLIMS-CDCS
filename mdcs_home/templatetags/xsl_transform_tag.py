@@ -14,6 +14,8 @@ from core_main_app.utils.file import read_file_content
 # from core_main_app.utils.xml import xsl_transform
 from mdcs_home.utils.xml import xsl_transform
 
+from traceback import format_exc
+
 register = template.Library()
 
 
@@ -41,6 +43,12 @@ def render_xml_as_html(*args, **kwargs):
     template_hash = kwargs.pop("template_hash", None)
     xsl_transform_id = kwargs.pop("xslt_id", None)
     detail_url = '"{}"'.format(kwargs.pop('detail_url', '#'))
+    # print(f"xml_content: {xml_content}")
+    # print(f"template_id: {template_id}")
+    # print(f"template_hash: {template_hash}")
+    # print(f"xsl_transform_id: {xsl_transform_id}")
+    # print(f"detail_url: {detail_url}")
+
     return _render_xml_as_html(
         xml_content,
         template_id,
@@ -67,15 +75,23 @@ def render_xml_as_html(*args, **kwargs):
     template_hash = kwargs.pop("template_hash", None)
     xsl_transform_id = kwargs.pop("xslt_id", None)
     xmlName = '"{}"'.format(kwargs.pop('xmlName', ''))
+
+    print(f"xml_content: {xml_content}")
+    print(f"template_id: {template_id}")
+    print(f"template_hash: {template_hash}")
+    print(f"xsl_transform_id: {xsl_transform_id}")
+    print(f"xmlName: {xmlName}")
+
     return _render_xml_as_html(
         xml_content,
         template_id,
         template_hash,
         XSLType.type_detail,
-        xsl_transform_id,
-        xmlName=xmlName, 
-        **kwargs
+        xsl_transform_id
     )
+    #     xmlName=xmlName, 
+    #     **kwargs
+    # )
 
 
 def _render_xml_as_html(
@@ -120,6 +136,8 @@ def _render_xml_as_html(
                     xsl_transformation = template_xsl_rendering.list_xslt
                 else:
                     xsl_transformation = template_xsl_rendering.default_detail_xslt
+
+                print(f"xsl_transformation: {xsl_transformation}")
             else:
                 raise Exception(
                     "No template information provided. Default xslt will be used."
@@ -132,5 +150,6 @@ def _render_xml_as_html(
             xslt_string = read_file_content(default_xslt_path)
 
         return xsl_transform(xml_string, xslt_string, **kwargs)
-    except Exception:
+    except Exception as e:
+        print(f"Exception xml_string: {format_exc()}")
         return xml_string
