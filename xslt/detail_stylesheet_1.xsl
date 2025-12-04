@@ -10,8 +10,8 @@
     
     <xsl:param name="xmlName" select="''"/>
 
-    <xsl:variable name="datasetBaseUrl">https://limsimages.campus.nist.gov/mmfnexus/</xsl:variable>
-    <xsl:variable name="previewBaseUrl">https://limsimages.campus.nist.gov/nexusLIMS/mmfnexus/</xsl:variable>
+    <xsl:variable name="datasetBaseUrl">https://CHANGE.THIS.VALUE</xsl:variable>
+    <xsl:variable name="previewBaseUrl">https://CHANGE.THIS.VALUE</xsl:variable>
    
     <!--
         These variables control the limit for interactive dataset display. More than this
