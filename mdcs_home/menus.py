@@ -66,32 +66,32 @@ Menu.add_item(
 
 Menu.add_item(
     "reservation",
-    MenuItem("MARLIN",
-             "https://marlin.nist.gov",
+    MenuItem("LINK 1",
+             "https://example.com",
              icon="fish",
              iconClass="fas")
 )
 
 Menu.add_item(
     "reservation",
-    MenuItem("NEMO (CNST)",
-             "https://nemo.nist.gov",
+    MenuItem("LINK 2",
+             "https://example.com",
              icon="fish",
              iconClass="fas")
 )
 
 Menu.add_item(
     "reservation",
-    MenuItem("CRUSH (Boulder)",
-             "https://nemo.nist.gov",
+    MenuItem("LINK 3",
+             "https://example.com",
              icon="fish",
              iconClass="fas")
 )
 
 Menu.add_item(
     "nodropdown",
-    MenuItem("EM Community Page",
-             "https://nistgov.sharepoint.com/sites/microscopy/",
+    MenuItem("LINK 4",
+             "https://example.com",
              icon="users",
              iconClass="fas")
 )
@@ -180,8 +180,8 @@ Menu.add_item(
 
 Menu.add_item(
     "help",
-    MenuItem("NexusLIMS Data Stats",
-             "http://limsimages.campus.nist.gov:5000",
+    MenuItem("Link 5",
+             "https://example.com",
              icon="chart-line",
              iconClass="fas")
 )
