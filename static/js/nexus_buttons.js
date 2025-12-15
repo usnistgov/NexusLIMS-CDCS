@@ -2,7 +2,7 @@
  * Helper function to get the record id either from the URL, or if we're 
  * accessing the record via PID, then by the API
  */
- const get_record_id = async function() {
+const get_record_id = async function() {
     if (window.location.href.includes('/pid/')) {
       // we're accessing via PID, so use API to get real id
       try{
