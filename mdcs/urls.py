@@ -12,19 +12,19 @@ Class-based views
 Including another URLconf
     1. Add a URL to urlpatterns:  re_path(r'^blog/', include('blog.urls'))
 """
+
 from django.conf.urls import include
 from django.contrib import admin
 from django.urls import re_path
+from mdcs.core_settings import ADMIN_URLS_PREFIX
 
 from core_main_app.admin import core_admin_site
-from core_parser_app.tools.modules.discover import discover_modules
 
 admin.autodiscover()
 
 urlpatterns = [
-    re_path(r"^admin/", admin.site.urls),
-    re_path(r"^core-admin/", core_admin_site.urls),
-    re_path(r"^admin/defender/", include("defender.urls")),
+    re_path(rf"^{ADMIN_URLS_PREFIX}admin/", admin.site.urls),
+    re_path(rf"^{ADMIN_URLS_PREFIX}core-admin/", core_admin_site.urls),
     re_path(
         r"^o/", include("oauth2_provider.urls", namespace="oauth2_provider")
     ),
@@ -55,6 +55,3 @@ urlpatterns = [
     re_path(r"^", include("core_module_text_area_app.urls")),
     re_path(r"^pid/", include("core_linked_records_app.urls")),
 ]
-
-# TODO: see if we can automate the discovery and run it from parser app
-discover_modules(urlpatterns)

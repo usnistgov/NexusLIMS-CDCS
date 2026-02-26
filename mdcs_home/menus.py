@@ -58,7 +58,7 @@ from core_main_app.utils.labels import get_form_label, get_data_label
 
 Menu.add_item(
     "record_search",
-    MenuItem("Browse and Search Records", 
+    MenuItem("Browse and Search Records",
              reverse("core_explore_keyword_app_search"),
              icon="search",
              iconClass="fas")
@@ -180,7 +180,7 @@ Menu.add_item(
 # )
 
 Menu.add_item(
-    "help", MenuItem("NexusLIMS Documentation", 
+    "help", MenuItem("NexusLIMS Documentation",
                      DOCUMENTATION_LINK,
                      icon="book",
                      iconClass="fas")
