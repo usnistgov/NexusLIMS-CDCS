@@ -24,9 +24,13 @@
             {% endcomment %}
             {% if result.permission_url and display_edit_button %}
                 <input class="input-permission-url" type="hidden" value="{{result.permission_url}}">
-                <a class="permissions-link" href="#">
-                    <i class="fa fa-pencil-alt permissions-icon edit" aria-hidden="true"></i>
+                <a class="permissions-link-open mx-2" href="#" {% if BOOTSTRAP_VERSION|first == "4" %}data-toggle{% elif BOOTSTRAP_VERSION|first == "5" %}data-bs-toggle{% endif %}="tooltip" title="Open in text editor">
+                    <i class="fas fa-code" aria-hidden="true"></i>
                 </a>
+                <a class="permissions-link mx-2" href="#" {% if BOOTSTRAP_VERSION|first == "4" %}data-toggle{% elif BOOTSTRAP_VERSION|first == "5" %}data-bs-toggle{% endif %}="tooltip" title="Edit">
+                    <i class="fas fa-pencil-alt permissions-icon edit" aria-hidden="true"></i>
+                </a>
+
             {% endif %}
             <div title="Last modification date" class="data-info-right-container">
                 {{result.last_modification_date|json_date:"N d Y g:iA"}}

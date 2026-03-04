@@ -5,12 +5,12 @@ import os
 
 SERVER_URI = os.environ["SERVER_URI"] if "SERVER_URI" in os.environ else None
 
-PROJECT_VERSION = os.getenv("PROJECT_VERSION", "3.16.0")
+PROJECT_VERSION = os.getenv("PROJECT_VERSION", "3.19.0")
 """ :py:class:`str`: Project version number.
 """
 
 # Website customization
-WEBSITE_SHORT_TITLE = "MDCS"
+WEBSITE_SHORT_TITLE = "NexusLIMS CDCS"
 CUSTOM_DATA = "Materials Data"
 CUSTOM_NAME = os.environ["SERVER_NAME"] if "SERVER_NAME" in os.environ else "Curator"
 CUSTOM_TITLE = "Welcome to NexusLIMS!"
@@ -118,8 +118,8 @@ ID_PROVIDER_PREFIX_BLOB = os.getenv(
     "ID_PROVIDER_PREFIX_BLOB", ID_PROVIDER_PREFIXES[0]
 )
 
-PID_XPATH = os.getenv("PID_XPATH", "root.pid")
-""" string: location of the PID in the document, specified as dot notation
+PID_PATH = os.getenv("PID_PATH", os.getenv("PID_XPATH", "root.pid"))
+""" string: location of the PID in the document, specified as dot notation.
 """
 
 AUTO_SET_PID = os.getenv("AUTO_SET_PID", "False").lower() == "true"
@@ -188,6 +188,14 @@ CUSTOM_FILE_STORAGE = dict()
 
 ENABLE_XML_ENTITIES_TOOLTIPS = True
 """ :py:class:`bool`: Enable XML entities tooltips during curation.
+"""
+
+CAN_SET_PUBLIC_DATA_TO_PRIVATE = True
+""" :py:class:`bool`: Can revert public data to private.
+"""
+
+CAN_SET_WORKSPACE_PUBLIC = True
+""" :py:class:`bool`: Can set workspace to be accessible publicly.
 """
 
 CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT = False

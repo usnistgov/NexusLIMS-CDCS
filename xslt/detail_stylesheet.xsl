@@ -387,6 +387,7 @@ Use it like:
                          z-index: 1000;
                          display: block;
                          padding: 20px;
+                         margin: 40px;
                          overflow-x: visible;
                          overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
                          /* border-right: 1px solid #eee; */
