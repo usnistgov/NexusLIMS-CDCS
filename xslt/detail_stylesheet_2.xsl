@@ -1290,6 +1290,10 @@ Use it like:
                   margin-left: auto;
                   text-align: right;
                 }
+
+                .fa-stack{
+                    cursor: pointer
+                }
             </style>
 
 
@@ -1353,7 +1357,7 @@ Use it like:
                       <i class="fas fa-code menu-fa"></i> Download XML
                   </button>
 
-                <xsl:if test="not($simpleDisplay)">
+
                     <button id="btn-filelisting" type="button"
                             class="btn btn-outline-dark btn-top-group"
                             data-toggle="tooltip" data-placement="top"
@@ -1362,7 +1366,7 @@ Use it like:
                      <i class="fas fa-cloud-download-alt menu-fa"></i> Download files
                     </button>
 
-                </xsl:if>
+
                 <xsl:choose>
                     <xsl:when test="$pid != ''">
                         <span id='pid-to-copy' style='display: none;'>
@@ -1498,7 +1502,7 @@ Use it like:
                                 </span>
                                 <span class="badge list-record-badge">
                                     <xsl:element name="a">
-                                        <xsl:if test="not($simpleDisplay)">
+
                                             <xsl:attribute name="href">
                                                 javascript:void(0);
                                             </xsl:attribute>
@@ -1508,7 +1512,7 @@ Use it like:
                                             <xsl:attribute name="data-toggle">tooltip</xsl:attribute>
                                             <xsl:attribute name="data-placement">bottom</xsl:attribute>
                                             <xsl:attribute name="title">Click to view a file listing of this record</xsl:attribute>
-                                        </xsl:if>
+
                                         <xsl:value-of select="count(//nx:dataset)"/> data file<xsl:if test="count(//nx:dataset)>1">s</xsl:if> in <xsl:value-of select="count(//nx:acquisitionActivity)"/> activit<xsl:choose>
                                             <xsl:when test="count(//nx:acquisitionActivity) = 1">y</xsl:when>
                                             <xsl:otherwise>ies</xsl:otherwise>
@@ -2412,7 +2416,7 @@ Use it like:
                     </xsl:for-each>
                    </xsl:otherwise>
                </xsl:choose>
-               <xsl:if test="not($simpleDisplay)">
+
 
                   <div id="filelist-modal" class="modal">
                       <div class="modal-content" style="width: 65vw;">
@@ -2614,7 +2618,7 @@ Use it like:
                       </div>
                   </div>
 
-               </xsl:if>
+
             </div>
             </div>
 
@@ -2947,6 +2951,11 @@ Use it like:
                     window.currentSlide = currentSlide;
                     window.showSlides = showSlides;
                     window.disable_gallery_tooltips = disable_gallery_tooltips;
+
+                    window.openModal = openModal;
+                    window.closeModal = closeModal;
+                    window.toTop = toTop;
+                    window.copy_and_change_tt = copy_and_change_tt;
                     
                     function activate_metadata_tooltips(){
                         // activate tooltips (on demand)
@@ -4855,7 +4864,7 @@ Use it like:
 -->
         <xsl:param name="input"/>
         <xsl:for-each select="$input/extensionCount/extension">
-            <span style="white-space:nowrap;">
+            <span style="white-space:normal;">
                 <xsl:attribute name="data-toggle">tooltip</xsl:attribute>
                 <xsl:attribute name="data-placement">bottom</xsl:attribute>
                 <xsl:variable name="extension" select="./text()"/>
