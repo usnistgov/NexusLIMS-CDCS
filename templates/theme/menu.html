@@ -24,45 +24,36 @@
                     </a>
                 </li>
             {% endfor %}
-            <!-- <li class="nested">
-                <a href="#">
-                    Browse and Search Records</a>
-                </a>
-                <ul>
-                    {% generate_menu %}
-                    {% for item in menus.explorer %}
-                        <li><a href="{{ item.url }}" class="cdcs-menu-item">{% if item|get_attribute:'icon' %}<i class="fas fa-{{ item.icon }}"></i>{% endif %} {{ item.title }}</a></li>
-                    {% endfor %}
-                </ul>
-            </li> -->
-            <!-- <li class="nested">
+            <li class="nested">
                 <div class="dropdown">
                     <a class="dropdown-toggle"
                        type="button"
-                       id="dropdownComposer"
+                       id="dropdownExploration"
                        {% if BOOTSTRAP_VERSION|first == "4" %}data-toggle="dropdown"
                        {% elif BOOTSTRAP_VERSION|first == "5" %}data-bs-toggle="dropdown"
                        {% endif %}
                        aria-haspopup="true"
-                       aria-expanded="false">
-                        Composer
+                       aria-expanded="false"
+                    >
+                        Resources
                     </a>
                     <ul class="dropdown-menu"
-                        aria-labelledby="dropdownComposer">
+                        aria-labelledby="dropdownExploration">
                         {% generate_menu %}
-                        {% for item in menus.composer %}
-                            {% if not item|get_attribute:'require_authentication' or user.is_authenticated %}
-                                <li class="dropdown-item"><a href="{{ item.url }}">
+                        {% for item in menus.resources %}
+                            <li class="dropdown-item">
+                                <a href="{{ item.url }}">
                                     {% if item|get_attribute:'icon' %}
                                         <i class="fas fa-{{ item.icon }}"></i>
                                     {% endif %}
                                     {{ item.title }}
-                                </a></li>
-                            {% endif %}
+                                </a>
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
-            </li> -->
+            </li>
+
         {% endblock %}
         <!-- End float left menu-->
 

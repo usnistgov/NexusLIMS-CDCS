@@ -15,8 +15,6 @@
 		margin: 0;
 		padding: 0;
 		border: 0;
-		font-size: 100%;
-		font: inherit;
 		vertical-align: baseline;
 	}
 
@@ -1875,16 +1873,6 @@
 			font-weight: 300;
 		}
 
-	h2 {
-		font-size: 1.75em;
-		letter-spacing: -0.025em;
-	}
-
-	h3 {
-		font-size: 1.2em;
-		letter-spacing: -0.025em;
-	}
-
 	sub {
 		font-size: 0.8em;
 		position: relative;
@@ -2395,7 +2383,7 @@
 
 				#nav > ul > li > a:hover,
 				#nav > ul > li > div > a:hover{
-					color: #888;
+					color: #007aa7;
 					background-color: transparent;
 				}
 
@@ -2408,9 +2396,9 @@
 				}
 
 				#cdcs-menu-title > a > img {
-					height: auto; 
+					height: auto;
 					width:auto;
-					max-height:1.5em; 
+					max-height:1.5em;
 					max-width:300px;
 					line-height: 1.5em;
 					vertical-align: middle;
@@ -2444,10 +2432,6 @@
   margin-bottom: 0;
 }
 
-.cdcs-menu__item {
-  list-style: none;
-}
-
 .cdcs-logo {
     width: 1.5em;
     height: 1.5em;
@@ -2468,45 +2452,34 @@
     height: 1.25em;
 }
 
-/* Dropotron */
+/* Nav Dropdown */
 
-	.dropotron {
+	#nav .dropdown-menu {
 		background-color: #fff;
 		border-radius: 5px;
 		color: #000;
-		min-width: 10em;
-		/*padding: 1em 0;*/
-		/*text-align: center;*/
-		/*box-shadow: 0 1em 1em 0 rgba(0, 0, 0, 0.5);*/
+		min-width: max-content;
 		box-shadow: 0 6px 12px rgba(0,0,0,.175)
 	}
 
-		.dropotron > li {
-			line-height: 2em;
-			/*padding: 0 1.1em 0 1em;*/
+		#nav .dropdown-menu > li {
+			padding: 0.1rem 1rem;
+			line-height: 2rem;
 		}
 
-			.dropotron > li > a,
-			.dropdown-item > a{
+		#nav .dropdown-menu .dropdown-item:hover {
+			/* Added by NIST */
+			background-color: #e0e0e0;
+		}
+
+			#nav .dropdown-menu > li > a {
 				color: #000/*#c0c0c0*/;
 				text-decoration: none;
+				font-size: 1rem;
 				border: 0;
-				padding-left: 1em;
+				padding: 0.25rem;
 			}
 
-			.dropotron > li.active > a, .dropotron > li:hover > a,
-			.dropdown-item.active > a, .dropdown-item:hover > a{
-				/* Added by NIST */
-				background-color: #e0e0e0;
-			}
-
-		.dropotron.level-0,
-		.dropdown-menu.dropdown-menu-right {
-			border-radius: 0 0 5px 5px;
-			font-size: 0.8em;
-			padding-top: 0;
-			margin-top: -1px;
-		}
 
 /* Banner */
 
@@ -2591,6 +2564,7 @@
 
 	#footer a {
         color: #999;
+        padding: 0 20px;
 	}
 
 	/* #footer div {
@@ -2813,7 +2787,7 @@
 				}
 
 		/* Footer */
-/* 
+/*
 			#footer {
 				text-align: center;
 			}
@@ -3012,18 +2986,6 @@
 
 			body, input, select, textarea {
 				font-size: 11pt;
-				line-height: 1.35em;
-			}
-
-			h2 {
-				font-size: 1.25em;
-				letter-spacing: 0;
-				line-height: 1.35em;
-			}
-
-			h3 {
-				font-size: 1em;
-				letter-spacing: 0;
 				line-height: 1.35em;
 			}
 

@@ -32,40 +32,23 @@
 """
 
 from django.urls import reverse
-from mdcs.settings import CURATE_MENU_NAME
+
 from mdcs.settings import DOCUMENTATION_LINK
 from menu import Menu, MenuItem
 
 from core_main_app.utils.labels import get_form_label, get_data_label
 
-# Menu.add_item(
-#     "nodropdown",
-#     MenuItem("Home", reverse("core_main_app_homepage"), icon="home"),
-# )
-
-# Menu.add_item(
-#     "nodropdown", MenuItem(CURATE_MENU_NAME, reverse("core_curate_index"))
-# )
-# Menu.add_item(
-#     "explorer",
-#     MenuItem("Search by Keyword", reverse("core_explore_keyword_app_search")),
-# )
-
-# Menu.add_item(
-#     "explorer",
-#     MenuItem("Build a Custom Query", reverse("core_explore_example_index")),
-# )
 
 Menu.add_item(
     "record_search",
-    MenuItem("Browse and Search Records", 
+    MenuItem("Browse and Search Records",
              reverse("core_explore_keyword_app_search"),
              icon="search",
              iconClass="fas")
 )
 
 Menu.add_item(
-    "reservation",
+    "resources",
     MenuItem("MARLIN",
              "https://marlin.nist.gov",
              icon="fish",
@@ -73,7 +56,7 @@ Menu.add_item(
 )
 
 Menu.add_item(
-    "reservation",
+    "resources",
     MenuItem("NEMO (CNST)",
              "https://nemo.nist.gov",
              icon="fish",
@@ -81,51 +64,21 @@ Menu.add_item(
 )
 
 Menu.add_item(
-    "reservation",
+    "resources",
     MenuItem("CRUSH (Boulder)",
-             "https://nemo.nist.gov",
+             "https://crush.nist.gov",
              icon="fish",
              iconClass="fas")
 )
 
 Menu.add_item(
-    "nodropdown",
-    MenuItem("EM Community Page",
+    "resources",
+    MenuItem("EM Community SharePoint",
              "https://nistgov.sharepoint.com/sites/microscopy/",
              icon="users",
              iconClass="fas")
 )
 
-Menu.add_item(
-    "nodropdown",
-    MenuItem("NexusLIMS Data Stats",
-             "http://limsimages.campus.nist.gov:5000",
-             icon="chart-line",
-             iconClass="fas")
-)
-
-
-# Menu.add_item(
-#     "composer", MenuItem("Create New Template", reverse("core_composer_index"))
-# )
-
-# Menu.add_item(
-#     "composer",
-#     MenuItem(
-#         "My Templates",
-#         reverse("core_dashboard_templates"),
-#         require_authentication=True,
-#     ),
-# )
-
-# Menu.add_item(
-#     "composer",
-#     MenuItem(
-#         "My Types",
-#         reverse("core_dashboard_types"),
-#         require_authentication=True,
-#     ),
-# )
 
 Menu.items["dashboard"] = []
 Menu.add_item(
@@ -165,22 +118,9 @@ Menu.add_item(
     MenuItem("My Queries", reverse("core_dashboard_queries"), icon="search"),
 )
 
-# Menu.add_item(
-#     "help", MenuItem("API Documentation", reverse("swagger_view"), icon="cogs")
-# )
-
-# Menu.add_item(
-#     "help",
-#     MenuItem("Contact", reverse("core_website_app_contact"), icon="envelope"),
-# )
-
-# Menu.add_item(
-#     "help",
-#     MenuItem("Help", reverse("core_website_app_help"), icon="question-circle"),
-# )
 
 Menu.add_item(
-    "help", MenuItem("NexusLIMS Documentation", 
+    "help", MenuItem("NexusLIMS Documentation",
                      DOCUMENTATION_LINK,
                      icon="book",
                      iconClass="fas")

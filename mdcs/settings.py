@@ -7,6 +7,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
 import os  # noqa
 
 from core_main_app.utils.logger.logger_utils import (
@@ -45,21 +46,29 @@ VERIFY_DATA_ACCESS = False
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "HOST": os.environ["POSTGRES_HOST"]
-        if "POSTGRES_HOST" in os.environ
-        else None,
-        "PORT": int(os.environ["POSTGRES_PORT"])
-        if "POSTGRES_PORT" in os.environ
-        else 5432,
-        "NAME": os.environ["POSTGRES_DB"]
-        if "POSTGRES_DB" in os.environ
-        else None,
-        "USER": os.environ["POSTGRES_USER"]
-        if "POSTGRES_USER" in os.environ
-        else None,
-        "PASSWORD": os.environ["POSTGRES_PASS"]
-        if "POSTGRES_PASS" in os.environ
-        else None,
+        "HOST": (
+            os.environ["POSTGRES_HOST"]
+            if "POSTGRES_HOST" in os.environ
+            else None
+        ),
+        "PORT": (
+            int(os.environ["POSTGRES_PORT"])
+            if "POSTGRES_PORT" in os.environ
+            else 5432
+        ),
+        "NAME": (
+            os.environ["POSTGRES_DB"] if "POSTGRES_DB" in os.environ else None
+        ),
+        "USER": (
+            os.environ["POSTGRES_USER"]
+            if "POSTGRES_USER" in os.environ
+            else None
+        ),
+        "PASSWORD": (
+            os.environ["POSTGRES_PASS"]
+            if "POSTGRES_PASS" in os.environ
+            else None
+        ),
     }
 }
 
@@ -83,7 +92,6 @@ CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 # Application definition
 
 INSTALLED_APPS = (
-    "rest_framework.authtoken",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -94,23 +102,14 @@ INSTALLED_APPS = (
     "oauth2_provider",
     # Extra apps
     "rest_framework",
+    "rest_framework.authtoken",
     "drf_spectacular",
     "menu",
-    "defender",
     "captcha",
     "django_celery_beat",
     "fontawesomefree",
-
     # Core apps
     "core_main_app",
-
-    # Local apps
-    "mdcs_home",
-
-    # Override for results.js;
-    "results_override",
-
-    # Core apps
     "core_exporters_app",
     "core_exporters_app.exporters.xsl",
     "core_website_app",
@@ -137,6 +136,10 @@ INSTALLED_APPS = (
     "core_module_chemical_composition_app",
     "core_module_chemical_composition_simple_app",
     "core_module_text_area_app",
+    # Local apps
+    "mdcs_home",
+    # Override for results.js;
+    "results_override",
 )
 
 MIDDLEWARE = (
@@ -145,7 +148,6 @@ MIDDLEWARE = (
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "defender.middleware.FailedLoginMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -200,11 +202,14 @@ STATIC_ROOT = "static.prod"
 
 
 STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 )
 
-STATICFILES_DIRS = ("static",)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "results_override", "static"),
+    os.path.join(BASE_DIR, "static"),
+]
 
 # https://docs.djangoproject.com/en/4.2/topics/files/
 MEDIA_ROOT = "media"
@@ -266,7 +271,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Django REST Framework
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
         "rest_framework.authentication.TokenAuthentication",
@@ -284,26 +288,6 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAuthenticated"],
 }
-
-# Django Defender
-DEFENDER_REDIS_URL = REDIS_URL
-""" :py:class:`str`: The Redis url for defender.
-"""
-DEFENDER_COOLOFF_TIME = 60
-""" integer: Period of inactivity after which old failed login attempts will be forgotten
-"""
-DEFENDER_LOGIN_FAILURE_LIMIT = 3
-""" integer: The number of login attempts allowed before a record is created for the failed login.
-"""
-DEFENDER_STORE_ACCESS_ATTEMPTS = True
-""" boolean: Store the login attempt to the database.
-"""
-DEFENDER_USE_CELERY = True
-""" boolean: Use Celery to store the login attempt to the database.
-"""
-DEFENDER_LOCKOUT_URL = "/locked"
-""" string: url to the defender error page (defined in core_main_app)
-"""
 
 # Django simple-menu
 MENU_SELECT_PARENTS = False
@@ -328,8 +312,8 @@ LOGGER_FILE_APP = os.path.join(BASE_DIR, "logfile_app.txt")
 LOGGER_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
 LOGGER_CLIENT_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "INFO")
 LOGGER_SERVER_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
+LOGGER_DB_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
 LOGGER_APP_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
-LOGGER_DB_LEVEL = os.getenv("LOGGER_DB_LEVEL", "DEBUG")
 
 LOGGER_MAX_BYTES = 500000
 LOGGER_BACKUP_COUNT = 2
@@ -450,7 +434,6 @@ if LOGGING_DB:
 
 
 # SSL
-
 if SERVER_URI.lower().startswith("https"):  # noqa: F405 (core setting)
     # Activate HTTPS
     os.environ["HTTPS"] = "on"
@@ -464,6 +447,31 @@ if SERVER_URI.lower().startswith("https"):  # noqa: F405 (core setting)
 
     # Set x-frame options
     X_FRAME_OPTIONS = "SAMEORIGIN"
+
+if "defender" not in INSTALLED_APPS:
+    INSTALLED_APPS = INSTALLED_APPS + ("defender",)
+
+if "defender.middleware.FailedLoginMiddleware" not in MIDDLEWARE:
+    MIDDLEWARE = MIDDLEWARE + ("defender.middleware.FailedLoginMiddleware",)
+# Django Defender
+DEFENDER_REDIS_URL = REDIS_URL
+""" :py:class:`str`: The Redis url for defender.
+"""
+DEFENDER_COOLOFF_TIME = 60
+""" integer: Period of inactivity after which old failed login attempts will be forgotten
+"""
+DEFENDER_LOGIN_FAILURE_LIMIT = 3
+""" integer: The number of login attempts allowed before a record is created for the failed login.
+"""
+DEFENDER_STORE_ACCESS_ATTEMPTS = True
+""" boolean: Store the login attempt to the database.
+"""
+DEFENDER_USE_CELERY = True
+""" boolean: Use Celery to store the login attempt to the database.
+"""
+DEFENDER_LOCKOUT_URL = "/locked"
+""" string: url to the defender error page (defined in core_main_app)
+"""
 
 if ENABLE_SAML2_SSO_AUTH:  # noqa: F405 (core setting)
     import saml2
@@ -505,7 +513,8 @@ if ENABLE_SAML2_SSO_AUTH:  # noqa: F405 (core setting)
 
     # Configure Pysaml2
     SAML_CONFIG = load_saml_config_from_env(
-        server_uri=SERVER_URI, base_dir=BASE_DIR  # noqa: F405 (core setting)
+        server_uri=SERVER_URI,  # noqa: F405 (core setting)
+        base_dir=BASE_DIR,  # noqa: F405 (core setting)
     )
     SAML_ACS_FAILURE_RESPONSE_FUNCTION = (
         "core_main_app.views.user.views.saml2_failure"
@@ -552,7 +561,6 @@ LOGIN_URL = "core_main_app_login"
 # Default view for Django Exception Reports
 DEFAULT_EXCEPTION_REPORTER_FILTER = (
     "core_main_app.views.admin.views.CustomExceptionReporter"
-
 )
 SSL_CERTIFICATES_DIR = False
 
