@@ -71,22 +71,12 @@ def tiles(request):
         explore_keywords_tile = {
             "logo": "fa-search",
             "link": reverse("core_explore_keyword_app_search"),
-            "title": "Browse and Search Records",
+            "title": "Browse and Search Microscopy Records",
             "text": "Click here to explore the NexusLIMS record repository",
             "id": "app_search"
         }
 
         context["tiles"].append(explore_keywords_tile)
 
-    if "core_composer_app" in installed_apps:
-        compose_tile = {
-            "logo": "fa-file-code",
-            "link": reverse("core_composer_index"),
-            "title": "Compose a template",
-            "text": "Click here to compose your own template.",
-            "id": "app_compose",
-        }
-
-        # context["tiles"].append(compose_tile)
 
     return render(request, "mdcs_home/tiles.html", context)

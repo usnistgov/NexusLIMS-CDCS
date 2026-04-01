@@ -1345,11 +1345,30 @@ Use it like:
             </xsl:if>
 
             <div class="main d-flex" style="padding: 0; position: relative; z-index: 100;" id="top-button-div">
-                  <button id="btn-edit-record" type="button" class="btn btn-outline-dark btn-top-group"
-                          data-toggle="tooltip" data-placement="top"
-                          title="Manually edit the contents of this record (login required)">
-                      <i class="fas fa-file-alt menu-fa"></i> Edit this record
-                  </button>
+
+                  <div class="dropdown d-inline-block">
+                        <button id="btn-record-actions"
+                                type="button"
+                                class="btn btn-outline-dark btn-top-group dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                title="Record actions">
+                            <i class="fas fa-file-alt menu-fa"></i> Edit options
+                        </button>
+
+                        <ul class="dropdown-menu" aria-labelledby="btn-record-actions">
+                            <li>
+                                <button id="btn-edit-record" type="button" class="dropdown-item">
+                                    <i class="fas fa-file-alt menu-fa"></i> Edit record in form
+                                </button>
+                            </li>
+                            <li>
+                                <button  type="button" class="dropdown-item open-xml-record-btn">
+                                    <i class="fas fa-file-code menu-fa"></i> Edit in text editor
+                                </button>
+                            </li>
+                        </ul>
+                  </div>
 
                   <button id="btn-xml-dl" type="button" class="btn btn-outline-dark btn-top-group"
                       data-toggle="tooltip" data-placement="top"
@@ -3528,8 +3547,8 @@ Use it like:
                                 // columns to wrap
                                 columnDefs: [
                                     { "width": "53%", "targets": 0 },
-                                    { targets: 0, orderable: true },
-                                    { targets: [1, 2, 3, 4, 5], orderable: false }
+                                    { targets: [ 0, 1, 2], orderable: true },
+                                    { targets: [ 3, 4, 5], orderable: false }
                                 ],
                                 responsive: true,
                                 ordering: true,
