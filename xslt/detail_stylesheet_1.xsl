@@ -12,7 +12,7 @@
 
     <xsl:variable name="datasetBaseUrl">https://CHANGE.THIS.VALUE</xsl:variable>
     <xsl:variable name="previewBaseUrl">https://CHANGE.THIS.VALUE</xsl:variable>
-   
+
     <!--
         These variables control the limit for interactive dataset display. More than this
         number and the stylesheet will revert to a simple file list rather than an

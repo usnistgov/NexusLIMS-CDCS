@@ -1,15 +1,16 @@
 """ Django settings for core applications.
 """
+
 import os
 
 SERVER_URI = os.environ["SERVER_URI"] if "SERVER_URI" in os.environ else None
 
-PROJECT_VERSION = os.getenv("PROJECT_VERSION", "3.6.0")
+PROJECT_VERSION = os.getenv("PROJECT_VERSION", "3.20.0")
 """ :py:class:`str`: Project version number.
 """
 
 # Website customization
-WEBSITE_SHORT_TITLE = "MDCS"
+WEBSITE_SHORT_TITLE = "NexusLIMS CDCS"
 CUSTOM_DATA = "Materials Data"
 CUSTOM_NAME = os.environ["SERVER_NAME"] if "SERVER_NAME" in os.environ else "Curator"
 CUSTOM_TITLE = "Welcome to NexusLIMS!"
@@ -117,12 +118,16 @@ ID_PROVIDER_PREFIX_BLOB = os.getenv(
     "ID_PROVIDER_PREFIX_BLOB", ID_PROVIDER_PREFIXES[0]
 )
 
-PID_XPATH = os.getenv("PID_XPATH", "root.pid")
-""" string: location of the PID in the document, specified as dot notation
+PID_PATH = os.getenv("PID_PATH", os.getenv("PID_XPATH", "root.pid"))
+""" string: location of the PID in the document, specified as dot notation.
 """
 
 AUTO_SET_PID = os.getenv("AUTO_SET_PID", "False").lower() == "true"
 """ boolean: enable the automatic pid generation for saved data.
+"""
+
+ENABLE_ALLAUTH = os.getenv("ENABLE_ALLAUTH", "False").lower() == "true"
+""" boolean: enable Django-allauth
 """
 
 ENABLE_SAML2_SSO_AUTH = (
@@ -135,7 +140,7 @@ ENABLE_HANDLE_PID = os.getenv("ENABLE_HANDLE_PID", "False").lower() == "true"
 """ boolean: enable handle server PID support.
 """
 
-MONGODB_INDEXING = True
+MONGODB_INDEXING = os.getenv("MONGODB_INDEXING", "True").lower() == "true"
 """ :py:class:`bool`: Use MongoDB for data indexing.
     If True:
         - a copy of the data will be stored in MongoDB,
@@ -147,7 +152,7 @@ MONGODB_ASYNC_SAVE = True
     If True, data are saved in MongoDB asynchronously.
 """
 
-GRIDFS_STORAGE = True
+GRIDFS_STORAGE = os.getenv("GRIDFS_STORAGE", "True").lower() == "true"
 """ :py:class:`bool`: Use GridFS for file storage.
 """
 
@@ -181,12 +186,16 @@ CUSTOM_FILE_STORAGE = dict()
     }
 """
 
-GA_TRACKING_ID = os.getenv("GA_TRACKING_ID", None)
-""" :py:class:`str`: Google Analytics tracking ID. Adds gtag to user pages if set.
-"""
-
 ENABLE_XML_ENTITIES_TOOLTIPS = True
 """ :py:class:`bool`: Enable XML entities tooltips during curation.
+"""
+
+CAN_SET_PUBLIC_DATA_TO_PRIVATE = True
+""" :py:class:`bool`: Can revert public data to private.
+"""
+
+CAN_SET_WORKSPACE_PUBLIC = True
+""" :py:class:`bool`: Can set workspace to be accessible publicly.
 """
 
 CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT = False
@@ -195,4 +204,27 @@ CAN_ANONYMOUS_ACCESS_PUBLIC_DOCUMENT = False
 
 BOOTSTRAP_VERSION = os.getenv("BOOTSTRAP_VERSION", "5.1.3")
 """ :py:class:`str`: Version of the boostrap library.
+"""
+
+TEXT_EDITOR_LIBRARY = os.getenv("TEXT_EDITOR_LIBRARY", "Monaco")
+""" :py:class:`str`: Set to `Monaco` to enable use external text editor Monaco,`None` to use default text editor,
+or specify another external text editor to set it up.
+"""
+
+ENABLE_JSON_SCHEMA_SUPPORT = (
+    os.getenv("ENABLE_JSON_SCHEMA_SUPPORT", "False").lower() == "true"
+)
+""" :py:class:`bool`: Set to `True` to enable JSON Schema support.
+"""
+
+BACKWARD_COMPATIBILITY_DATA_XML_CONTENT = (
+    os.getenv("BACKWARD_COMPATIBILITY_DATA_XML_CONTENT", "True").lower()
+    == "true"
+)
+""" :py:class:`bool`: Set to `True` to continue using Data.xml_content (deprecated)
+    instead of Data.content in the REST API.
+"""
+
+ADMIN_URLS_PREFIX = os.getenv("ADMIN_URLS_PREFIX", "staff-")
+""" :py:class:`str`: Prefix added to admin urls.
 """

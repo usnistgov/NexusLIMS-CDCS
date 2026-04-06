@@ -6,8 +6,8 @@
   <xsl:output method="html" indent="yes" encoding="UTF-8"/>
 
   <xsl:param name="detail_url" select="'#'"/>
-  <xsl:variable name="datasetBaseUrl">https://CHANGE.THIS.VALUE</xsl:variable>
-  <xsl:variable name="previewBaseUrl">https://CHANGE.THIS.VALUE</xsl:variable>
+  <xsl:variable name="datasetBaseUrl">https://limsimages.campus.nist.gov/mmfnexus/</xsl:variable>
+  <xsl:variable name="previewBaseUrl">https://limsimages.campus.nist.gov/nexusLIMS/mmfnexus/</xsl:variable>
 
   <xsl:variable name="month-num-dictionary">
     <month month-number="01">January</month>
@@ -613,3 +613,5 @@ Use it like:
   </xsl:template>
   
 </xsl:stylesheet>
+
+
