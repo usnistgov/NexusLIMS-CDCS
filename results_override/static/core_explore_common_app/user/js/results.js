@@ -127,6 +127,13 @@ var getDataPermission = function() {
                                   openEditRecord(target_id,$(editLinkElement));
                                 });
                             }());
+                        // show the open icon
+                        var openLinkElement = inputElement.siblings(".permissions-link-open");
+                        var dataFormat = inputElement.siblings(".data-template-format").val();
+                        openLinkElement.css('display', "inline");
+                        // add link to text editor
+                        openLinkElement.attr("href", openXMLRecordUrl + '?id=' + id);
+
                     }
                 }
             },
