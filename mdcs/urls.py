@@ -22,6 +22,8 @@ from core_main_app.admin import core_admin_site
 
 admin.autodiscover()
 
+admin.autodiscover()
+
 urlpatterns = [
     re_path(rf"^{ADMIN_URLS_PREFIX}admin/", admin.site.urls),
     re_path(rf"^{ADMIN_URLS_PREFIX}core-admin/", core_admin_site.urls),

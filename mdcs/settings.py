@@ -92,6 +92,7 @@ CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 # Application definition
 
 INSTALLED_APPS = (
+    "rest_framework.authtoken",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -218,6 +219,14 @@ SITE_ID = 1
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# https://docs.djangoproject.com/en/4.2/topics/files/
+MEDIA_ROOT = "media"
+
+# https://docs.djangoproject.com/en/4.2/ref/contrib/sites/
+SITE_ID = 1
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 # Password Validators
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -311,8 +320,8 @@ LOGGER_FILE_APP = os.path.join(BASE_DIR, "logfile_app.txt")
 LOGGER_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
 LOGGER_CLIENT_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "INFO")
 LOGGER_SERVER_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
-LOGGER_DB_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
 LOGGER_APP_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "DEBUG")
+LOGGER_DB_LEVEL = os.getenv("LOGGER_DB_LEVEL", "DEBUG")
 
 LOGGER_MAX_BYTES = 500000
 LOGGER_BACKUP_COUNT = 2
