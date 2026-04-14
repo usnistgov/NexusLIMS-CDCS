@@ -5,8 +5,8 @@ About this repository
 +++++++++++++++++++++
 
 This repository holds a fork of the `"Materials Data Curation System (MDCS)" <https://github.com/usnistgov/mdcs/>`_
-that has been customized for use as part of the [NexusLIMS](https://github.com/usnistgov/NexusLIMS) laboratory information management system (see the
-`published manuscript <https://doi.org/10.1017/S1431927621000222>`_ for the academic article). This repository
+that has been customized for use as part of the `NexusLIMS <https://github.com/usnistgov/NexusLIMS>`_ laboratory information management system (see the
+`published manuscript <https://doi.org/10.1017/S1431927621000222>`_ for the background motivation). This repository
 contains the "front-end" system that gives users access to experimental XML records built by the 
 `NexusLIMS backend <https://github.com/usnistgov/NexusLIMS>`_.
 
@@ -125,5 +125,6 @@ NexusLIMS-CDCS repo is being developed and maintained by:
 - [Ryan White](https://www.nist.gov/people/ryan-white) - Applied Chemicals and Materials Division 
 
 Past developers:
+
 - Yannick Congo - Former staff memeber
 - Joshua Taillon - Former staff member
