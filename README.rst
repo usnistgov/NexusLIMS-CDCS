@@ -5,8 +5,8 @@ About this repository
 +++++++++++++++++++++
 
 This repository holds a fork of the `"Materials Data Curation System (MDCS)" <https://github.com/usnistgov/mdcs/>`_
-that has been customized for use as part of the NexusLIMS laboratory information management system (see the
-`published manuscript <https://doi.org/10.1017/S1431927621000222>`_ for more details about NexusLIMS). This repository
+that has been customized for use as part of the [NexusLIMS](https://github.com/usnistgov/NexusLIMS) laboratory information management system (see the
+`published manuscript <https://doi.org/10.1017/S1431927621000222>`_ for the academic article). This repository
 contains the "front-end" system that gives users access to experimental XML records built by the 
 `NexusLIMS backend <https://github.com/usnistgov/NexusLIMS>`_.
 
@@ -111,3 +111,19 @@ should or might want to change in order to customize the application to your spe
 +--------------------------------+-------------------------+-----------------------------------------------------------+
 
 
+## About the developers
+
+NexusLIMS-CDCS repo is being developed and maintained by: 
+
+- [June Lau](https://www.nist.gov/people/june-w-lau) - Research Data and Computing Office - Project Lead
+- [Hamza Bouhanni](https://www.nist.gov/people/hamza-bouhanni) - Prometheus Computing
+- [Gretchen Greene](https://www.nist.gov/people/gretchen-greene) - Research Data and Computing Office
+- [Michael Katz](https://www.nist.gov/people/michael-katz) - Material Data Division
+- [Benjamin Long](https://www.nist.gov/people/benjamin-long) - Applied AI Research Group
+- [Marcus Newrock](https://www.nist.gov/people/marcus-william-newrock) - Material Data Division
+- [Ray Plante](https://www.nist.gov/people/raymond-plante) - Research Data and Computing Office
+- [Ryan White](https://www.nist.gov/people/ryan-white) - Applied Chemicals and Materials Division 
+
+Past developers:
+- Yannick Congo - Former staff memeber
+- Joshua Taillon - Former staff member
