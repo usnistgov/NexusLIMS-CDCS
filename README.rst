@@ -13,6 +13,16 @@ contains the "front-end" system that gives users access to experimental XML reco
 The software was developed by the National Institute of Standards and Technology (NIST), and the standard NIST license
 and disclaimer apply (see the ``LICENSE.txt`` file for details).
 
+.. warning::
+
+Nexus Data Orchestra
++++++++++++++++++++++
+
+   This repository is part of the Nexus Data Orchestra project family.
+
+   See the project hub: `Nexus-Data-Orchestra-NDO <https://github.com/usnistgov/Nexus-Data-Orchestra-NDO>`_.
+
+
 Updates
 +++++++
 
